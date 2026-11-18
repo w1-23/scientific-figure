@@ -176,6 +176,9 @@ def test_scope_decides_which_reference_edges_an_object_owns(tmp_path):
 
     outline, interior = run("outline"), run("object")
     assert outline["status"] == "passed", (outline["status"], outline["metrics"], outline["notes"])
+    # Precision must stay measurable: masking the edge map must keep 0/255.
+    assert outline["metrics"]["precision"] > 0.5, outline["metrics"]
+    assert outline["metrics"]["source_edge_pixels"] > 300, outline["metrics"]
     assert interior["status"] != "passed", (interior["status"], interior["metrics"], interior["notes"])
     assert interior["metrics"]["recall"] < outline["metrics"]["recall"] - 0.2
     assert any("recall" in note for note in interior["notes"])

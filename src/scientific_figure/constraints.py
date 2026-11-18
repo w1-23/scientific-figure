@@ -719,7 +719,10 @@ def _check_binding(scene, pack, pack_edges, binding, size, root):
             reachable = reachable - cv2.erode(reachable, np.ones((3, 3), np.uint8))
         radius = int(round(tolerance)) + 1
         reach = cv2.dilate(reachable, np.ones((2 * radius + 1, 2 * radius + 1), np.uint8)) > 0
-        source_edges = source_edges & reach[y:y + h, x:x + w]
+        # Preserve the 0/255 edge values: a bitwise AND with a boolean mask
+        # would turn every kept pixel into 1, and a distance transform fed
+        # 254/255 instead of 0/255 reports an unreachable map (precision 0).
+        source_edges = np.where(reach[y:y + h, x:x + w], source_edges, 0)
     metrics = _edge_metrics(source_edges, render_edges, tolerance)
     status, notes = "passed", []
     if metrics["source_edge_pixels"] == 0:

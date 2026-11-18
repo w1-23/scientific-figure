@@ -24,7 +24,7 @@ python examples/plant-nitrogen-assimilation/check.py work/plantcheck --deliver e
 |---|---|---|---|---|
 | cell-envelope | outline | passed | 1.000 | 1.28 |
 | vacuole | outline | passed | 0.970 | 1.54 |
-| chloroplast-top-left | object | **needs_review** | 0.549 | 4.05 |
+| chloroplast-top-left | object | **needs_review** | 0.680 | 3.30 |
 | chloroplast-top-right | object | passed | 0.708 | 2.39 |
 | chloroplast-bottom-left | object | passed | 0.739 | 2.22 |
 | mitochondrion-left | object | passed | 0.871 | 1.49 |
@@ -36,11 +36,28 @@ python examples/plant-nitrogen-assimilation/check.py work/plantcheck --deliver e
 
 三个线粒体、内质网和高尔基体都是 `object` scope 下的通过，即它们的**内部**结构（嵴、多层膜折叠、堆叠层）也在被比较，不只是外轮廓对得上。
 
-## 唯一待复核项
+## 已修正：左上叶绿体的比例与姿态
 
-[chloroplast-top-left 对照图](compare-chloroplast-top-left.png)（左参考、右重绘）显示：重绘的叶绿体比参考大约三分之一、倾角更平、整体略偏左上；基粒数量和堆叠层次是对的，但轮廓与基粒位置整体偏移约 4px，超过 3px 容差，recall 掉到 0.549。这是**真实的比例／姿态简化**，不是测量的假警报。同一定义下 [chloroplast-top-right](compare-chloroplast-top-right.png) 为 0.708／2.39px 通过，说明阈值能区分"位置形状基本对"和"整体偏移"。
+首次复核时这一项是 recall 0.549、平均偏移 4.05px：重绘的叶绿体比参考长约 15%、厚约 40%，倾角偏了约 4°，基粒整体偏内。
 
-如需修正，应改该细胞器的变换与轮廓，而不是调低阈值。
+修正内容（都在 `redraw.svg` 的该组内，未改其它对象）：
+
+| 项 | 原 | 现 |
+|---|---|---|
+| 组变换 | `matrix(0.85303502 -0.4925 0.4825 0.83571451 217 190)` | `matrix(0.818914 -0.399411 0.391301 0.802286 215.153595 185.97663)` |
+| 四个基粒堆 | 按原局部坐标 | 按参考中心各平移 0.6–13.8px |
+
+变换由与参考边的套准搜索得到（缩放 0.925、旋转 −4°、平移 −2/−4），不是试阈值；基粒平移取参考暗色分量与重绘基粒质心的差。结果：
+
+| | 修正前 | 修正后 |
+|---|---|---|
+| recall | 0.549 | **0.680** |
+| 平均偏移 | 4.05px | **3.30px** |
+| precision | — | 0.88 |
+
+[修正前对照](compare-chloroplast-top-left-before.png) · [修正后对照](compare-chloroplast-top-left.png) · [参考边（红）与重绘边（蓝）叠加](compare-chloroplast-top-left-edges.png)
+
+**仍在待复核**：3.30px 仍高于 3.0px 容差，但已经不是姿态问题——继续做全局缩放/旋转只会变差（套准搜索证实当前姿态是局部最优），残差集中在基粒内部的层间距：参考每堆可见 4–5 层薄片，重绘的盘更厚、层数更少。要消掉这 0.3px 需要重画基粒堆的层叠，不属于本次姿态修正。其余 10 个对象不受影响。
 
 ## 读了什么、没读什么
 

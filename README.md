@@ -42,7 +42,7 @@
 |---|---|
 | [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
 
-重绘了核周内质网的多圈膜带、膜缘与膜面圆点，以及高尔基体的侧壁和堆叠关系。[可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg) · [约束包复核](examples/plant-nitrogen-assimilation/EVIDENCE-CHECK.md)：11 个细胞器逐项检查（含线粒体嵴、内质网多层折叠等内部结构），10 项通过，1 项叶绿体比例/姿态偏移待复核
+重绘了核周内质网的多圈膜带、膜缘与膜面圆点，以及高尔基体的侧壁和堆叠关系。[可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg) · [约束包复核](examples/plant-nitrogen-assimilation/EVIDENCE-CHECK.md)：11 个细胞器逐项检查（含线粒体嵴、内质网多层折叠等内部结构），10 项通过；左上叶绿体的比例与倾角已按参考修正（recall 0.55→0.68），基粒层间距仍待复核
 
 ### PV2F 植物基因组图
 
