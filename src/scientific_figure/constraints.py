@@ -588,6 +588,31 @@ def _count_components(rgb, size_range):
     return found
 
 
+def load_pack_document(directory):
+    """Return one validated ``constraint_pack`` document, without decoding edges."""
+    path = Path(directory)
+    if path.is_dir():
+        path = path / "constraints.json"
+    pack = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(pack, dict) or pack.get("kind") != "constraint_pack":
+        raise ValueError("expected a constraint_pack document")
+    schema_validate(pack, "constraint-pack")
+    return pack
+
+
+def evidence_boxes(pack):
+    """Every addressable evidence ID mapped to its source-ROI-local box."""
+    boxes = {}
+    for scale in pack.get("edge_packs", {}).values():
+        for contour in scale.get("contours", []):
+            boxes[contour["id"]] = contour["bbox"]
+    for entry in pack.get("regions", []) + pack.get("holes", []):
+        boxes[entry["id"]] = entry["bbox"]
+    for group in pack.get("repetitions", []):
+        boxes[group["id"]] = group["bbox"]
+    return boxes
+
+
 def check_constraints(project, pack_directory, *, bindings=None, output=None):
     """Compare the current project against one constraint pack."""
     from .project import load_project

@@ -202,7 +202,53 @@ def _endpoint(endpoint, mappings):
     return entry['part_ids'][endpoint['part']]
 
 
-def compile_plan(plan, *, fragments=None, registry=None, planning_context=None):
+def validate_evidence_bindings(plan, pack):
+    """Resolve every declared ``evidence_ids`` entry against one constraint pack.
+
+    Plan ``source_region`` values are oriented-source pixels; pack contour,
+    region, hole and repetition boxes are ROI-local, so the pack ROI origin is
+    subtracted before comparison. A cited ID must exist, and when the object also
+    declares a source region at least one cited box must intersect it. Evidence
+    stays geometry: a passing binding says nothing about scientific identity.
+    """
+    from .constraints import evidence_boxes
+    if not isinstance(pack, dict) or pack.get("kind") != "constraint_pack":
+        raise ValueError("expected a constraint_pack document")
+    boxes = evidence_boxes(pack)
+    roi = pack["source"]["roi"]
+    ox, oy, rw, rh = roi
+    report = []
+    for module in plan["modules"]:
+        for spec in module["objects"]:
+            cited = list(spec.get("evidence_ids", []))
+            region = spec.get("source_region")
+            if not cited and region is None:
+                continue
+            unknown = sorted(set(cited) - set(boxes))
+            if unknown:
+                raise ValueError("needs_input: unknown evidence IDs for " + spec["id"]
+                                 + ": " + ", ".join(unknown))
+            local = None
+            if region is not None:
+                local = (region[0] - ox, region[1] - oy, region[0] - ox + region[2],
+                         region[1] - oy + region[3])
+                if local[2] <= 0 or local[3] <= 0 or local[0] >= rw or local[1] >= rh:
+                    raise ValueError("needs_input: source region lies outside the constraint pack ROI: " + spec["id"])
+            hits = []
+            if cited and local is not None:
+                for key in cited:
+                    box = boxes[key]
+                    if _intersects(list(local), list(box)):
+                        hits.append(key)
+                if not hits:
+                    raise ValueError("needs_input: cited evidence lies outside the declared source region: " + spec["id"])
+            report.append({"object_id": spec["id"], "evidence_ids": cited,
+                           "source_region": region, "intersecting": hits})
+    return report
+
+
+def compile_plan(plan, *, fragments=None, registry=None, planning_context=None,
+                 evidence_pack=None):
     """Return (bound Scene, project extras, lowering report), never run source.
 
     Program fragments are host-produced Scene dictionaries supplied explicitly;
@@ -212,6 +258,9 @@ def compile_plan(plan, *, fragments=None, registry=None, planning_context=None):
     from .generation import attach_generation, generation_input
     from .recipes import build as recipe_build
     validate_plan(plan)
+    evidence_report = None
+    if evidence_pack is not None:
+        evidence_report = validate_evidence_bindings(plan, evidence_pack)
     if planning_context is not None:
         from .planning_tools import validate_context
         validate_context(plan, planning_context)
@@ -366,6 +415,8 @@ def compile_plan(plan, *, fragments=None, registry=None, planning_context=None):
     extras['figure-plan.json'] = copy.deepcopy(plan)
     report = plan_review(bound, plan, mappings, planning_context=planning_context, baseline=extras['generation.json']['baseline'])
     report['lowering'] = lowered
+    if evidence_report is not None:
+        report['evidence_bindings'] = evidence_report
     return bound, extras, report
 
 
@@ -404,6 +455,25 @@ def _intersects(a, b):
     return min(a[2], b[2]) > max(a[0], b[0]) and min(a[3], b[3]) > max(a[1], b[1])
 
 
+def _preserve_target(text, oid, parts, root):
+    """Resolve one must-preserve line to a Scene ID, or ``None`` for free text.
+
+    A line that names a part (``cristae``), ``object/part`` (``mitochondrion/cristae``)
+    or the object itself is addressable and therefore checkable. Anything else is a
+    host judgement: it must stay open instead of counting as satisfied.
+    """
+    label = text.strip()
+    if label in parts:
+        return parts[label], 'part'
+    if '/' in label:
+        head, _, tail = label.partition('/')
+        if head == oid and tail in parts:
+            return parts[tail], 'object_part'
+    if label == oid:
+        return root, 'object'
+    return None, 'free_text'
+
+
 def plan_review(scene, plan, mappings, *, planning_context=None, baseline=None,
                 constraints_report=None):
     geometry = Geometry(scene); checks = []
@@ -418,6 +488,18 @@ def plan_review(scene, plan, mappings, *, planning_context=None, baseline=None,
             checks.append({'kind': 'required_part', 'plan_object_id': oid, 'part': part,
                 'object_id': current_id, 'status': 'passed' if current_id in geometry.nodes and geometry.visible_bounds(current_id) is not None else 'failed'})
         ids = set(parts.values()) | {entry['root_id']}
+        for requirement in spec.get('must_preserve', []):
+            target, resolution = _preserve_target(requirement, oid, parts, entry['root_id'])
+            if target is None:
+                checks.append({'kind': 'must_preserve', 'plan_object_id': oid,
+                               'requirement': requirement, 'resolution': resolution,
+                               'status': 'needs_review',
+                               'notes': ['Free text: needs host confirmation or an explicit constraint binding.']})
+            else:
+                visible = target in geometry.nodes and geometry.visible_bounds(target) is not None
+                checks.append({'kind': 'must_preserve', 'plan_object_id': oid,
+                               'requirement': requirement, 'resolution': resolution,
+                               'object_id': target, 'status': 'passed' if visible else 'failed'})
         changed = sorted(i for i in ids if i in old and geometry.nodes.get(i) != old[i])
         texts = [{'object_id': i, 'text': geometry.nodes[i]['geometry']['text'],
                   'differs_from_input': i in old and old[i].get('geometry', {}).get('text') != geometry.nodes[i]['geometry']['text']}
@@ -434,6 +516,23 @@ def plan_review(scene, plan, mappings, *, planning_context=None, baseline=None,
             'visual_structure': 'host_required'})
     for oid in plan['review_spec'].get('required_objects', []):
         root = mappings[oid]['root_id']; checks.append({'kind': 'required_object', 'object_id': root, 'status': 'passed' if root in geometry.nodes and geometry.visible_bounds(root) is not None else 'failed'})
+    # Figure-level must-preserve lines resolve through the same rule as object
+    # lines: an addressable object or object/part is checked; free text stays open.
+    addressable = {oid: mappings[oid]['root_id'] for oid in specs}
+    for oid, spec in specs.items():
+        parts = mappings[oid]['part_ids']
+        addressable.update({f'{oid}/{name}': pid for name, pid in parts.items()})
+    for requirement in plan['review_spec'].get('must_preserve', []):
+        target = addressable.get(requirement.strip())
+        if target is None:
+            checks.append({'kind': 'must_preserve', 'scope': 'figure', 'requirement': requirement,
+                           'resolution': 'free_text', 'status': 'needs_review',
+                           'notes': ['Free text: needs host confirmation or an explicit constraint binding.']})
+        else:
+            visible = target in geometry.nodes and geometry.visible_bounds(target) is not None
+            checks.append({'kind': 'must_preserve', 'scope': 'figure', 'requirement': requirement,
+                           'resolution': 'addressable', 'object_id': target,
+                           'status': 'passed' if visible else 'failed'})
     for lock in plan.get('color_semantics', []):
         if not lock['locked']: continue
         oid = _endpoint(lock['target'], mappings)

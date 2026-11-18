@@ -35,6 +35,7 @@ def parser():
     plan=sub.add_parser("plan");plan.add_argument("action",choices=["draft","check","suggest","validate","compile","review"]);plan.add_argument("input",type=Path);plan.add_argument("--fragments",type=Path);plan.add_argument("--output",type=Path);plan.add_argument("--candidate",action="store_true");plan.add_argument("--scale",type=float,default=3)
     plan.add_argument("--context",type=Path);plan.add_argument("--phase",choices=["semantic","construction"],default="semantic");plan.add_argument("--reference",type=Path)
     plan.add_argument("--constraints",type=Path,help="Merge a constraint_check report into review")
+    plan.add_argument("--evidence-pack",type=Path,help="Resolve declared evidence_ids against this constraint pack")
     constraints=sub.add_parser("constraints");constraint_sub=constraints.add_subparsers(dest="action",required=True)
     cbuild=constraint_sub.add_parser("build");cbuild.add_argument("source",type=Path);cbuild.add_argument("--request",type=Path,required=True);cbuild.add_argument("--output",type=Path,required=True)
     ccheck=constraint_sub.add_parser("check");ccheck.add_argument("project",type=Path);ccheck.add_argument("--pack",type=Path,required=True);ccheck.add_argument("--bindings",type=Path);ccheck.add_argument("--output",type=Path)
@@ -168,9 +169,18 @@ def execute(args):
         if args.action=='validate':return validate_plan(data)
         context=load_json(args.context) if args.context else None
         fragments=load_json(args.fragments) if args.fragments else None
-        if args.action=='check':return check_plan(data,context=context,phase=args.phase,fragments=fragments)
+        pack=None
+        if args.evidence_pack:
+            from .constraints import load_pack_document
+            pack=load_pack_document(args.evidence_pack)
+        if args.action=='check':
+            result=check_plan(data,context=context,phase=args.phase,fragments=fragments)
+            if pack is not None:
+                from .planning import validate_evidence_bindings
+                result['evidence_bindings']=validate_evidence_bindings(data,pack)
+            return result
         if args.output is None:raise ValueError('plan compile requires --output')
-        scene,extras,report=compile_plan(data,fragments=fragments,planning_context=context)
+        scene,extras,report=compile_plan(data,fragments=fragments,planning_context=context,evidence_pack=pack)
         reference=None
         if args.reference:
             from PIL import ImageOps

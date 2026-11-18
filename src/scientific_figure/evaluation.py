@@ -110,8 +110,10 @@ def evaluate(path, analysis, scene, *, profile=None, budget=None):
                         "interior_pixels":interior,"constraint_applied":interior>=3,
                         **mask_metrics(src, dst, scale=1)})
     from .internal_structure import internal_edges, edge_comparison
+    # Each side uses its own foreground: masking the candidate with the source
+    # silhouette would hide structure painted outside the reference outline.
     internal = edge_comparison(internal_edges(reference, a, analysis["background"]),
-                               internal_edges(actual, a, analysis["background"]))
+                               internal_edges(actual, b, analysis["background"]))
     geo = Geometry(scene)
     tasks = []
     for part in analysis["parts"]:

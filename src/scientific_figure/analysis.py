@@ -10,15 +10,24 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 
 from .quality import topology
 from .scene import schema_validate
 
 
 def source_crop(path, region=None):
+    """Crop one ROI in EXIF-oriented pixel boundaries.
+
+    The same contract as :func:`scientific_figure.coords.load_oriented`: EXIF
+    orientation is applied once, before any region check or pixel index, so an
+    analysis ROI, an evidence ROI and a measurement ROI always address the same
+    pixels. Alpha is preserved here because transparency is direct evidence for
+    this analysis path.
+    """
     path = Path(path)
     with Image.open(path) as image:
+        image = ImageOps.exif_transpose(image)
         size = list(image.size)
         region = region or [0, 0, *size]
         if (not isinstance(region, list) or len(region) != 4

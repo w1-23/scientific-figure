@@ -44,6 +44,38 @@ Use `inspect reference.png` for source size/hash. Source-bound plans declare SHA
 conda run -n ScientificFigure_skill figure-cli reconstruct reference.png --plan plan.json --output work/figure
 ```
 
+### Evidence constraints for reference reconstruction
+
+Reference work runs one evidence loop; the figure is its output, not a substitute for it.
+
+```bash
+conda run -n ScientificFigure_skill figure-cli constraints build reference.png --request constraints-request.json --output work/constraints
+```
+
+The request declares the ROI, background and the scales to compute (`coarse`, `medium`, `fine`). The pack records classified edges (`strong_structural`, `internal_boundary`, `fine_stroke`, `texture`, `gradient_transition`, `uncertain`), region, hole and repetition candidates, and explicit coordinate mappings. IDs such as `contour-medium-3`, `region-1-4`, `hole-0-1` or `repeat-1` are addressable geometry evidence; they never name a scientific object.
+
+Bind the objects you chose to that evidence in the FigurePlan:
+
+```json
+{"id": "mitochondrion", "role": "host-declared mitochondrion",
+ "source_region": [420, 300, 160, 90],
+ "evidence_ids": ["contour-medium-12", "contour-medium-15"],
+ "fidelity": {"shape": "hard", "detail": "soft", "topology": ["holes"], "allowed_deviation": 4}}
+```
+
+- `plan compile --evidence-pack work/constraints` and `plan check --evidence-pack work/constraints` reject unknown evidence IDs and IDs that miss the declared `source_region`. A stale citation is an error, not a silent no-op.
+- Plan `source_region` is in oriented-source pixels; pack and binding boxes are ROI-local. The pack ROI origin is subtracted when these are compared.
+- `must_preserve` lines are checked when they name an object (`sample`), a part (`cristae`) or `object/part` (`mitochondrion/cristae`). Free text stays `needs_review`; it is never counted as satisfied.
+
+Check the rendered result object by object, then merge the report into the plan review:
+
+```bash
+conda run -n ScientificFigure_skill figure-cli constraints check work/figure --pack work/constraints --bindings bindings.json --output work/constraint-check.json
+conda run -n ScientificFigure_skill figure-cli plan review work/figure --constraints work/constraint-check.json
+```
+
+Each binding reports recall, mean offset and region/hole/repetition detail as `passed`, `needs_review` or `failed`. A hard failure is a repair item for that object ID, not a styling preference. `hard`, `soft` and `ignore` decide which evidence constrains construction: do not turn every detected edge into a path, and do not read a passing pack as scientific meaning.
+
 For drawing from a scientific description, supply a semantic Plan without `source`, or a normal Scene:
 
 ```bash
