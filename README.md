@@ -67,7 +67,7 @@
 1. **宿主负责语义，引擎负责几何。** 看图、拆模块、判断内部结构和画法是宿主的职责；引擎执行明确的 path、text、group、渐变和变换，并保证对象 ID 与父子关系稳定可编辑。
 2. **两类任务共用一个对象图。** 参考复刻和自然语言描述最后都落到 FigurePlan / Scene；参考图额外产生约束包，用多尺度边缘、区域、孔洞和重复候选约束绘制结果，而不是把边缘自动当成语义结论。
 3. **画法可选、可组合。** `filled_shape`、`stroke`、`band`、`layered_fill`、`boolean_cut`、`mask`、`occlusion`、`overlay`、`gradient`、`repeated_instances`、`text`、`program`；复杂对象先画主结构和必要部件，看到实际预览后再细化。
-4. **文字与几何分离。** 所有标签是真实 `<text>`（本仓库示例共 165 / 70 个文本对象），经字体测量后显式换行；缺字或超宽会被检查，不用路径伪装文字。
+4. **文字与几何分离。** 所有标签是真实 `<text>`（本仓库示例 SVG 共 302 个文本对象），经字体测量后显式换行；缺字或超宽会被检查，不用路径伪装文字。
 5. **预览闭环。** 每轮都读整图和局部 ROI，问题定位到具体对象 ID，再改程序或参数；不以缩略图通过代替检查。示例的质量记录逐条列出发现的问题和剩余限制。
 
 ## 运行示例
@@ -81,14 +81,10 @@ python examples/citrus-quality/draw.py work/citrus --scale 2 --deliver examples/
 ```
 
 ```bash
-python examples/genomics-prioritization/draw.py work/genomics --scale 3 --deliver examples/genomics-prioritization
-```
-
-```bash
 python examples/structural-regression/run.py work/regression --deliver examples/structural-regression
 ```
 
-两个绘图脚本只依赖本仓库与 Pillow/FontTools；回归脚本另外用到 OpenCV——它为四种不同学科结构各生成参考图和约束包，并用同一套绑定分别检查忠实版与降级版，结果写入 [REPORT.md](examples/structural-regression/REPORT.md)。输出为 `figure.svg`、`preview.png`、`scene.json` 和对象清单。宿主指南见 [SKILL.md](SKILL.md)；参考图与自然语言两条流程见 [参考图重建](references/reference-reconstruction.md) 与 [自然语言设计](references/text-design.md)。
+示例绘图脚本只依赖本仓库与 Pillow/FontTools；回归脚本另外用到 OpenCV——它为四种不同学科结构各生成参考图和约束包，并用同一套绑定分别检查忠实版与降级版，结果写入 [REPORT.md](examples/structural-regression/REPORT.md)。输出为 `figure.svg`、`preview.png`、`scene.json` 和对象清单。宿主指南见 [SKILL.md](SKILL.md)；参考图与自然语言两条流程见 [参考图重建](references/reference-reconstruction.md) 与 [自然语言设计](references/text-design.md)。
 
 ## 目录
 
@@ -100,7 +96,6 @@ docs/                             API、依赖、脚本与设计文档
 scripts/                          安装、验证与本地交付脚本
 tests/                            工程行为测试
 examples/citrus-quality/          自然语言示例：程序、SVG/PNG、Scene、对象清单、复核
-examples/genomics-prioritization/ 参考图重绘：参考、程序、SVG/PNG、Scene、对象清单、复核
 examples/v0.8/                    历史整图重绘与完整参考图
 examples/structural-regression/   跨学科结构回归：参考、程序、检查报告
 examples/plant-nitrogen-assimilation/、examples/pv2f/  参考图复刻

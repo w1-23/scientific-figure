@@ -74,13 +74,13 @@ The owner requested an independent v0.9 repository with the v0.8 drawing and its
 
 ## Example reference figures (2026-11-18)
 
-`examples/plant-nitrogen-assimilation/reference.webp`, `examples/pv2f/reference.png`,
-`examples/genomics-prioritization/reference.png` and `examples/v0.8/reference.png`
+`examples/plant-nitrogen-assimilation/reference.webp`, `examples/pv2f/reference.png`
+and `examples/v0.8/reference.png`
 are reference figures supplied or selected by the repository owner for
 side-by-side comparison with this project's vector redraws. Their copyright and
 reuse rights remain with their original authors and publishers; they are not
 licensed under the PolyForm Noncommercial License and are excluded from any
 reuse grant for this repository. The redraws are independent vector
 reconstructions produced by this project, not republications of the original
-artwork. `examples/genomics-prioritization/QA.md` records the transcription and
-the deliberate simplifications.
+artwork. The per-directory `QA.md` files record the transcription and the
+deliberate simplifications.
