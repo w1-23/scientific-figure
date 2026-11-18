@@ -92,13 +92,63 @@ def test_program_fragment_is_hash_bound_and_never_executed():
     with pytest.raises(ValueError,match='SHA'):compile_plan(plan,fragments={'host_output':fragment})
 
 
-@pytest.mark.parametrize('kind',['repeats','mirrors','magnifies','aligned_with'])
+@pytest.mark.parametrize('kind',['magnifies','aligned_with','overlaps'])
 def test_unsupported_execute_is_explicit_needs_input(kind):
     plan=request();plan['relations'][0]['type']=kind
     with pytest.raises(ValueError,match='needs_input:'):compile_plan(plan)
     plan['relations'][0]['mode']='semantic'
     _,_,report=compile_plan(plan)
     assert report['semantic_assertions']==['transfer']
+
+
+def test_repeat_executes_explicit_independent_instances():
+    plan=request();plan['relations']=[{'id':'copies','type':'repeats','mode':'execute',
+        'source':{'object_id':'sample'},'target':{'object_id':'result'},
+        'params':{'instances':[{'suffix':'a','transform':[1,0,0,1,0,120]},{'suffix':'b'}]}}]
+    base,_,_=compile_plan({**plan,'relations':[]})
+    scene,_,report=compile_plan(plan)
+    ids={o['id'] for o in scene['objects']}
+    assert {'result.a','result.b'} <= ids
+    assert report['lowering'][0]['support']=='executable'
+    # Each instance is a real independent subtree, not one decorative block.
+    parents=[o.get('parent') for o in scene['objects']]
+    assert parents.count('result.a')==1 and parents.count('result.b')==1
+    assert len(ids)>=len(base['objects'])+8
+    plan['relations'][0]['params']={}
+    with pytest.raises(ValueError,match='explicit instances'):compile_plan(plan)
+
+
+def test_mirror_places_target_about_source_axis():
+    plan=request();plan['relations']=[{'id':'flip','type':'mirrors','mode':'execute',
+        'source':{'object_id':'sample'},'target':{'object_id':'result'},'params':{'axis':'vertical'}}]
+    base,_,_=compile_plan({**plan,'relations':[]})
+    bx0,_,bx1,_=Geometry(base).bounds('result')
+    scene,_,report=compile_plan(plan)
+    geometry=Geometry(scene)
+    sx0,_,sx1,_=geometry.bounds('sample')
+    rx0,_,rx1,_=geometry.bounds('result')
+    # Every point reflects about the sample's vertical centre line.
+    assert abs((rx0+rx1)/2-(2*(sx0+sx1)/2-(bx0+bx1)/2))<1e-6
+    assert abs((rx1-rx0)-(bx1-bx0))<1e-6
+    assert report['lowering'][0]['status']=='lowered'
+    plan['relations'][0]['params']={'axis':'diagonal'}
+    with pytest.raises(ValueError,match='axis'):compile_plan(plan)
+
+
+def test_fidelity_requires_source_region_and_is_bound_into_inputs():
+    plan=request();plan['task_type']='reference_reconstruction'
+    plan['sources']=[{'id':'src','sha256':'a'*64,'size':[400,300]}]
+    spec=plan['modules'][0]['objects'][0]
+    spec['fidelity']={'shape':'hard','detail':'soft','topology':['holes'],'allowed_deviation':2}
+    with pytest.raises(ValueError,match='source_region'):validate_plan(plan)
+    spec['source_region']=[0,0,100,100]
+    plan['modules'][0]['objects'][1]['source_region']=[350,250,60,60]
+    with pytest.raises(ValueError,match='outside'):validate_plan(plan)
+    plan['modules'][0]['objects'][1]['source_region']=[10,10,60,60]
+    plan['modules'][0]['local_frame']={'origin':[20,10],'scale':1.5,'rotation':5}
+    _,extras,_=compile_plan(plan)
+    bindings=extras['generation.json']['input']['inputs']['fidelity_bindings']
+    assert bindings[0]['fidelity']['shape']=='hard' and bindings[0]['evidence_ids']==[]
 
 
 def test_reference_unknowns_and_color_meaning_are_not_inferred():

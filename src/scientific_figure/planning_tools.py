@@ -13,8 +13,8 @@ import copy
 from .context import canonical_hash
 from .prepared import _fields, _json_object, _sha, _strings
 
-STRATEGIES = {'filled_shape', 'stroke', 'boolean_cut', 'mask', 'occlusion',
-              'overlay', 'gradient', 'repeated_instances', 'text'}
+STRATEGIES = {'filled_shape', 'stroke', 'band', 'layered_fill', 'boolean_cut', 'mask',
+              'occlusion', 'overlay', 'gradient', 'repeated_instances', 'text', 'program'}
 
 
 def draft_plan(request):
@@ -84,7 +84,7 @@ def validate_context(plan, context):
             if field == 'objects':
                 if record['construction_sha256'] != canonical_hash(specs[oid]['construction']):
                     raise ValueError('planning construction binding mismatch')
-                _strings(record['strategies'], maximum=9, length=40)
+                _strings(record['strategies'], maximum=12, length=40)
                 if set(record['strategies']) - STRATEGIES: raise ValueError('unknown construction strategy')
             _strings(record.get('evidence_keys', []), maximum=64, length=64)
             if set(record.get('evidence_keys', [])) - evidence_keys: raise ValueError('unknown measurement reference')

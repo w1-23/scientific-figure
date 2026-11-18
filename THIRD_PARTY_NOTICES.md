@@ -62,8 +62,25 @@ Development rasters normalize those assets to 144x144 on white. Reconstructed SV
 
 No OCR, SAM or other model weights are distributed. SAM3 is not an MIT default dependency; its custom SAM License and gated weights would require separate handling if integrated later.
 
-No project-wide open-source license for the new project code has been selected by the owner. Publishing this repository does not add an MIT or other license to project code.
+Project code is licensed under the PolyForm Noncommercial License 1.0.0
+(source-available, noncommercial use only); the full text is in `LICENSE`.
+That license covers this project's code only. It does not cover third-party
+dependencies, Registry assets, user-supplied reference figures, or figures
+reproduced for comparison, whose rights remain with their respective owners.
 
 ## User-requested GitHub example publication (2026-11-18)
 
-The owner requested an independent v0.9 repository with the v0.8 drawing and its reference shown in the README. The selected complete saved reference PNG and the v0.8 full redraw SVG/PNG are included under `examples/v0.8/`. The README compares the complete figures; no cell-only crop is published in this example directory. This is an explicit exception to the earlier local-delivery exclusion for these selected files only; complete private programs, bundles and other private inputs remain excluded. The original artwork's author/source and copyright have not been independently verified. Display at the provider's request does not grant third parties a reuse license for that reference. The original v0.8 artwork notices and original-code license status remain separate from the CC-BY-4.0 Twemoji Registry asset.
+The owner requested an independent v0.9 repository with the v0.8 drawing and its reference shown in the README. The selected complete saved reference PNG and the v0.8 full redraw SVG/PNG are included under `examples/v0.8/`. The README compares the complete figures; no cell-only crop is published in this example directory. This is an explicit exception to the earlier local-delivery exclusion for these selected files only; complete private programs, bundles and other private inputs remain excluded. The original artwork's author/source and copyright have not been independently verified. Display at the provider's request does not grant third parties a reuse license for that reference. The original v0.8 artwork notices remain separate from the CC-BY-4.0 Twemoji Registry asset.
+
+## Example reference figures (2026-11-18)
+
+`examples/plant-nitrogen-assimilation/reference.webp`, `examples/pv2f/reference.png`,
+`examples/genomics-prioritization/reference.png` and `examples/v0.8/reference.png`
+are reference figures supplied or selected by the repository owner for
+side-by-side comparison with this project's vector redraws. Their copyright and
+reuse rights remain with their original authors and publishers; they are not
+licensed under the PolyForm Noncommercial License and are excluded from any
+reuse grant for this repository. The redraws are independent vector
+reconstructions produced by this project, not republications of the original
+artwork. `examples/genomics-prioritization/QA.md` records the transcription and
+the deliberate simplifications.

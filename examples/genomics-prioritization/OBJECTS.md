@@ -1,0 +1,1232 @@
+# Object ID inventory
+
+Generated from `scene.json` by `draw.py --deliver`: 1215 objects, canvas 926x1054.
+
+Every ID is a real Scene object. Groups keep their children; text objects carry their exact string; geometry values are local to the parent group.
+
+## panel-a
+
+- `panel-a` - group
+  - `a-border` - rect x=14, y=8, width=336, height=392, rx=10
+  - `head-A-ribbon` - rect x=18, y=19, width=191.233, height=23, rx=3
+  - `head-A-text` - text "A  GWAS and QTL mapping."
+  - `gwas-table` - group
+    - `table-shadow` - rect x=40, y=59, width=306, height=120, rx=2
+    - `table-head` - rect x=37, y=55, width=306, height=21
+    - `table-col-accession` - text ""
+    - `table-col-SNP1` - text "SNP1"
+    - `table-col-SNP2` - text "SNP2"
+    - `table-col-SNP3` - text "SNP3"
+    - `table-col-SNP4` - text "SNP4"
+    - `table-col-dots` - text "…"
+    - `table-col-Trait` - text "Trait"
+    - `table-row-1` - rect x=37, y=76, width=306, height=19
+    - `table-row-1-name` - text "Accession1"
+    - `table-row-1-SNP1` - text "A"
+    - `table-row-1-SNP2` - text "G"
+    - `table-row-1-SNP3` - text "A"
+    - `table-row-1-SNP4` - text "T"
+    - `table-row-1-Trait` - text "10"
+    - `table-row-2` - rect x=37, y=95, width=306, height=19
+    - `table-row-2-name` - text "Accession2"
+    - `table-row-2-SNP1` - text "T"
+    - `table-row-2-SNP2` - text "C"
+    - `table-row-2-SNP3` - text "C"
+    - `table-row-2-SNP4` - text "G"
+    - `table-row-2-Trait` - text "15"
+    - `table-row-3` - rect x=37, y=114, width=306, height=19
+    - `table-row-3-name` - text "Accession3"
+    - `table-row-3-SNP1` - text "A"
+    - `table-row-3-SNP2` - text "G"
+    - `table-row-3-SNP3` - text "C"
+    - `table-row-3-SNP4` - text "G"
+    - `table-row-3-Trait` - text "10"
+    - `table-row-4` - rect x=37, y=133, width=306, height=19
+    - `table-row-4-name` - text "Accession4"
+    - `table-row-4-SNP1` - text "A"
+    - `table-row-4-SNP2` - text "C"
+    - `table-row-4-SNP3` - text "C"
+    - `table-row-4-SNP4` - text "C"
+    - `table-row-4-Trait` - text "14"
+    - `table-foot` - rect x=37, y=152, width=306, height=19
+    - `table-foot-SNP1` - text "…"
+    - `table-foot-SNP2` - text "…"
+    - `table-foot-SNP3` - text "…"
+    - `table-foot-SNP4` - text "…"
+    - `table-foot-dots` - text "…"
+    - `table-foot-Trait` - text "…"
+  - `model-text` - text "Y = Xβ + Zb + ε"
+  - `model-arrow` - path
+  - `testing-label` - text "Association testing"
+  - `association-plot` - group
+    - `plot-axis-y` - path
+    - `plot-axis-x` - path
+    - `plot-ytick-1` - path
+    - `plot-ytick-2` - path
+    - `plot-ytick-3` - path
+    - `plot-ytick-4` - path
+    - `plot-ytick-5` - path
+    - `plot-0-0` - path
+    - `plot-0-1` - path
+    - `plot-0-2` - path
+    - `plot-0-3` - path
+    - `plot-0-4` - path
+    - `plot-0-5` - path
+    - `plot-0-6` - path
+    - `plot-0-7` - path
+    - `plot-0-8` - path
+    - `plot-0-9` - path
+    - `plot-0-10` - path
+    - `plot-0-11` - path
+    - `plot-0-12` - path
+    - `plot-0-13` - path
+    - `plot-0-14` - path
+    - `plot-0-15` - path
+    - `plot-0-16` - path
+    - `plot-0-17` - path
+    - `plot-0-18` - path
+    - `plot-0-19` - path
+    - `plot-0-20` - path
+    - `plot-0-21` - path
+    - `plot-0-22` - path
+    - `plot-0-23` - path
+    - `plot-0-24` - path
+    - `plot-0-25` - path
+    - `plot-0-26` - path
+    - `plot-0-27` - path
+    - `plot-0-28` - path
+    - `plot-1-0` - path
+    - `plot-1-1` - path
+    - `plot-1-2` - path
+    - `plot-1-3` - path
+    - `plot-1-4` - path
+    - `plot-1-5` - path
+    - `plot-1-6` - path
+    - `plot-1-7` - path
+    - `plot-1-8` - path
+    - `plot-1-9` - path
+    - `plot-1-10` - path
+    - `plot-1-11` - path
+    - `plot-1-12` - path
+    - `plot-1-13` - path
+    - `plot-1-14` - path
+    - `plot-1-15` - path
+    - `plot-1-16` - path
+    - `plot-1-17` - path
+    - `plot-1-18` - path
+    - `plot-1-19` - path
+    - `plot-1-20` - path
+    - `plot-1-21` - path
+    - `plot-1-22` - path
+    - `plot-1-23` - path
+    - `plot-1-24` - path
+    - `plot-1-25` - path
+    - `plot-1-26` - path
+    - `plot-1-27` - path
+    - `plot-1-28` - path
+    - `plot-2-0` - path
+    - `plot-2-1` - path
+    - `plot-2-2` - path
+    - `plot-2-3` - path
+    - `plot-2-4` - path
+    - `plot-2-5` - path
+    - `plot-2-6` - path
+    - `plot-2-7` - path
+    - `plot-2-8` - path
+    - `plot-2-9` - path
+    - `plot-2-10` - path
+    - `plot-2-11` - path
+    - `plot-2-12` - path
+    - `plot-2-13` - path
+    - `plot-2-14` - path
+    - `plot-2-15` - path
+    - `plot-2-16` - path
+    - `plot-2-17` - path
+    - `plot-2-18` - path
+    - `plot-2-19` - path
+    - `plot-2-20` - path
+    - `plot-2-21` - path
+    - `plot-2-22` - path
+    - `plot-2-23` - path
+    - `plot-2-24` - path
+    - `plot-2-25` - path
+    - `plot-2-26` - path
+    - `plot-2-27` - path
+    - `plot-2-28` - path
+    - `plot-3-0` - path
+    - `plot-3-1` - path
+    - `plot-3-2` - path
+    - `plot-3-3` - path
+    - `plot-3-4` - path
+    - `plot-3-5` - path
+    - `plot-3-6` - path
+    - `plot-3-7` - path
+    - `plot-3-8` - path
+    - `plot-3-9` - path
+    - `plot-3-10` - path
+    - `plot-3-11` - path
+    - `plot-3-12` - path
+    - `plot-3-13` - path
+    - `plot-3-14` - path
+    - `plot-3-15` - path
+    - `plot-3-16` - path
+    - `plot-3-17` - path
+    - `plot-3-18` - path
+    - `plot-3-19` - path
+    - `plot-3-20` - path
+    - `plot-3-21` - path
+    - `plot-3-22` - path
+    - `plot-3-23` - path
+    - `plot-3-24` - path
+    - `plot-3-25` - path
+    - `plot-3-26` - path
+    - `plot-3-27` - path
+    - `plot-3-28` - path
+    - `plot-4-0` - path
+    - `plot-4-1` - path
+    - `plot-4-2` - path
+    - `plot-4-3` - path
+    - `plot-4-4` - path
+    - `plot-4-5` - path
+    - `plot-4-6` - path
+    - `plot-4-7` - path
+    - `plot-4-8` - path
+    - `plot-4-9` - path
+    - `plot-4-10` - path
+    - `plot-4-11` - path
+    - `plot-4-12` - path
+    - `plot-4-13` - path
+    - `plot-4-14` - path
+    - `plot-4-15` - path
+    - `plot-4-16` - path
+    - `plot-4-17` - path
+    - `plot-4-18` - path
+    - `plot-4-19` - path
+    - `plot-4-20` - path
+    - `plot-4-21` - path
+    - `plot-4-22` - path
+    - `plot-4-23` - path
+    - `plot-4-24` - path
+    - `plot-4-25` - path
+    - `plot-4-26` - path
+    - `plot-4-27` - path
+    - `plot-4-28` - path
+    - `plot-5-0` - path
+    - `plot-5-1` - path
+    - `plot-5-2` - path
+    - `plot-5-3` - path
+    - `plot-5-4` - path
+    - `plot-5-5` - path
+    - `plot-5-6` - path
+    - `plot-5-7` - path
+    - `plot-5-8` - path
+    - `plot-5-9` - path
+    - `plot-5-10` - path
+    - `plot-5-11` - path
+    - `plot-5-12` - path
+    - `plot-5-13` - path
+    - `plot-5-14` - path
+    - `plot-5-15` - path
+    - `plot-5-16` - path
+    - `plot-5-17` - path
+    - `plot-5-18` - path
+    - `plot-5-19` - path
+    - `plot-5-20` - path
+    - `plot-5-21` - path
+    - `plot-5-22` - path
+    - `plot-5-23` - path
+    - `plot-5-24` - path
+    - `plot-5-25` - path
+    - `plot-5-26` - path
+    - `plot-5-27` - path
+    - `plot-5-28` - path
+    - `plot-6-0` - path
+    - `plot-6-1` - path
+    - `plot-6-2` - path
+    - `plot-6-3` - path
+    - `plot-6-4` - path
+    - `plot-6-5` - path
+    - `plot-6-6` - path
+    - `plot-6-7` - path
+    - `plot-6-8` - path
+    - `plot-6-9` - path
+    - `plot-6-10` - path
+    - `plot-6-11` - path
+    - `plot-6-12` - path
+    - `plot-6-13` - path
+    - `plot-6-14` - path
+    - `plot-6-15` - path
+    - `plot-6-16` - path
+    - `plot-6-17` - path
+    - `plot-6-18` - path
+    - `plot-6-19` - path
+    - `plot-6-20` - path
+    - `plot-6-21` - path
+    - `plot-6-22` - path
+    - `plot-6-23` - path
+    - `plot-6-24` - path
+    - `plot-6-25` - path
+    - `plot-6-26` - path
+    - `plot-6-27` - path
+    - `plot-6-28` - path
+    - `plot-7-0` - path
+    - `plot-7-1` - path
+    - `plot-7-2` - path
+    - `plot-7-3` - path
+    - `plot-7-4` - path
+    - `plot-7-5` - path
+    - `plot-7-6` - path
+    - `plot-7-7` - path
+    - `plot-7-8` - path
+    - `plot-7-9` - path
+    - `plot-7-10` - path
+    - `plot-7-11` - path
+    - `plot-7-12` - path
+    - `plot-7-13` - path
+    - `plot-7-14` - path
+    - `plot-7-15` - path
+    - `plot-7-16` - path
+    - `plot-7-17` - path
+    - `plot-7-18` - path
+    - `plot-7-19` - path
+    - `plot-7-20` - path
+    - `plot-7-21` - path
+    - `plot-7-22` - path
+    - `plot-7-23` - path
+    - `plot-7-24` - path
+    - `plot-7-25` - path
+    - `plot-7-26` - path
+    - `plot-7-27` - path
+    - `plot-7-28` - path
+    - `plot-8-0` - path
+    - `plot-8-1` - path
+    - `plot-8-2` - path
+    - `plot-8-3` - path
+    - `plot-8-4` - path
+    - `plot-8-5` - path
+    - `plot-8-6` - path
+    - `plot-8-7` - path
+    - `plot-8-8` - path
+    - `plot-8-9` - path
+    - `plot-8-10` - path
+    - `plot-8-11` - path
+    - `plot-8-12` - path
+    - `plot-8-13` - path
+    - `plot-8-14` - path
+    - `plot-8-15` - path
+    - `plot-8-16` - path
+    - `plot-8-17` - path
+    - `plot-8-18` - path
+    - `plot-8-19` - path
+    - `plot-8-20` - path
+    - `plot-8-21` - path
+    - `plot-8-22` - path
+    - `plot-8-23` - path
+    - `plot-8-24` - path
+    - `plot-8-25` - path
+    - `plot-8-26` - path
+    - `plot-8-27` - path
+    - `plot-8-28` - path
+    - `plot-dot-1` - ellipse cx=58, cy=310.613, rx=0.7, ry=0.7
+    - `plot-dot-2` - ellipse cx=95, cy=294.289, rx=0.7, ry=0.7
+    - `plot-dot-3` - ellipse cx=132, cy=312.99, rx=0.7, ry=0.7
+    - `plot-dot-4` - ellipse cx=169, cy=310.941, rx=0.7, ry=0.7
+    - `plot-dot-5` - ellipse cx=206, cy=291.801, rx=0.7, ry=0.7
+    - `plot-dot-6` - ellipse cx=243, cy=298.198, rx=0.7, ry=0.7
+    - `plot-dot-7` - ellipse cx=280, cy=316.855, rx=0.7, ry=0.7
+    - `plot-dot-8` - ellipse cx=317, cy=306.802, rx=0.7, ry=0.7
+    - `plot-dot-9` - ellipse cx=71, cy=298.467, rx=0.7, ry=0.7
+    - `plot-dot-10` - ellipse cx=108, cy=304.555, rx=0.7, ry=0.7
+    - `plot-dot-11` - ellipse cx=145, cy=297.455, rx=0.7, ry=0.7
+    - `plot-dot-12` - ellipse cx=182, cy=313.081, rx=0.7, ry=0.7
+    - `plot-dot-13` - ellipse cx=219, cy=307.414, rx=0.7, ry=0.7
+    - `plot-dot-14` - ellipse cx=256, cy=297.475, rx=0.7, ry=0.7
+    - `plot-dot-15` - ellipse cx=293, cy=293.988, rx=0.7, ry=0.7
+    - `plot-dot-16` - ellipse cx=330, cy=320.172, rx=0.7, ry=0.7
+    - `plot-dot-17` - ellipse cx=84, cy=304.711, rx=0.7, ry=0.7
+    - `plot-dot-18` - ellipse cx=121, cy=298.999, rx=0.7, ry=0.7
+    - `plot-dot-19` - ellipse cx=158, cy=301.674, rx=0.7, ry=0.7
+    - `plot-dot-20` - ellipse cx=195, cy=303.997, rx=0.7, ry=0.7
+    - `plot-dot-21` - ellipse cx=232, cy=306.352, rx=0.7, ry=0.7
+    - `plot-dot-22` - ellipse cx=269, cy=307.933, rx=0.7, ry=0.7
+    - `plot-dot-23` - ellipse cx=306, cy=296.269, rx=0.7, ry=0.7
+    - `plot-dot-24` - ellipse cx=60, cy=298.271, rx=0.7, ry=0.7
+    - `plot-dot-25` - ellipse cx=97, cy=311.616, rx=0.7, ry=0.7
+    - `plot-dot-26` - ellipse cx=134, cy=308.562, rx=0.7, ry=0.7
+    - `plot-dot-27` - ellipse cx=171, cy=292.63, rx=0.7, ry=0.7
+    - `plot-dot-28` - ellipse cx=208, cy=302.87, rx=0.7, ry=0.7
+    - `plot-dot-29` - ellipse cx=245, cy=305.681, rx=0.7, ry=0.7
+    - `plot-dot-30` - ellipse cx=282, cy=302.941, rx=0.7, ry=0.7
+    - `plot-dot-31` - ellipse cx=319, cy=311.608, rx=0.7, ry=0.7
+    - `plot-dot-32` - ellipse cx=73, cy=296.506, rx=0.7, ry=0.7
+    - `plot-dot-33` - ellipse cx=110, cy=292.914, rx=0.7, ry=0.7
+    - `plot-dot-34` - ellipse cx=147, cy=313.225, rx=0.7, ry=0.7
+    - `plot-dot-35` - ellipse cx=184, cy=309.63, rx=0.7, ry=0.7
+    - `plot-dot-36` - ellipse cx=221, cy=289.44, rx=0.7, ry=0.7
+    - `plot-dot-37` - ellipse cx=258, cy=307.463, rx=0.7, ry=0.7
+    - `plot-dot-38` - ellipse cx=295, cy=302.299, rx=0.7, ry=0.7
+    - `plot-dot-39` - ellipse cx=332, cy=303.561, rx=0.7, ry=0.7
+    - `plot-dot-40` - ellipse cx=86, cy=307.734, rx=0.7, ry=0.7
+    - `plot-dot-41` - ellipse cx=123, cy=300.272, rx=0.7, ry=0.7
+    - `plot-dot-42` - ellipse cx=160, cy=290.493, rx=0.7, ry=0.7
+    - `plot-dot-43` - ellipse cx=197, cy=318.357, rx=0.7, ry=0.7
+    - `plot-dot-44` - ellipse cx=234, cy=303.558, rx=0.7, ry=0.7
+    - `plot-dot-45` - ellipse cx=271, cy=290.353, rx=0.7, ry=0.7
+    - `plot-dot-46` - ellipse cx=308, cy=307.401, rx=0.7, ry=0.7
+    - `plot-dot-47` - ellipse cx=62, cy=306.485, rx=0.7, ry=0.7
+    - `plot-dot-48` - ellipse cx=99, cy=305.108, rx=0.7, ry=0.7
+    - `plot-dot-49` - ellipse cx=136, cy=310.111, rx=0.7, ry=0.7
+    - `plot-dot-50` - ellipse cx=173, cy=294.959, rx=0.7, ry=0.7
+    - `plot-dot-51` - ellipse cx=210, cy=292.131, rx=0.7, ry=0.7
+    - `plot-dot-52` - ellipse cx=247, cy=320.873, rx=0.7, ry=0.7
+    - `plot-dot-53` - ellipse cx=284, cy=300.593, rx=0.7, ry=0.7
+    - `plot-dot-54` - ellipse cx=321, cy=294.712, rx=0.7, ry=0.7
+    - `plot-dot-55` - ellipse cx=75, cy=302.63, rx=0.7, ry=0.7
+    - `plot-dot-56` - ellipse cx=112, cy=302.163, rx=0.7, ry=0.7
+    - `plot-dot-57` - ellipse cx=149, cy=305.514, rx=0.7, ry=0.7
+    - `plot-dot-58` - ellipse cx=186, cy=312.04, rx=0.7, ry=0.7
+    - `plot-dot-59` - ellipse cx=223, cy=292.559, rx=0.7, ry=0.7
+    - `plot-dot-60` - ellipse cx=260, cy=297.39, rx=0.7, ry=0.7
+    - `plot-dot-61` - ellipse cx=297, cy=316.024, rx=0.7, ry=0.7
+    - `plot-dot-62` - ellipse cx=334, cy=301.679, rx=0.7, ry=0.7
+    - `plot-dot-63` - ellipse cx=88, cy=290.469, rx=0.7, ry=0.7
+    - `plot-dot-64` - ellipse cx=125, cy=307.452, rx=0.7, ry=0.7
+    - `plot-dot-65` - ellipse cx=162, cy=300.445, rx=0.7, ry=0.7
+    - `plot-dot-66` - ellipse cx=199, cy=308.197, rx=0.7, ry=0.7
+    - `plot-dot-67` - ellipse cx=236, cy=304.666, rx=0.7, ry=0.7
+    - `plot-dot-68` - ellipse cx=273, cy=294.217, rx=0.7, ry=0.7
+    - `plot-dot-69` - ellipse cx=310, cy=300.308, rx=0.7, ry=0.7
+    - `plot-dot-70` - ellipse cx=64, cy=317.267, rx=0.7, ry=0.7
+    - `plot-dot-71` - ellipse cx=101, cy=305.81, rx=0.7, ry=0.7
+    - `plot-dot-72` - ellipse cx=138, cy=293.405, rx=0.7, ry=0.7
+    - `plot-dot-73` - ellipse cx=175, cy=301.09, rx=0.7, ry=0.7
+    - `plot-dot-74` - ellipse cx=212, cy=302.67, rx=0.7, ry=0.7
+    - `plot-dot-75` - ellipse cx=249, cy=310.603, rx=0.7, ry=0.7
+    - `plot-dot-76` - ellipse cx=286, cy=300.142, rx=0.7, ry=0.7
+    - `plot-dot-77` - ellipse cx=323, cy=299.516, rx=0.7, ry=0.7
+    - `plot-dot-78` - ellipse cx=77, cy=292.704, rx=0.7, ry=0.7
+    - `plot-dot-79` - ellipse cx=114, cy=312.867, rx=0.7, ry=0.7
+    - `plot-dot-80` - ellipse cx=151, cy=305.098, rx=0.7, ry=0.7
+    - `plot-dot-81` - ellipse cx=188, cy=298.277, rx=0.7, ry=0.7
+    - `plot-dot-82` - ellipse cx=225, cy=297.326, rx=0.7, ry=0.7
+    - `plot-dot-83` - ellipse cx=262, cy=308.644, rx=0.7, ry=0.7
+    - `plot-dot-84` - ellipse cx=299, cy=303.502, rx=0.7, ry=0.7
+    - `plot-dot-85` - ellipse cx=336, cy=299.641, rx=0.7, ry=0.7
+    - `plot-dot-86` - ellipse cx=90, cy=294.867, rx=0.7, ry=0.7
+    - `plot-dot-87` - ellipse cx=127, cy=299.173, rx=0.7, ry=0.7
+    - `plot-dot-88` - ellipse cx=164, cy=309.54, rx=0.7, ry=0.7
+    - `plot-dot-89` - ellipse cx=201, cy=308.245, rx=0.7, ry=0.7
+    - `plot-dot-90` - ellipse cx=238, cy=291.813, rx=0.7, ry=0.7
+    - `plot-dot-91` - ellipse cx=275, cy=297.526, rx=0.7, ry=0.7
+    - `plot-dot-92` - ellipse cx=312, cy=314.556, rx=0.7, ry=0.7
+    - `plot-dot-93` - ellipse cx=66, cy=312.948, rx=0.7, ry=0.7
+    - `plot-dot-94` - ellipse cx=103, cy=302.1, rx=0.7, ry=0.7
+    - `plot-dot-95` - ellipse cx=140, cy=298.572, rx=0.7, ry=0.7
+    - `plot-dot-96` - ellipse cx=177, cy=295.162, rx=0.7, ry=0.7
+    - `plot-dot-97` - ellipse cx=214, cy=309.999, rx=0.7, ry=0.7
+    - `plot-dot-98` - ellipse cx=251, cy=313.462, rx=0.7, ry=0.7
+    - `plot-dot-99` - ellipse cx=288, cy=287.944, rx=0.7, ry=0.7
+    - `plot-dot-100` - ellipse cx=325, cy=301.521, rx=0.7, ry=0.7
+    - `plot-dot-101` - ellipse cx=79, cy=304.717, rx=0.7, ry=0.7
+    - `plot-dot-102` - ellipse cx=116, cy=309.489, rx=0.7, ry=0.7
+    - `plot-dot-103` - ellipse cx=153, cy=299.692, rx=0.7, ry=0.7
+    - `plot-dot-104` - ellipse cx=190, cy=305.011, rx=0.7, ry=0.7
+    - `plot-dot-105` - ellipse cx=227, cy=292.099, rx=0.7, ry=0.7
+    - `plot-dot-106` - ellipse cx=264, cy=314.302, rx=0.7, ry=0.7
+    - `plot-dot-107` - ellipse cx=301, cy=307.112, rx=0.7, ry=0.7
+    - `plot-dot-108` - ellipse cx=338, cy=288.055, rx=0.7, ry=0.7
+    - `plot-dot-109` - ellipse cx=92, cy=294.322, rx=0.7, ry=0.7
+    - `plot-dot-110` - ellipse cx=129, cy=312.08, rx=0.7, ry=0.7
+    - `plot-dot-111` - ellipse cx=166, cy=303.82, rx=0.7, ry=0.7
+    - `plot-dot-112` - ellipse cx=203, cy=301.274, rx=0.7, ry=0.7
+    - `plot-dot-113` - ellipse cx=240, cy=301.138, rx=0.7, ry=0.7
+    - `plot-dot-114` - ellipse cx=277, cy=292.884, rx=0.7, ry=0.7
+    - `plot-dot-115` - ellipse cx=314, cy=320.834, rx=0.7, ry=0.7
+    - `plot-dot-116` - ellipse cx=68, cy=315.942, rx=0.7, ry=0.7
+    - `plot-dot-117` - ellipse cx=105, cy=290.493, rx=0.7, ry=0.7
+    - `plot-dot-118` - ellipse cx=142, cy=296.637, rx=0.7, ry=0.7
+    - `plot-dot-119` - ellipse cx=179, cy=311.037, rx=0.7, ry=0.7
+    - `plot-dot-120` - ellipse cx=216, cy=301.791, rx=0.7, ry=0.7
+    - `plot-dot-121` - ellipse cx=253, cy=305.596, rx=0.7, ry=0.7
+    - `plot-dot-122` - ellipse cx=290, cy=298.014, rx=0.7, ry=0.7
+    - `plot-dot-123` - ellipse cx=327, cy=297.595, rx=0.7, ry=0.7
+    - `plot-dot-124` - ellipse cx=81, cy=307.31, rx=0.7, ry=0.7
+    - `plot-dot-125` - ellipse cx=118, cy=314.257, rx=0.7, ry=0.7
+    - `plot-dot-126` - ellipse cx=155, cy=288.691, rx=0.7, ry=0.7
+    - `plot-dot-127` - ellipse cx=192, cy=301.975, rx=0.7, ry=0.7
+    - `plot-dot-128` - ellipse cx=229, cy=308.56, rx=0.7, ry=0.7
+    - `plot-dot-129` - ellipse cx=266, cy=303.724, rx=0.7, ry=0.7
+    - `plot-dot-130` - ellipse cx=303, cy=299.768, rx=0.7, ry=0.7
+    - `plot-dot-131` - ellipse cx=340, cy=298.724, rx=0.7, ry=0.7
+    - `plot-dot-132` - ellipse cx=94, cy=290.31, rx=0.7, ry=0.7
+    - `plot-dot-133` - ellipse cx=131, cy=313.25, rx=0.7, ry=0.7
+    - `plot-dot-134` - ellipse cx=168, cy=309.005, rx=0.7, ry=0.7
+    - `plot-dot-135` - ellipse cx=205, cy=290.978, rx=0.7, ry=0.7
+    - `plot-dot-136` - ellipse cx=242, cy=299.135, rx=0.7, ry=0.7
+    - `plot-dot-137` - ellipse cx=279, cy=309.716, rx=0.7, ry=0.7
+    - `plot-dot-138` - ellipse cx=316, cy=308.388, rx=0.7, ry=0.7
+    - `plot-dot-139` - ellipse cx=70, cy=304.262, rx=0.7, ry=0.7
+    - `plot-dot-140` - ellipse cx=107, cy=300.8, rx=0.7, ry=0.7
+    - `plot-dot-141` - ellipse cx=144, cy=293.347, rx=0.7, ry=0.7
+    - `plot-dot-142` - ellipse cx=181, cy=312.969, rx=0.7, ry=0.7
+    - `plot-dot-143` - ellipse cx=218, cy=307.213, rx=0.7, ry=0.7
+    - `plot-dot-144` - ellipse cx=255, cy=296.324, rx=0.7, ry=0.7
+    - `plot-dot-145` - ellipse cx=292, cy=294.717, rx=0.7, ry=0.7
+    - `plot-dot-146` - ellipse cx=329, cy=314.831, rx=0.7, ry=0.7
+    - `plot-dot-147` - ellipse cx=83, cy=306.114, rx=0.7, ry=0.7
+    - `plot-dot-148` - ellipse cx=120, cy=303.442, rx=0.7, ry=0.7
+    - `plot-dot-149` - ellipse cx=157, cy=299.547, rx=0.7, ry=0.7
+    - `plot-dot-150` - ellipse cx=194, cy=299.66, rx=0.7, ry=0.7
+    - `plot-dot-151` - ellipse cx=231, cy=308.917, rx=0.7, ry=0.7
+    - `plot-dot-152` - ellipse cx=268, cy=309.446, rx=0.7, ry=0.7
+    - `plot-dot-153` - ellipse cx=305, cy=293.691, rx=0.7, ry=0.7
+    - `plot-dot-154` - ellipse cx=59, cy=299.408, rx=0.7, ry=0.7
+    - `plot-dot-155` - ellipse cx=96, cy=307.805, rx=0.7, ry=0.7
+    - `plot-dot-156` - ellipse cx=133, cy=309.894, rx=0.7, ry=0.7
+    - `plot-dot-157` - ellipse cx=170, cy=296.821, rx=0.7, ry=0.7
+    - `plot-dot-158` - ellipse cx=207, cy=302.382, rx=0.7, ry=0.7
+    - `plot-dot-159` - ellipse cx=244, cy=300.003, rx=0.7, ry=0.7
+    - `plot-dot-160` - ellipse cx=281, cy=308.286, rx=0.7, ry=0.7
+    - `plot-dot-161` - ellipse cx=318, cy=314.694, rx=0.7, ry=0.7
+    - `plot-dot-162` - ellipse cx=72, cy=295.557, rx=0.7, ry=0.7
+    - `plot-dot-163` - ellipse cx=109, cy=293.737, rx=0.7, ry=0.7
+    - `plot-dot-164` - ellipse cx=146, cy=311.198, rx=0.7, ry=0.7
+    - `plot-dot-165` - ellipse cx=183, cy=309.727, rx=0.7, ry=0.7
+    - `plot-dot-166` - ellipse cx=220, cy=293.486, rx=0.7, ry=0.7
+    - `plot-dot-167` - ellipse cx=257, cy=308.502, rx=0.7, ry=0.7
+    - `plot-dot-168` - ellipse cx=294, cy=296.445, rx=0.7, ry=0.7
+    - `plot-dot-169` - ellipse cx=331, cy=309.558, rx=0.7, ry=0.7
+    - `plot-dot-170` - ellipse cx=85, cy=312.753, rx=0.7, ry=0.7
+    - `plot-dot-171` - ellipse cx=122, cy=297.927, rx=0.7, ry=0.7
+    - `plot-dot-172` - ellipse cx=159, cy=291.138, rx=0.7, ry=0.7
+    - `plot-dot-173` - ellipse cx=196, cy=318.03, rx=0.7, ry=0.7
+    - `plot-dot-174` - ellipse cx=233, cy=303.524, rx=0.7, ry=0.7
+    - `plot-dot-175` - ellipse cx=270, cy=294.244, rx=0.7, ry=0.7
+    - `plot-dot-176` - ellipse cx=307, cy=308.833, rx=0.7, ry=0.7
+    - `plot-dot-177` - ellipse cx=61, cy=300.856, rx=0.7, ry=0.7
+    - `plot-dot-178` - ellipse cx=98, cy=303.685, rx=0.7, ry=0.7
+    - `plot-dot-179` - ellipse cx=135, cy=316.806, rx=0.7, ry=0.7
+    - `plot-dot-180` - ellipse cx=172, cy=292.302, rx=0.7, ry=0.7
+    - `plot-dot-181` - ellipse cx=209, cy=292.627, rx=0.7, ry=0.7
+    - `plot-dot-182` - ellipse cx=246, cy=321.103, rx=0.7, ry=0.7
+    - `plot-dot-183` - ellipse cx=283, cy=300.543, rx=0.7, ry=0.7
+    - `plot-dot-184` - ellipse cx=320, cy=298.319, rx=0.7, ry=0.7
+    - `plot-dot-185` - ellipse cx=74, cy=307.501, rx=0.7, ry=0.7
+    - `plot-dot-186` - ellipse cx=111, cy=296.257, rx=0.7, ry=0.7
+    - `plot-dot-187` - ellipse cx=148, cy=305.427, rx=0.7, ry=0.7
+    - `plot-dot-188` - ellipse cx=185, cy=319.195, rx=0.7, ry=0.7
+    - `plot-dot-189` - ellipse cx=222, cy=289.731, rx=0.7, ry=0.7
+    - `plot-dot-190` - ellipse cx=259, cy=297.642, rx=0.7, ry=0.7
+    - `plot-dot-191` - ellipse cx=296, cy=317.366, rx=0.7, ry=0.7
+    - `plot-dot-192` - ellipse cx=333, cy=301.61, rx=0.7, ry=0.7
+    - `plot-dot-193` - ellipse cx=87, cy=294.382, rx=0.7, ry=0.7
+    - `plot-dot-194` - ellipse cx=124, cy=311.616, rx=0.7, ry=0.7
+    - `plot-dot-195` - ellipse cx=161, cy=294.434, rx=0.7, ry=0.7
+    - `plot-dot-196` - ellipse cx=198, cy=310.794, rx=0.7, ry=0.7
+    - `plot-dot-197` - ellipse cx=235, cy=311.747, rx=0.7, ry=0.7
+    - `plot-dot-198` - ellipse cx=272, cy=291.249, rx=0.7, ry=0.7
+    - `plot-dot-199` - ellipse cx=309, cy=299.168, rx=0.7, ry=0.7
+    - `plot-dot-200` - ellipse cx=63, cy=319.716, rx=0.7, ry=0.7
+    - `plot-dot-201` - ellipse cx=100, cy=305.484, rx=0.7, ry=0.7
+    - `plot-dot-202` - ellipse cx=137, cy=297.114, rx=0.7, ry=0.7
+    - `plot-dot-203` - ellipse cx=174, cy=305.06, rx=0.7, ry=0.7
+    - `plot-dot-204` - ellipse cx=211, cy=296.622, rx=0.7, ry=0.7
+    - `plot-dot-205` - ellipse cx=248, cy=314.713, rx=0.7, ry=0.7
+    - `plot-dot-206` - ellipse cx=285, cy=307.261, rx=0.7, ry=0.7
+    - `plot-dot-207` - ellipse cx=322, cy=296.319, rx=0.7, ry=0.7
+    - `plot-dot-208` - ellipse cx=76, cy=293.03, rx=0.7, ry=0.7
+    - `plot-dot-209` - ellipse cx=113, cy=314.228, rx=0.7, ry=0.7
+    - `plot-dot-210` - ellipse cx=150, cy=304.834, rx=0.7, ry=0.7
+    - `plot-dot-211` - ellipse cx=187, cy=300.604, rx=0.7, ry=0.7
+    - `plot-dot-212` - ellipse cx=224, cy=301.246, rx=0.7, ry=0.7
+    - `plot-dot-213` - ellipse cx=261, cy=302.501, rx=0.7, ry=0.7
+    - `plot-dot-214` - ellipse cx=298, cy=307.612, rx=0.7, ry=0.7
+    - `plot-dot-215` - ellipse cx=335, cy=306.801, rx=0.7, ry=0.7
+    - `plot-dot-216` - ellipse cx=89, cy=292.126, rx=0.7, ry=0.7
+    - `plot-dot-217` - ellipse cx=126, cy=299.129, rx=0.7, ry=0.7
+    - `plot-dot-218` - ellipse cx=163, cy=310.979, rx=0.7, ry=0.7
+    - `plot-dot-219` - ellipse cx=200, cy=307.97, rx=0.7, ry=0.7
+    - `plot-dot-220` - ellipse cx=237, cy=293.774, rx=0.7, ry=0.7
+    - `plot-dot-221` - ellipse cx=274, cy=301.432, rx=0.7, ry=0.7
+    - `plot-dot-222` - ellipse cx=311, cy=307.179, rx=0.7, ry=0.7
+    - `plot-dot-223` - ellipse cx=65, cy=310.899, rx=0.7, ry=0.7
+    - `plot-dot-224` - ellipse cx=102, cy=309.414, rx=0.7, ry=0.7
+    - `plot-dot-225` - ellipse cx=139, cy=295.683, rx=0.7, ry=0.7
+    - `plot-dot-226` - ellipse cx=176, cy=293.73, rx=0.7, ry=0.7
+    - `plot-dot-227` - ellipse cx=213, cy=311.586, rx=0.7, ry=0.7
+    - `plot-dot-228` - ellipse cx=250, cy=312.004, rx=0.7, ry=0.7
+    - `plot-dot-229` - ellipse cx=287, cy=289.682, rx=0.7, ry=0.7
+    - `plot-dot-230` - ellipse cx=324, cy=305.328, rx=0.7, ry=0.7
+    - `plot-dot-231` - ellipse cx=78, cy=298.622, rx=0.7, ry=0.7
+    - `plot-dot-232` - ellipse cx=115, cy=307.991, rx=0.7, ry=0.7
+    - `plot-dot-233` - ellipse cx=152, cy=307.066, rx=0.7, ry=0.7
+    - `plot-dot-234` - ellipse cx=189, cy=301.827, rx=0.7, ry=0.7
+    - `plot-dot-235` - ellipse cx=226, cy=290.45, rx=0.7, ry=0.7
+    - `plot-dot-236` - ellipse cx=263, cy=315.981, rx=0.7, ry=0.7
+    - `plot-dot-237` - ellipse cx=300, cy=305.489, rx=0.7, ry=0.7
+    - `plot-dot-238` - ellipse cx=337, cy=289.608, rx=0.7, ry=0.7
+    - `plot-dot-239` - ellipse cx=91, cy=298.607, rx=0.7, ry=0.7
+    - `plot-dot-240` - ellipse cx=128, cy=305.801, rx=0.7, ry=0.7
+    - `plot-dot-241` - ellipse cx=165, cy=304.994, rx=0.7, ry=0.7
+    - `plot-dot-242` - ellipse cx=202, cy=308.636, rx=0.7, ry=0.7
+    - `plot-dot-243` - ellipse cx=239, cy=296.638, rx=0.7, ry=0.7
+    - `plot-dot-244` - ellipse cx=276, cy=291.092, rx=0.7, ry=0.7
+    - `plot-dot-245` - ellipse cx=313, cy=321.449, rx=0.7, ry=0.7
+    - `plot-dot-246` - ellipse cx=67, cy=315.434, rx=0.7, ry=0.7
+    - `plot-dot-247` - ellipse cx=104, cy=292.243, rx=0.7, ry=0.7
+    - `plot-dot-248` - ellipse cx=141, cy=300.835, rx=0.7, ry=0.7
+    - `plot-dot-249` - ellipse cx=178, cy=303.525, rx=0.7, ry=0.7
+    - `plot-dot-250` - ellipse cx=215, cy=305.378, rx=0.7, ry=0.7
+    - `plot-dot-251` - ellipse cx=252, cy=312.767, rx=0.7, ry=0.7
+    - `plot-dot-252` - ellipse cx=289, cy=293.372, rx=0.7, ry=0.7
+    - `plot-dot-253` - ellipse cx=326, cy=295.611, rx=0.7, ry=0.7
+    - `plot-dot-254` - ellipse cx=80, cy=308.878, rx=0.7, ry=0.7
+    - `plot-dot-255` - ellipse cx=117, cy=312.599, rx=0.7, ry=0.7
+    - `plot-dot-256` - ellipse cx=154, cy=290.273, rx=0.7, ry=0.7
+    - `plot-dot-257` - ellipse cx=191, cy=305.938, rx=0.7, ry=0.7
+    - `plot-dot-258` - ellipse cx=228, cy=301.005, rx=0.7, ry=0.7
+    - `plot-dot-259` - ellipse cx=265, cy=307.289, rx=0.7, ry=0.7
+    - `plot-dot-260` - ellipse cx=302, cy=305.693, rx=0.7, ry=0.7
+    - `plot-xtick-1` - path
+    - `plot-xtick-2` - path
+    - `plot-xtick-3` - path
+    - `plot-xtick-4` - path
+    - `plot-xtick-5` - path
+    - `plot-xtick-6` - path
+    - `plot-xtick-7` - path
+    - `plot-xtick-8` - path
+    - `plot-xtick-9` - path
+    - `plot-threshold` - path
+  - `ld-triangle` - group
+    - `ld-band` - rect x=216, y=208, width=128, height=12
+    - `ld-0-0` - rect x=216, y=220, width=11.6, height=8.6
+    - `ld-0-1` - rect x=227.6, y=220, width=11.6, height=8.6
+    - `ld-0-2` - rect x=239.2, y=220, width=11.6, height=8.6
+    - `ld-0-3` - rect x=250.8, y=220, width=11.6, height=8.6
+    - `ld-0-4` - rect x=262.4, y=220, width=11.6, height=8.6
+    - `ld-0-5` - rect x=274, y=220, width=11.6, height=8.6
+    - `ld-0-6` - rect x=285.6, y=220, width=11.6, height=8.6
+    - `ld-0-7` - rect x=297.2, y=220, width=11.6, height=8.6
+    - `ld-0-8` - rect x=308.8, y=220, width=11.6, height=8.6
+    - `ld-0-9` - rect x=320.4, y=220, width=11.6, height=8.6
+    - `ld-0-10` - rect x=332, y=220, width=11.6, height=8.6
+    - `ld-1-1` - rect x=227.6, y=228.6, width=11.6, height=8.6
+    - `ld-1-2` - rect x=239.2, y=228.6, width=11.6, height=8.6
+    - `ld-1-3` - rect x=250.8, y=228.6, width=11.6, height=8.6
+    - `ld-1-4` - rect x=262.4, y=228.6, width=11.6, height=8.6
+    - `ld-1-5` - rect x=274, y=228.6, width=11.6, height=8.6
+    - `ld-1-6` - rect x=285.6, y=228.6, width=11.6, height=8.6
+    - `ld-1-7` - rect x=297.2, y=228.6, width=11.6, height=8.6
+    - `ld-1-8` - rect x=308.8, y=228.6, width=11.6, height=8.6
+    - `ld-1-9` - rect x=320.4, y=228.6, width=11.6, height=8.6
+    - `ld-1-10` - rect x=332, y=228.6, width=11.6, height=8.6
+    - `ld-2-2` - rect x=239.2, y=237.2, width=11.6, height=8.6
+    - `ld-2-3` - rect x=250.8, y=237.2, width=11.6, height=8.6
+    - `ld-2-4` - rect x=262.4, y=237.2, width=11.6, height=8.6
+    - `ld-2-5` - rect x=274, y=237.2, width=11.6, height=8.6
+    - `ld-2-6` - rect x=285.6, y=237.2, width=11.6, height=8.6
+    - `ld-2-7` - rect x=297.2, y=237.2, width=11.6, height=8.6
+    - `ld-2-8` - rect x=308.8, y=237.2, width=11.6, height=8.6
+    - `ld-2-9` - rect x=320.4, y=237.2, width=11.6, height=8.6
+    - `ld-2-10` - rect x=332, y=237.2, width=11.6, height=8.6
+    - `ld-3-3` - rect x=250.8, y=245.8, width=11.6, height=8.6
+    - `ld-3-4` - rect x=262.4, y=245.8, width=11.6, height=8.6
+    - `ld-3-5` - rect x=274, y=245.8, width=11.6, height=8.6
+    - `ld-3-6` - rect x=285.6, y=245.8, width=11.6, height=8.6
+    - `ld-3-7` - rect x=297.2, y=245.8, width=11.6, height=8.6
+    - `ld-3-8` - rect x=308.8, y=245.8, width=11.6, height=8.6
+    - `ld-3-9` - rect x=320.4, y=245.8, width=11.6, height=8.6
+    - `ld-3-10` - rect x=332, y=245.8, width=11.6, height=8.6
+    - `ld-4-4` - rect x=262.4, y=254.4, width=11.6, height=8.6
+    - `ld-4-5` - rect x=274, y=254.4, width=11.6, height=8.6
+    - `ld-4-6` - rect x=285.6, y=254.4, width=11.6, height=8.6
+    - `ld-4-7` - rect x=297.2, y=254.4, width=11.6, height=8.6
+    - `ld-4-8` - rect x=308.8, y=254.4, width=11.6, height=8.6
+    - `ld-4-9` - rect x=320.4, y=254.4, width=11.6, height=8.6
+    - `ld-4-10` - rect x=332, y=254.4, width=11.6, height=8.6
+    - `ld-5-5` - rect x=274, y=263, width=11.6, height=8.6
+    - `ld-5-6` - rect x=285.6, y=263, width=11.6, height=8.6
+    - `ld-5-7` - rect x=297.2, y=263, width=11.6, height=8.6
+    - `ld-5-8` - rect x=308.8, y=263, width=11.6, height=8.6
+    - `ld-5-9` - rect x=320.4, y=263, width=11.6, height=8.6
+    - `ld-5-10` - rect x=332, y=263, width=11.6, height=8.6
+    - `ld-6-6` - rect x=285.6, y=271.6, width=11.6, height=8.6
+    - `ld-6-7` - rect x=297.2, y=271.6, width=11.6, height=8.6
+    - `ld-6-8` - rect x=308.8, y=271.6, width=11.6, height=8.6
+    - `ld-6-9` - rect x=320.4, y=271.6, width=11.6, height=8.6
+    - `ld-6-10` - rect x=332, y=271.6, width=11.6, height=8.6
+    - `ld-7-7` - rect x=297.2, y=280.2, width=11.6, height=8.6
+    - `ld-7-8` - rect x=308.8, y=280.2, width=11.6, height=8.6
+    - `ld-7-9` - rect x=320.4, y=280.2, width=11.6, height=8.6
+    - `ld-7-10` - rect x=332, y=280.2, width=11.6, height=8.6
+    - `ld-8-8` - rect x=308.8, y=288.8, width=11.6, height=8.6
+    - `ld-8-9` - rect x=320.4, y=288.8, width=11.6, height=8.6
+    - `ld-8-10` - rect x=332, y=288.8, width=11.6, height=8.6
+    - `ld-9-9` - rect x=320.4, y=297.4, width=11.6, height=8.6
+    - `ld-9-10` - rect x=332, y=297.4, width=11.6, height=8.6
+    - `ld-10-10` - rect x=332, y=306, width=11.6, height=8.6
+    - `ld-outline` - path
+  - `ld-leader` - path
+
+## panel-b
+
+- `panel-b` - group
+  - `b-border` - rect x=356, y=8, width=556, height=392, rx=10
+  - `head-B-ribbon` - rect x=360, y=17, width=353.849, height=23, rx=3
+  - `head-B-text` - text "B  The timeline for association mapping studies in plants."
+  - `timeline-axis` - path
+  - `timeline-head` - path
+  - `year-label` - text "Year"
+  - `year-tick-2010` - path
+  - `year-label-2010` - text "2010"
+  - `year-tick-2011` - path
+  - `year-label-2011` - text "2011"
+  - `year-tick-2013` - path
+  - `year-label-2013` - text "2013"
+  - `year-tick-2014` - path
+  - `year-label-2014` - text "2014"
+  - `year-tick-2015` - path
+  - `year-label-2015` - text "2015"
+  - `year-tick-2016` - path
+  - `year-label-2016` - text "2016"
+  - `year-tick-2017` - path
+  - `year-label-2017` - text "2017"
+  - `year-tick-2018` - path
+  - `year-label-2018` - text "2018"
+  - `year-tick-2019` - path
+  - `year-label-2019` - text "2019"
+  - `year-tick-2020` - path
+  - `year-label-2020` - text "2020"
+  - `year-tick-2022` - path
+  - `year-label-2022` - text "2022"
+  - `year-tick-2023` - path
+  - `year-label-2023` - text "2023"
+  - `year-tick-2024` - path
+  - `year-label-2024` - text "2024"
+  - `year-tick-2025` - path
+  - `year-label-2025` - text "2025"
+  - `timeline-bubbles` - group
+    - `stem-first-1` - path
+    - `bubble-first-1` - ellipse cx=445, cy=64, rx=27.9771, ry=27.9771
+    - `bubble-first-1-value` - text "4,892"
+    - `stem-first-2` - path
+    - `bubble-first-2` - ellipse cx=474, cy=98, rx=9.09505, ry=9.09505
+    - `bubble-first-2-value` - text "517"
+    - `stem-first-3` - path
+    - `bubble-first-3` - ellipse cx=474, cy=133, rx=5.64269, ry=5.64269
+    - `bubble-first-3-value` - text "199"
+    - `stem-first-4` - path
+    - `bubble-first-4` - ellipse cx=502, cy=108, rx=5.54256, ry=5.54256
+    - `bubble-first-4-value` - text "192"
+    - `stem-first-5` - path
+    - `bubble-first-5` - ellipse cx=524, cy=62, rx=8.69022, ry=8.69022
+    - `bubble-first-5-value` - text "472"
+    - `stem-first-6` - path
+    - `bubble-first-6` - ellipse cx=552, cy=130, rx=5.10686, ry=5.10686
+    - `bubble-first-6-value` - text "163"
+    - `stem-first-7` - path
+    - `bubble-first-7` - ellipse cx=576, cy=112, rx=6.77643, ry=6.77643
+    - `bubble-first-7-value` - text "287"
+    - `stem-first-8` - path
+    - `bubble-first-8` - ellipse cx=600, cy=116, rx=7.53658, ry=7.53658
+    - `bubble-first-8-value` - text "355"
+    - `stem-first-9` - path
+    - `bubble-first-9` - ellipse cx=624, cy=136, rx=4, ry=4
+    - `bubble-first-9-value` - text "67"
+    - `stem-largest-1` - path
+    - `bubble-largest-1` - ellipse cx=634, cy=205, rx=8.40952, ry=8.40952
+    - `bubble-largest-1-value` - text "442"
+    - `stem-largest-2` - path
+    - `bubble-largest-2` - ellipse cx=724, cy=192, rx=10.969, ry=10.969
+    - `bubble-largest-2-value` - text "752"
+    - `stem-largest-3` - path
+    - `bubble-largest-3` - ellipse cx=668, cy=214, rx=13.4759, ry=13.4759
+    - `bubble-largest-3-value` - text "1,135"
+    - `stem-largest-4` - path
+    - `bubble-largest-4` - ellipse cx=708, cy=266, rx=35.5235, ry=35.5235
+    - `bubble-largest-4-value` - text "7,887"
+    - `stem-largest-5` - path
+    - `bubble-largest-5` - ellipse cx=744, cy=224, rx=16.507, ry=16.507
+    - `bubble-largest-5-value` - text "1,703"
+    - `stem-largest-6` - path
+    - `bubble-largest-6` - ellipse cx=770, cy=302, rx=53.0645, ry=53.0645
+    - `bubble-largest-6-value` - text "17,599"
+    - `stem-largest-7` - path
+    - `bubble-largest-7` - ellipse cx=806, cy=272, rx=24.4098, ry=24.4098
+    - `bubble-largest-7-value` - text "3,724"
+    - `stem-largest-8` - path
+    - `bubble-largest-8` - ellipse cx=838, cy=234, rx=24.02, ry=24.02
+    - `bubble-largest-8-value` - text "3,606"
+    - `stem-largest-9` - path
+    - `bubble-largest-9` - ellipse cx=814, cy=188, rx=7.08802, ry=7.08802
+    - `bubble-largest-9-value` - text "314"
+  - `species-legend` - group
+    - `legend-dot-1` - ellipse cx=452, cy=197.8, rx=4, ry=4
+    - `legend-name-1` - text "A. thaliana"
+    - `legend-dot-2` - ellipse cx=452, cy=214.8, rx=4, ry=4
+    - `legend-name-2` - text "O. sativa"
+    - `legend-dot-3` - ellipse cx=452, cy=231.8, rx=4, ry=4
+    - `legend-name-3` - text "Z. mays"
+    - `legend-dot-4` - ellipse cx=452, cy=248.8, rx=4, ry=4
+    - `legend-name-4` - text "T. aestivum"
+    - `legend-dot-5` - ellipse cx=452, cy=265.8, rx=4, ry=4
+    - `legend-name-5` - text "B. napus"
+    - `legend-dot-6` - ellipse cx=452, cy=282.8, rx=4, ry=4
+    - `legend-name-6` - text "G. max"
+    - `legend-dot-7` - ellipse cx=452, cy=299.8, rx=4, ry=4
+    - `legend-name-7` - text "S. lycopersicum"
+    - `legend-dot-8` - ellipse cx=452, cy=316.8, rx=4, ry=4
+    - `legend-name-8` - text "S. tuberosum"
+    - `legend-dot-9` - ellipse cx=452, cy=333.8, rx=4, ry=4
+    - `legend-name-9` - text "G. hirsutum"
+  - `sample-size-legend` - group
+    - `sample-box` - rect x=762, y=92, width=128, height=40, rx=8
+    - `sample-ring-1` - ellipse cx=780, cy=112, rx=5, ry=5
+    - `sample-ring-2` - ellipse cx=780, cy=112, rx=9, ry=9
+    - `sample-ring-3` - ellipse cx=780, cy=112, rx=14, ry=14
+    - `sample-arrow` - path
+    - `sample-head` - path
+    - `sample-label-1` - text "Population"
+    - `sample-label-2` - text "sample size"
+  - `timeline-note-1` - text "Upper panel: First GWAS for each species"
+  - `timeline-note-2` - text "Lower panel: GWAS with the largest population size for each species"
+
+## panel-c
+
+- `panel-c` - group
+  - `c-border` - rect x=30, y=422, width=860, height=233, rx=10
+  - `head-C-ribbon` - rect x=34, y=434, width=433.783, height=23, rx=3
+  - `head-C-text` - text "C  Multiple molecular traits datasets are used for xQTL studies in plant."
+  - `molecular-diagram` - group
+    - `chromatin-loop` - path
+    - `promoter-box` - rect x=138, y=504, width=78, height=22, rx=4
+    - `promoter-label` - text "Promoter"
+    - `enhancer-box` - rect x=135, y=568, width=84, height=22, rx=4
+    - `enhancer-label` - text "Enhancer"
+    - `tf-blob` - path
+    - `chip-box` - rect x=118, y=492, width=220, height=128, rx=6
+    - `chip-label-1` - text "ChIP-seq   CAGE-seq"
+    - `chip-label-2` - text "ATAC-seq  CUT&Tag"
+    - `nucleosome-1-top` - ellipse cx=288, cy=502, rx=13, ry=4
+    - `nucleosome-1-body` - rect x=275, y=502, width=26, height=8, rx=4
+    - `nucleosome-1-bottom` - ellipse cx=288, cy=510, rx=13, ry=3.6
+    - `nucleosome-2-top` - ellipse cx=312, cy=508, rx=13, ry=4
+    - `nucleosome-2-body` - rect x=299, y=508, width=26, height=8, rx=4
+    - `nucleosome-2-bottom` - ellipse cx=312, cy=516, rx=13, ry=3.6
+    - `nucleosome-3-top` - ellipse cx=330, cy=516.4, rx=11.7, ry=3.6
+    - `nucleosome-3-body` - rect x=318.3, y=516.4, width=23.4, height=7.2, rx=3.6
+    - `nucleosome-3-bottom` - ellipse cx=330, cy=523.6, rx=11.7, ry=3.24
+    - `me-stem` - path
+    - `me-mark` - ellipse cx=276, cy=477, rx=6, ry=6
+    - `me-label` - text "Me"
+    - `ac-stem` - path
+    - `ac-mark` - ellipse cx=336, cy=480, rx=6, ry=6
+    - `ac-label` - text "Ac"
+    - `dna-helix-strand-a` - path
+    - `dna-helix-strand-b` - path
+    - `dna-helix-rung-1` - path
+    - `dna-helix-rung-2` - path
+    - `dna-helix-rung-3` - path
+    - `dna-helix-rung-4` - path
+    - `dna-helix-rung-5` - path
+    - `dna-helix-rung-6` - path
+    - `dna-helix-rung-7` - path
+    - `dna-helix-rung-8` - path
+    - `dna-helix-rung-9` - path
+    - `dna-helix-rung-10` - path
+    - `dna-helix-rung-11` - path
+    - `dna-helix-rung-12` - path
+    - `dna-helix-rung-13` - path
+    - `dna-helix-rung-14` - path
+    - `dna-helix-rung-15` - path
+    - `dna-helix-rung-16` - path
+    - `dna-helix-rung-17` - path
+    - `dna-helix-rung-18` - path
+    - `dna-helix-rung-19` - path
+    - `dna-helix-rung-20` - path
+    - `dna-helix-rung-21` - path
+    - `dna-helix-rung-22` - path
+    - `dna-helix-rung-23` - path
+    - `dna-helix-rung-24` - path
+    - `dna-helix-rung-25` - path
+    - `dna-helix-rung-26` - path
+    - `dna-helix-rung-27` - path
+    - `dna-helix-rung-28` - path
+    - `dna-helix-rung-29` - path
+    - `dna-helix-rung-30` - path
+    - `dna-helix-rung-31` - path
+    - `dna-helix-rung-32` - path
+    - `dna-helix-rung-33` - path
+    - `dna-helix-rung-34` - path
+    - `dna-helix-rung-35` - path
+    - `dna-helix-rung-36` - path
+    - `dna-helix-rung-37` - path
+    - `dna-helix-rung-38` - path
+    - `dna-helix-rung-39` - path
+    - `dna-helix-rung-40` - path
+    - `dna-helix-rung-41` - path
+    - `dna-helix-rung-42` - path
+    - `polymerase-stem` - path
+    - `polymerase-mark` - ellipse cx=398, cy=510, rx=3.4, ry=3.4
+    - `ont-box` - rect x=345, y=468, width=180, height=74, rx=6
+    - `ont-label-1` - text "ONT/PacBio"
+    - `ont-label-2` - text "WGBS"
+    - `rnap-body` - path
+    - `gene-model` - group
+      - `gene-box` - rect x=560, y=522, width=92, height=22, rx=4
+      - `gene-label` - text "Gene"
+    - `nascent-rna` - path
+    - `nascent-branch` - path
+    - `rna-cap` - ellipse cx=494, cy=606, rx=3.2, ry=3.2
+    - `transcription-box` - rect x=438, y=574, width=120, height=54, rx=6
+    - `transcription-title` - text "Transcription"
+    - `transcription-rna` - text "RNA-seq"
+    - `transcription-iso` - text "ISO-seq"
+    - `transcription-merip` - text "MeRIP-seq"
+    - `mrna-loop-1` - path
+    - `mrna-loop-2` - path
+    - `mrna-loop-3` - path
+    - `mrna-loop-4` - path
+    - `mrna-loop-5` - path
+    - `mrna-loop-6` - path
+    - `translation-box` - rect x=662, y=566, width=118, height=64, rx=6
+    - `translation-title` - text "Translation"
+    - `translation-ribo` - text "Ribo-seq"
+    - `translation-ms` - text "MS/MS"
+    - `translation-lc` - text "LC/MS"
+    - `translation-gc` - text "GC/MS"
+    - `ribosome-large` - ellipse cx=706, cy=552, rx=11, ry=9
+    - `ribosome-small` - ellipse cx=706, cy=541, rx=8, ry=5
+    - `peptide` - path
+    - `protein-unit-1` - ellipse cx=754, cy=537, rx=2.2, ry=2.2
+    - `protein-unit-2` - ellipse cx=758.2, cy=535.8, rx=2.2, ry=2.2
+    - `protein-unit-3` - ellipse cx=762.4, cy=534.6, rx=2.2, ry=2.2
+    - `protein-unit-4` - ellipse cx=766.6, cy=533.4, rx=2.2, ry=2.2
+    - `protein-unit-5` - ellipse cx=770.8, cy=532.2, rx=2.2, ry=2.2
+    - `protein-label` - text "Protein"
+  - `cell-body` - ellipse cx=878, cy=520, rx=24, ry=36
+  - `nucleus` - ellipse cx=878, cy=520, rx=14, ry=17
+  - `nucleolus` - ellipse cx=878, cy=520, rx=5.5, ry=6.5
+  - `dna-box` - rect x=788, y=480, width=80, height=84, rx=8
+  - `dna-label` - text "DNA"
+  - `dna-note-1` - text "WGS/WES"
+  - `dna-note-2` - text "ONT/PacBio"
+  - `dna-box-helix-strand-a` - path
+  - `dna-box-helix-strand-b` - path
+  - `dna-box-helix-rung-1` - path
+  - `dna-box-helix-rung-2` - path
+  - `dna-box-helix-rung-3` - path
+  - `dna-box-helix-rung-4` - path
+  - `dna-box-helix-rung-5` - path
+  - `dna-box-helix-rung-6` - path
+  - `dna-box-helix-rung-7` - path
+  - `dna-box-helix-rung-8` - path
+  - `dna-box-helix-rung-9` - path
+  - `dna-box-helix-rung-10` - path
+  - `dna-box-helix-rung-11` - path
+  - `dna-box-helix-rung-12` - path
+  - `dna-box-helix-rung-13` - path
+  - `dna-box-helix-rung-14` - path
+  - `dna-box-helix-rung-15` - path
+  - `dna-box-helix-rung-16` - path
+  - `dna-box-helix-rung-17` - path
+  - `dna-box-helix-rung-18` - path
+  - `dna-box-helix-rung-19` - path
+  - `dna-box-helix-rung-20` - path
+
+## panel-d
+
+- `panel-d` - group
+  - `d-border` - rect x=30, y=665, width=860, height=381, rx=10
+  - `head-D-ribbon` - rect x=34, y=677, width=343.255, height=23, rx=3
+  - `head-D-text` - text "D  Candidate gene prioritization by integration of xQTL."
+  - `eqtl` - group
+    - `eqtl-label` - text "eQTL"
+    - `eqtl-axis` - path
+    - `eqtl-snp` - ellipse cx=58, cy=746, rx=3.6, ry=3.6
+    - `eqtl-snp-label` - text "SNP"
+    - `eqtl-effect` - group
+      - `eqtl-effect-shaft` - path
+      - `eqtl-effect-tip` - path
+    - `eqtl-gene` - rect x=118, y=740, width=78, height=10, rx=2
+    - `eqtl-gene-arrow` - path
+    - `eqtl-expr-1` - path
+    - `eqtl-expr-2` - path
+    - `eqtl-expr-3` - path
+    - `eqtl-caption` - text "Gene expression"
+  - `caqtl` - group
+    - `caqtl-label` - text "caQTL"
+    - `caqtl-axis` - path
+    - `caqtl-snp` - ellipse cx=266, cy=746, rx=3.6, ry=3.6
+    - `caqtl-snp-label` - text "SNP"
+    - `caqtl-effect` - group
+      - `caqtl-effect-shaft` - path
+      - `caqtl-effect-tip` - path
+    - `caqtl-gene` - rect x=328, y=740, width=76, height=10, rx=2
+    - `caqtl-gene-arrow` - path
+    - `caqtl-hist-1` - rect x=330, y=734, width=3.2, height=4, rx=0.6
+    - `caqtl-hist-2` - rect x=334.2, y=731, width=3.2, height=7, rx=0.6
+    - `caqtl-hist-3` - rect x=338.4, y=730, width=3.2, height=8, rx=0.6
+    - `caqtl-hist-4` - rect x=342.6, y=726, width=3.2, height=12, rx=0.6
+    - `caqtl-hist-5` - rect x=346.8, y=718, width=3.2, height=20, rx=0.6
+    - `caqtl-hist-6` - rect x=351, y=723, width=3.2, height=15, rx=0.6
+    - `caqtl-hist-7` - rect x=355.2, y=728, width=3.2, height=10, rx=0.6
+    - `caqtl-hist-8` - rect x=359.4, y=731, width=3.2, height=7, rx=0.6
+    - `caqtl-hist-9` - rect x=363.6, y=729, width=3.2, height=9, rx=0.6
+    - `caqtl-hist-10` - rect x=367.8, y=708, width=3.2, height=30, rx=0.6
+    - `caqtl-hist-11` - rect x=372, y=704, width=3.2, height=34, rx=0.6
+    - `caqtl-hist-12` - rect x=376.2, y=716, width=3.2, height=22, rx=0.6
+    - `caqtl-caption` - text "Chromatin accessibility"
+  - `sqtl` - group
+    - `sqtl-label` - text "sQTL"
+    - `sqtl-axis` - path
+    - `sqtl-snp` - ellipse cx=58, cy=821, rx=3.6, ry=3.6
+    - `sqtl-snp-label` - text "SNP"
+    - `sqtl-effect` - group
+      - `sqtl-effect-shaft` - path
+      - `sqtl-effect-tip` - path
+    - `sqtl-gene` - rect x=118, y=815, width=82, height=10, rx=2
+    - `sqtl-gene-arrow` - path
+    - `sqtl-exon-1` - rect x=124, y=816, width=8, height=8
+    - `sqtl-splice-1` - path
+    - `sqtl-exon-2` - rect x=140, y=816, width=8, height=8
+    - `sqtl-splice-2` - path
+    - `sqtl-exon-3` - rect x=156, y=816, width=8, height=8
+    - `sqtl-splice-3` - path
+    - `sqtl-exon-4` - rect x=172, y=816, width=8, height=8
+    - `sqtl-splice-4` - path
+    - `sqtl-caption` - text "Alternative splicing"
+  - `pqtl` - group
+    - `pqtl-label` - text "pQTL"
+    - `pqtl-axis` - path
+    - `pqtl-snp` - ellipse cx=266, cy=821, rx=3.6, ry=3.6
+    - `pqtl-snp-label` - text "SNP"
+    - `pqtl-effect` - group
+      - `pqtl-effect-shaft` - path
+      - `pqtl-effect-tip` - path
+    - `pqtl-gene` - rect x=326, y=815, width=78, height=10, rx=2
+    - `pqtl-gene-arrow` - path
+    - `pqtl-protein-0-0` - rect x=352, y=803, width=6, height=5, rx=2
+    - `pqtl-protein-0-1` - rect x=360, y=803, width=6, height=5, rx=2
+    - `pqtl-protein-0-2` - rect x=368, y=803, width=6, height=5, rx=2
+    - `pqtl-protein-0-3` - rect x=376, y=803, width=6, height=5, rx=2
+    - `pqtl-protein-0-4` - rect x=384, y=803, width=6, height=5, rx=2
+    - `pqtl-protein-1-0` - rect x=352, y=796, width=6, height=5, rx=2
+    - `pqtl-protein-1-1` - rect x=360, y=796, width=6, height=5, rx=2
+    - `pqtl-protein-1-2` - rect x=368, y=796, width=6, height=5, rx=2
+    - `pqtl-protein-1-3` - rect x=376, y=796, width=6, height=5, rx=2
+    - `pqtl-protein-1-4` - rect x=384, y=796, width=6, height=5, rx=2
+    - `pqtl-caption` - text "Protein abundance"
+  - `meqtl` - group
+    - `meqtl-label` - text "meQTL"
+    - `meqtl-axis` - path
+    - `meqtl-snp` - ellipse cx=58, cy=896, rx=3.6, ry=3.6
+    - `meqtl-snp-label` - text "SNP"
+    - `meqtl-effect` - group
+      - `meqtl-effect-shaft` - path
+      - `meqtl-effect-tip` - path
+    - `meqtl-cpg` - rect x=118, y=891, width=82, height=9, rx=2
+    - `meqtl-cpg-stem-1` - path
+    - `meqtl-cpg-dot-1` - ellipse cx=128, cy=879, rx=2.2, ry=2.2
+    - `meqtl-cpg-stem-2` - path
+    - `meqtl-cpg-dot-2` - ellipse cx=147, cy=879, rx=2.2, ry=2.2
+    - `meqtl-cpg-stem-3` - path
+    - `meqtl-cpg-dot-3` - ellipse cx=166, cy=879, rx=2.2, ry=2.2
+    - `meqtl-cpg-stem-4` - path
+    - `meqtl-cpg-dot-4` - ellipse cx=185, cy=879, rx=2.2, ry=2.2
+    - `meqtl-me-hex` - path
+    - `meqtl-me-label` - text "Me"
+    - `meqtl-caption` - text "CpG"
+  - `mqtl` - group
+    - `mqtl-label` - text "mQTL"
+    - `mqtl-axis` - path
+    - `mqtl-snp` - ellipse cx=266, cy=896, rx=3.6, ry=3.6
+    - `mqtl-snp-label` - text "SNP"
+    - `mqtl-effect` - group
+      - `mqtl-effect-shaft` - path
+      - `mqtl-effect-tip` - path
+    - `mqtl-gene` - rect x=326, y=890, width=78, height=10, rx=2
+    - `mqtl-gene-arrow` - path
+    - `mqtl-expr-1` - path
+    - `mqtl-expr-2` - path
+    - `mqtl-expr-3` - path
+    - `mqtl-caption` - text "Metabolites abundance"
+  - `mqtl-metabolite` - text "Metabolite"
+  - `bqtl` - group
+    - `bqtl-label` - text "bQTL"
+    - `bqtl-axis` - path
+    - `bqtl-snp` - ellipse cx=58, cy=971, rx=3.6, ry=3.6
+    - `bqtl-snp-label` - text "SNP"
+    - `bqtl-effect` - group
+      - `bqtl-effect-shaft` - path
+      - `bqtl-effect-tip` - path
+    - `bqtl-cre` - rect x=118, y=966, width=82, height=9, rx=2
+    - `bqtl-cre-box-1` - rect x=124, y=966, width=10, height=9, rx=1
+    - `bqtl-cre-box-2` - rect x=146, y=966, width=10, height=9, rx=1
+    - `bqtl-cre-box-3` - rect x=168, y=966, width=10, height=9, rx=1
+    - `bqtl-tf-1` - ellipse cx=152, cy=949, rx=11, ry=6
+    - `bqtl-tf-2` - ellipse cx=176, cy=955, rx=10, ry=6
+    - `bqtl-tf-3` - ellipse cx=187, cy=946, rx=6, ry=5
+    - `bqtl-tf-label` - text "TF"
+    - `bqtl-caption` - text "CRE"
+  - `haqtl` - group
+    - `haqtl-label` - text "haQTL"
+    - `haqtl-axis` - path
+    - `haqtl-snp` - ellipse cx=266, cy=971, rx=3.6, ry=3.6
+    - `haqtl-snp-label` - text "SNP"
+    - `haqtl-effect` - group
+      - `haqtl-effect-shaft` - path
+      - `haqtl-effect-tip` - path
+    - `haqtl-dna` - path
+    - `haqtl-nucleosome` - ellipse cx=376, cy=968, rx=12, ry=8
+    - `haqtl-tail-1` - path
+    - `haqtl-tail-2` - path
+    - `haqtl-ac-1` - ellipse cx=380, cy=937, rx=5, ry=5
+    - `haqtl-ac-label-1` - text "Ac"
+    - `haqtl-ac-2` - ellipse cx=392, cy=937, rx=5, ry=5
+    - `haqtl-ac-label-2` - text "Ac"
+    - `haqtl-caption` - text ""
+  - `twas` - group
+    - `twas-title` - text "TWAS"
+    - `twas-box-1` - rect x=474, y=724, width=74, height=30, rx=2
+    - `twas-label-1` - text "Training"
+    - `twas-arrow-1` - group
+      - `twas-arrow-1-shaft` - path
+      - `twas-arrow-1-tip` - path
+    - `twas-box-2` - rect x=580, y=724, width=84, height=30, rx=2
+    - `twas-label-2` - text "Imputation"
+    - `twas-arrow-2` - group
+      - `twas-arrow-2-shaft` - path
+      - `twas-arrow-2-tip` - path
+    - `twas-box-3` - rect x=692, y=724, width=88, height=30, rx=2
+    - `twas-label-3` - text "Association"
+  - `colocalization` - group
+    - `coloc-title` - text "Colocalization"
+    - `coloc-trait-1` - ellipse cx=512, cy=812, rx=38, ry=15
+    - `coloc-trait-1-label` - text "Trait 1"
+    - `coloc-trait-2` - ellipse cx=720, cy=812, rx=38, ry=15
+    - `coloc-trait-2-label` - text "Trait 2"
+    - `coloc-causal` - text "Causal GV"
+    - `coloc-helix-strand-a` - path
+    - `coloc-helix-strand-b` - path
+    - `coloc-helix-rung-1` - path
+    - `coloc-helix-rung-2` - path
+    - `coloc-helix-rung-3` - path
+    - `coloc-helix-rung-4` - path
+    - `coloc-helix-rung-5` - path
+    - `coloc-helix-rung-6` - path
+    - `coloc-helix-rung-7` - path
+    - `coloc-helix-rung-8` - path
+    - `coloc-helix-rung-9` - path
+    - `coloc-helix-rung-10` - path
+    - `coloc-helix-rung-11` - path
+    - `coloc-helix-rung-12` - path
+    - `coloc-helix-rung-13` - path
+    - `coloc-helix-rung-14` - path
+    - `coloc-helix-rung-15` - path
+    - `coloc-helix-rung-16` - path
+    - `coloc-helix-rung-17` - path
+    - `coloc-helix-rung-18` - path
+    - `coloc-helix-rung-19` - path
+    - `coloc-helix-rung-20` - path
+    - `coloc-helix-rung-21` - path
+    - `coloc-helix-rung-22` - path
+    - `coloc-helix-rung-23` - path
+    - `coloc-helix-rung-24` - path
+    - `coloc-helix-rung-25` - path
+    - `coloc-helix-rung-26` - path
+    - `coloc-helix-rung-27` - path
+    - `coloc-helix-rung-28` - path
+    - `coloc-helix-rung-29` - path
+    - `coloc-helix-rung-30` - path
+    - `coloc-helix-rung-31` - path
+    - `coloc-helix-rung-32` - path
+    - `coloc-helix-rung-33` - path
+    - `coloc-helix-rung-34` - path
+    - `coloc-variant` - rect x=612, y=838, width=9, height=22, rx=1
+    - `coloc-link-1` - group
+      - `coloc-link-1-shaft` - path
+      - `coloc-link-1-tip` - path
+    - `coloc-link-2` - group
+      - `coloc-link-2-shaft` - path
+      - `coloc-link-2-tip` - path
+  - `mr` - group
+    - `mr-title-1` - text "Summary-data-based"
+    - `mr-title-2` - text "Mendelian Randomization"
+    - `mr-exposure` - ellipse cx=512, cy=958, rx=44, ry=15
+    - `mr-exposure-label` - text "Exposure"
+    - `mr-trait` - ellipse cx=716, cy=958, rx=36, ry=15
+    - `mr-trait-label` - text "Trait"
+    - `mr-arrow-1` - group
+      - `mr-arrow-1-shaft` - path
+      - `mr-arrow-1-tip` - path
+    - `mr-arrow-2` - group
+      - `mr-arrow-2-shaft` - path
+      - `mr-arrow-2-tip` - path
+    - `mr-arrow-3` - group
+      - `mr-arrow-3-shaft` - path
+      - `mr-arrow-3-tip` - path
+    - `mr-helix-strand-a` - path
+    - `mr-helix-strand-b` - path
+    - `mr-helix-rung-1` - path
+    - `mr-helix-rung-2` - path
+    - `mr-helix-rung-3` - path
+    - `mr-helix-rung-4` - path
+    - `mr-helix-rung-5` - path
+    - `mr-helix-rung-6` - path
+    - `mr-helix-rung-7` - path
+    - `mr-helix-rung-8` - path
+    - `mr-helix-rung-9` - path
+    - `mr-helix-rung-10` - path
+    - `mr-helix-rung-11` - path
+    - `mr-helix-rung-12` - path
+    - `mr-helix-rung-13` - path
+    - `mr-helix-rung-14` - path
+    - `mr-helix-rung-15` - path
+    - `mr-helix-rung-16` - path
+    - `mr-helix-rung-17` - path
+    - `mr-helix-rung-18` - path
+    - `mr-helix-rung-19` - path
+    - `mr-helix-rung-20` - path
+    - `mr-helix-rung-21` - path
+    - `mr-helix-rung-22` - path
+    - `mr-helix-rung-23` - path
+    - `mr-helix-rung-24` - path
+    - `mr-helix-rung-25` - path
+    - `mr-helix-rung-26` - path
+    - `mr-helix-rung-27` - path
+    - `mr-helix-rung-28` - path
+    - `mr-helix-rung-29` - path
+    - `mr-helix-rung-30` - path
+    - `mr-helix-rung-31` - path
+    - `mr-helix-rung-32` - path
+    - `mr-helix-rung-33` - path
+    - `mr-helix-rung-34` - path
+    - `mr-helix-rung-35` - path
+    - `mr-helix-rung-36` - path
+    - `mr-variant-1` - rect x=574, y=992, width=9, height=22, rx=1
+    - `mr-variant-2` - rect x=598, y=992, width=9, height=22, rx=1
+    - `mr-variant-3` - rect x=622, y=992, width=9, height=22, rx=1
+    - `mr-variant-4` - rect x=646, y=992, width=9, height=22, rx=1
+  - `transfer-1` - path
+  - `transfer-1-head` - path
+  - `transfer-2` - path
+  - `transfer-2-head` - path
+  - `tool-column` - group
+    - `tools-bg` - rect x=798, y=678, width=84, height=354, rx=6
+    - `tools-title-1` - text "Prioritize"
+    - `tools-title-2` - text "‘effector gene’"
+    - `tool-box-1` - rect x=804, y=728, width=72, height=62, rx=8
+    - `tool-title-1` - text "xQTL"
+    - `tool-1-line-1` - text "RicePilaf, PoPS,"
+    - `tool-1-line-2` - text "MSC, SMR-Portal"
+    - `tool-box-2` - rect x=804, y=796, width=72, height=82, rx=8
+    - `tool-title-2` - text "Machine learning"
+    - `tool-2-line-1` - text "FLAMES, EMS, Open"
+    - `tool-2-line-2` - text "Targets Platform,"
+    - `tool-2-line-3` - text "Iswine, QTG-LGBM,"
+    - `tool-2-line-4` - text "GARFIELD"
+    - `tool-box-3` - rect x=804, y=884, width=72, height=64, rx=8
+    - `tool-title-3` - text "Statistical scores"
+    - `tool-3-line-1` - text "DEPICT, POCKET,"
+    - `tool-3-line-2` - text "MAGMA"

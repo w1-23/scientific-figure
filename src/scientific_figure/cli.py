@@ -34,6 +34,11 @@ def parser():
     recipe=sub.add_parser("recipe");recipe.add_argument("action",choices=["list","describe","build"]);recipe.add_argument("id",nargs="?");recipe.add_argument("--params",type=Path);recipe.add_argument("--instance",default="instance");recipe.add_argument("--output",type=Path);recipe.add_argument("--width",type=float,default=512);recipe.add_argument("--height",type=float,default=512);recipe.add_argument("--version",default="1.0.0");recipe.add_argument("--scale",type=float,default=3)
     plan=sub.add_parser("plan");plan.add_argument("action",choices=["draft","check","suggest","validate","compile","review"]);plan.add_argument("input",type=Path);plan.add_argument("--fragments",type=Path);plan.add_argument("--output",type=Path);plan.add_argument("--candidate",action="store_true");plan.add_argument("--scale",type=float,default=3)
     plan.add_argument("--context",type=Path);plan.add_argument("--phase",choices=["semantic","construction"],default="semantic");plan.add_argument("--reference",type=Path)
+    plan.add_argument("--constraints",type=Path,help="Merge a constraint_check report into review")
+    constraints=sub.add_parser("constraints");constraint_sub=constraints.add_subparsers(dest="action",required=True)
+    cbuild=constraint_sub.add_parser("build");cbuild.add_argument("source",type=Path);cbuild.add_argument("--request",type=Path,required=True);cbuild.add_argument("--output",type=Path,required=True)
+    ccheck=constraint_sub.add_parser("check");ccheck.add_argument("project",type=Path);ccheck.add_argument("--pack",type=Path,required=True);ccheck.add_argument("--bindings",type=Path);ccheck.add_argument("--output",type=Path)
+    cvalidate=constraint_sub.add_parser("validate");cvalidate.add_argument("pack",type=Path)
     template=sub.add_parser("template");template.add_argument("action",choices=["candidate"]);template.add_argument("input",type=Path);template.add_argument("--updates",type=Path,required=True);template.add_argument("--output",type=Path,required=True)
     text=sub.add_parser("text");text.add_argument("action",choices=["measure","wrap","validate-inventory"]);text.add_argument("input",type=Path)
     candidates=sub.add_parser("candidates");candidates.add_argument("input",type=Path);candidates.add_argument("--source",type=Path,required=True);candidates.add_argument("--roi");candidates.add_argument("--background")
@@ -146,7 +151,8 @@ def execute(args):
             scene=load_project(args.input);extras=project_extras(args.input);validate_planning(scene,extras)
             if 'figure-plan.json' not in extras:raise ValueError('project has no FigurePlan')
             generation=extras['generation.json'];inputs=generation['input']['inputs']
-            return plan_review(scene,extras['figure-plan.json'],inputs['object_map'],planning_context=inputs.get('planning_context'),baseline=generation['baseline'])
+            report=plan_review(scene,extras['figure-plan.json'],inputs['object_map'],planning_context=inputs.get('planning_context'),baseline=generation['baseline'],constraints_report=load_json(args.constraints) if args.constraints else None)
+            return report
         data=load_json(args.input)
         from .planning_tools import draft_plan, context_for, check_plan, suggest
         if args.action=='suggest':return suggest(data)
@@ -182,6 +188,17 @@ def execute(args):
         scene,extras,report=template_candidate(args.input,load_json(args.updates))
         receipt=write_candidate(scene,extras,args.output);receipt['plan_review']=report
         return receipt
+    if command=="constraints":
+        from .constraints import build_constraints, check_constraints, validate_constraint_pack
+        if args.action=='build':
+            return build_constraints(args.source,args.request,args.output)
+        if args.action=='validate':
+            return validate_constraint_pack(args.pack)
+        bindings=None
+        if args.bindings:
+            data=load_json(args.bindings)
+            bindings=data.get('bindings',data) if isinstance(data,dict) else data
+        return check_constraints(args.project,args.pack,bindings=bindings,output=args.output)
     if command=="evidence":
         if args.input == Path('measure'):
             from .measurements import measure

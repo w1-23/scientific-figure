@@ -1,16 +1,33 @@
-#还在为科研绘图而烦恼么？推荐使用Scientific Figure Reconstruction & Drawing Skill！！！
-独立的科研矢量重绘与绘制 Skill。支持**参考图语义复刻**和**自然语言生图**：调用它的宿主负责理解对象、内部结构与关系，选择素材、Recipe 或自由绘图程序；引擎负责执行几何、样式、层级、编辑和 SVG/PNG 导出。无需增加第二个看图模型、模型 API 或服务进程。
+# Scientific Figure Reconstruction & Drawing Skill
 
-推荐用法：利用GPT，seedance等生图模型生成你希望的风格和内容，素材，本skill可以基本排版和重建😊；如果不太满意，可以用截图指出问题局部问题不满的地方，他会自己再次修改，尽可能提交出还原的结果；
+独立的科研矢量重绘与绘制 Skill：支持**参考图语义复刻**和**自然语言生图**。
+宿主负责理解对象、内部结构与关系，选择素材、Recipe 或自由绘图程序；引擎负责执行几何、样式、层级、编辑与 SVG/PNG 导出。不需要第二个看图模型、模型 API 或服务进程。
 
-你也可以：截图自己喜欢的素材，让他为你生成基本绘图素材😊，后续自己排版；
-你更可以：提供完整的语言描述，产出相应图像，但本用法比较依赖LLM本身的理解力；
-skill帮你做的是：
 > 让模型决定怎么画，让引擎负责画好。
 
-## v0.8 整图重绘与完整参考图
+## 结果
 
-以下是 **v0.8 历史整图重绘结果**。左侧是完整参考图，右侧是使用本引擎完成的整张重绘，包含上方制备／给药流程、右侧肿瘤与血管、左下细胞放大图和底部色板。
+### 多组学 xQTL 参考图重绘（新）
+
+一张四分区植物基因组图：GWAS/QTL 与关联分析、关联作图时间线、xQTL 分子数据、候选基因整合。重绘保留了全部分区结构、表内基因型、时间线气泡数值与物种图例、C 区每个方法标签、D 区八种 xQTL 与工具列。
+
+| 完整参考图 | 整图矢量重绘 |
+|---|---|
+| [![xQTL 参考图](examples/genomics-prioritization/reference.png)](examples/genomics-prioritization/reference.png) | [![xQTL 重绘预览](examples/genomics-prioritization/redraw.png)](examples/genomics-prioritization/redraw.svg) |
+
+[可编辑 SVG](examples/genomics-prioritization/redraw.svg) · [PNG](examples/genomics-prioritization/redraw.png) · [绘图程序](examples/genomics-prioritization/draw.py) · [对象 ID 清单](examples/genomics-prioritization/OBJECTS.md) · [质量复核](examples/genomics-prioritization/QA.md)
+
+### 柑橘无损品质评价（新，自然语言）
+
+只给一段描述，不给参考图：果园取样 → 无损检测 → 参考品质测定 → 数据分析与品质预测。图中没有编造 R²、RMSE、波长、仪器型号或性能数值；比例尺仅为示意，批量统计明确标注为示意。
+
+![柑橘品质评价示意图](examples/citrus-quality/citrus-quality.png)
+
+[可编辑 SVG](examples/citrus-quality/citrus-quality.svg) · [PNG](examples/citrus-quality/citrus-quality.png) · [Scene 工程](examples/citrus-quality/citrus-quality.scene.json) · [绘图程序](examples/citrus-quality/draw.py) · [对象 ID 清单](examples/citrus-quality/OBJECTS.md) · [质量复核](examples/citrus-quality/QA.md)
+
+### v0.8 整图重绘与完整参考图
+
+上方制备／给药流程、右侧肿瘤与血管、左下细胞放大和底部色板。
 
 | 完整参考图 | v0.8 整张矢量重绘 |
 |---|---|
@@ -18,17 +35,13 @@ skill帮你做的是：
 
 [查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
 
-SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考位图。ER 形态、小鼠解剖和柔和笔绘边缘仍有近似；原图疑似错字在主结果中保留。参考图的权利归原权利人，本项目不为其授予复用许可；未做领域科学审核。
-
-## 植物科学参考图复刻示例
-
 ### 植物细胞氮同化
 
 | 完整参考图 | 整图重绘 |
 |---|---|
 | [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
 
-修订版重绘了核周内质网的多圈膜带、膜缘和膜面圆点，以及高尔基体的侧壁与堆叠关系。[下载可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg)
+重绘了核周内质网的多圈膜带、膜缘与膜面圆点，以及高尔基体的侧壁和堆叠关系。[可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg)
 
 ### PV2F 植物基因组图
 
@@ -36,113 +49,69 @@ SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考�
 |---|---|
 | [![PV2F 完整参考图](examples/pv2f/reference.png)](examples/pv2f/reference.png) | [![PV2F 三分区重绘预览](examples/pv2f/redraw.png)](examples/pv2f/redraw.svg) |
 
-重绘保留 A 区流程图、B 区水稻遗传变异资源时间线和 C 区冰山图表。A 区微型图标和曲线作了简化，C 区堆叠柱高度及发表量从参考图估读。[下载可编辑 SVG](examples/pv2f/redraw.svg) · [相关论文（Han 等，*Molecular Plant*，2026）](https://doi.org/10.1016/j.molp.2026.05.014)
+保留 A 区流程图、B 区水稻遗传变异资源时间线和 C 区冰山图表；微型图标与曲线简化，柱高和发表量按参考图估读。[可编辑 SVG](examples/pv2f/redraw.svg) · [相关论文（Han 等，*Molecular Plant*，2026）](https://doi.org/10.1016/j.molp.2026.05.014)
 
-两张参考图均由用户提供，权利归各原权利人。仓库代码许可不适用于参考图。
+> 以上参考图均由用户提供或按用户要求用于对照，权利归各原权利人。仓库的代码许可不适用于参考图；重绘是技术性重建，不构成对原图的再许可。
 
 ## 能力
 
 | 能力 | 实际行为 |
 |---|---|
 | 两类任务共用流程 | 参考／描述 → 宿主解释 → FigurePlan → 选择画法 → Scene → 实际预览 → 定向修正 |
-| 草稿与分阶段检查 | `plan draft/check` 保留 unresolved，区分语义待确认与构造可编译；不补造实验步骤 |
-| 真实候选检索 | `registry search` / `plan suggest` 返回已安装资源、适配理由与缺少部件；不存在的条目返回空 |
+| 参考图约束 | 参考图生成约束包：多尺度边缘分类、区域/孔洞/重复、坐标契约；按对象绑定的边界 recall/precision/偏移检查 |
+| 语义草稿与分阶段检查 | `plan draft/check` 保留 unresolved，区分语义待确认与构造可编译；不补造实验步骤 |
+| 关系语义 | `execute` / `check` / `semantic` 明确分工；不可执行的 execute 返回 `needs_input`，重复与镜像生成独立实例 |
+| 真实候选检索 | `registry search` / `plan suggest` 返回已安装资源、适配理由与缺失部件；不存在的条目返回空 |
 | 四项局部测量 | ROI 上下文、RGB/alpha 剖面、选定阈值的连通／孔洞候选、给定模板的单尺度重复候选 |
 | 自由程序与几何库 | 宿主显式执行 Python/JS，消费已有 Scene 片段；复用 FontTools、可选 skia-pathops 等 |
 | 可编辑矢量 | 稳定对象 ID、父子变换、路径、真 text、渐变、受限 clip/mask/occlusion、连接与独立实例 |
 | 安全重跑 | B/U/C 比较旧纯生成基线、用户当前图与新候选，保留用户单独改色、移动和文字；冲突拒绝覆盖 |
-| 工程与组合 | 保存重开、局部 SVG/PNG 导出、Bundle 与组合，保留实际采用的规划和测量输入 |
-| 同源 PNG | 由同一 SVG 使用 resvg 渲染；不能将测试通过当成视觉或科学正确性 |
+| 工程与组合 | 保存重开、局部 SVG/PNG 导出、Bundle 与组合，保留实际采用的规划与测量输入 |
+| 同源 PNG | 由同一 SVG 使用 resvg 渲染；测试通过不等于视觉或科学正确 |
 
-本地目录含 15 个 Recipe 族、2 个符号族元数据和 1 个有许可的 Twemoji 柠檬资产。复杂对象结构不匹配时可以直接使用自由程序；没有 mouse/flask/avatar Recipe，不伪造命中。
+复杂对象结构不匹配时直接使用自由程序；没有 mouse/flask/avatar Recipe，不伪造命中。Scene 是当前几何、文字和样式的唯一权威；Plan、程序、参数和测量是输入快照。加载工程、渲染、Bundle、diff/accept 不运行保存源码。
 
-Scene 是当前几何、文字和样式的唯一权威；Plan、程序、参数和测量为输入快照。加载工程、渲染、Bundle、diff/accept 不运行保存源码。`python -I` 是隔离解释器选项，不是安全沙箱。
+## 如何实现
 
-## v0.9 自然语言绘图示例
+1. **宿主负责语义，引擎负责几何。** 看图、拆模块、判断内部结构和画法是宿主的职责；引擎执行明确的 path、text、group、渐变和变换，并保证对象 ID 与父子关系稳定可编辑。
+2. **两类任务共用一个对象图。** 参考复刻和自然语言描述最后都落到 FigurePlan / Scene；参考图额外产生约束包，用多尺度边缘、区域、孔洞和重复候选约束绘制结果，而不是把边缘自动当成语义结论。
+3. **画法可选、可组合。** `filled_shape`、`stroke`、`band`、`layered_fill`、`boolean_cut`、`mask`、`occlusion`、`overlay`、`gradient`、`repeated_instances`、`text`、`program`；复杂对象先画主结构和必要部件，看到实际预览后再细化。
+4. **文字与几何分离。** 所有标签是真实 `<text>`（本仓库示例共 165 / 70 个文本对象），经字体测量后显式换行；缺字或超宽会被检查，不用路径伪装文字。
+5. **预览闭环。** 每轮都读整图和局部 ROI，问题定位到具体对象 ID，再改程序或参数；不以缩略图通过代替检查。示例的质量记录逐条列出发现的问题和剩余限制。
 
-描述：“画一个纳米颗粒靶向肿瘤并通过激光触发释放的机制示意图。”
-
-![v0.9 自然语言机制示意图](examples/v0.9/targeted-release.svg)
-
-[SVG](examples/v0.9/targeted-release.svg) · [PNG](examples/v0.9/targeted-release.png) · [完整宿主绘图程序](scripts/draw_targeted_release_v09.py)
-
-图为宿主新设计的示意：粒子、肿瘤目标、激光和释放采用同一引擎绘制，使用自由片段及两个 arrow Recipe。没有将制备、注射、配体、受体、波长或剂量当成描述中已有条件。宿主实际看图后移动了与壳体碰撞的释放标签和引线。它不认证某一种实际释放化学机制。
-
-## 安装
-
-```bash
-git clone https://github.com/w1-23/scientific-figure.git
-```
-
-```bash
-cd scientific-figure
-```
-
-在 Python >=3.12 的环境中，自动建立 `.venv` 并安装运行、构造与测试依赖：
-
-```bash
-python -I scripts/bootstrap.py --venv .venv --dev
-```
-
-Windows 检查入口：
-
-```bash
-.venv/Scripts/figure-cli.exe doctor --json
-```
-
-Linux 检查入口：
-
-```bash
-.venv/bin/figure-cli doctor --json
-```
-
-已有环境可直接安装：
+## 运行示例
 
 ```bash
 python -m pip install ".[dev,construction]"
 ```
 
-[完整依赖、Windows/Linux/Conda 安装、字体、版本约束与 wheel 用法](docs/dependencies-and-installation.md)
-
-没有 GPU 实现，无需 CUDA 或模型权重。字体使用本机文件；Windows 实测 Arial，Linux 实测 DejaVu Sans，不分发系统字体。WSL 的输出工程建议放在 Linux 原生文件系统，避免 Windows 挂载盘不支持所需原子发布操作。
-
-## 使用 Skill 和脚本
-
-将本仓库中含 `SKILL.md` 的目录交给支持本地 Skill 的宿主，或让已有 Agent 读取 [SKILL.md](SKILL.md)，并在上述安装环境中调用 `figure-cli`。宿主本身提供看图与推理能力；本项目不启动另一个 Agent 服务。
-
-两份按需指南：[参考图重建](references/reference-reconstruction.md) · [自然语言设计](references/text-design.md) · [构造方法选择](references/construction-selection.md)。
-
-安装后，用激活的环境执行完整合成验证链（目标目录需尚不存在）：
-
 ```bash
-python -I scripts/verify_v09_workflow.py --output work/workflow09
+python examples/citrus-quality/draw.py work/citrus --scale 2 --deliver examples/citrus-quality
 ```
 
-重新生成自然语言图：
-
 ```bash
-python -I scripts/draw_targeted_release_v09.py --output work/targeted-release --revision 1
+python examples/genomics-prioritization/draw.py work/genomics --scale 3 --deliver examples/genomics-prioritization
 ```
 
-若使用未激活的环境，将 `python` 替换为 `.venv/Scripts/python.exe` 或 `.venv/bin/python`。Linux 下可将输出改为 `~/figure-work/workflow09`。
+两个脚本只依赖本仓库与 Pillow/FontTools；输出为 `figure.svg`、`preview.png`、`scene.json` 和对象清单。宿主指南见 [SKILL.md](SKILL.md)；参考图与自然语言两条流程见 [参考图重建](references/reference-reconstruction.md) 与 [自然语言设计](references/text-design.md)。
 
-[脚本用途、参数、输入输出及可移植范围](docs/scripts.md) · [CLI 与请求契约](docs/semantic-planning-workflow.md) · [局部测量](docs/local-measurements.md) · [构造 API](docs/construction-tools.md) · [编辑与生成协议](docs/generation-and-effects.md) · [Bundle/组合](docs/bundles-and-composition.md)
-
-
-
-## 目录与许可
+## 目录
 
 ```text
-SKILL.md                    宿主工作指南
-src/scientific_figure/      引擎、CLI、Schema 与固定 Registry
-references/                 两类任务与构造选择指南
-docs/                       API、依赖、脚本与设计文档
-scripts/                    安装、绘图、验证及本地交付维护脚本
-tests/                      工程行为测试
-examples/v0.8/              本次指定展示的历史结果与参考图
-examples/v0.9/              原创描述图 SVG/PNG
-deliverables/               v0.9.0 应用 wheel
-verification/               本地验证事实与原交付摘要
+SKILL.md                          宿主工作指南
+src/scientific_figure/            引擎、CLI、Schema 与固定 Registry
+references/                       两类任务与构造选择指南
+docs/                             API、依赖、脚本与设计文档
+scripts/                          安装、验证与本地交付脚本
+tests/                            工程行为测试
+examples/citrus-quality/          自然语言示例：程序、SVG/PNG、Scene、对象清单、复核
+examples/genomics-prioritization/ 参考图重绘：参考、程序、SVG/PNG、Scene、对象清单、复核
+examples/v0.8/                    历史整图重绘与完整参考图
+examples/plant-nitrogen-assimilation/、examples/pv2f/  参考图复刻
 ```
 
-项目代码尚未指定统一开源许可证，不自动授予 MIT 等额外许可。第三方依赖和 Registry 资产遵守其各自条款，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。参考图单独注明来源与权利；代码许可与图像许可互不替代。此仓库独立于 QAagent。
+## 许可
+
+本仓库代码采用 **PolyForm Noncommercial License 1.0.0**（源码可见、仅限非商业用途），全文见 [LICENSE](LICENSE)。第三方依赖与 Registry 资产遵守各自条款，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
+参考图不属于代码许可范围：其权利归原作者／出版方，仅用于本仓库的对照展示，不随本仓库授予任何复用许可。商业使用请联系各参考图权利人与本仓库作者。本仓库独立于 QAagent。
