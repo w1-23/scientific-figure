@@ -1,17 +1,17 @@
 #还在为科研绘图而烦恼么？推荐使用Scientific Figure Reconstruction & Drawing Skill！！！
-独立的科研矢量重绘与绘制 Skill。支持**参考图语义复刻**和**自然语言生图**：调用它的宿主负责理解对象、内部结构与关系，选择素材、Recipe 或自由绘图程序；引擎负责执行几何、样式、层级、编辑和 SVG/PNG 导出。无需增加第二个看图模型、模型 API 或服务进程。
+独立的科研矢量重绘与绘制 Skill。
+支持**参考图语义复刻**和**自然语言生图**：调用它的宿主负责理解对象、内部结构与关系，选择素材、Recipe 或自由绘图程序；引擎负责执行几何、样式、层级、编辑和 SVG/PNG 导出。无需增加第二个看图模型、模型 API 或服务进程。
 
-推荐用法：利用GPT，seedance等生图模型生成你希望的风格和内容，素材，本skill可以基本排版和重建😊；如果不太满意，可以用截图指出问题局部问题不满的地方，他会自己再次修改，尽可能提交出还原的结果；
-
+推荐用法：利用GPT，seedance等生图模型生成你希望的风格和内容，素材，本skill可以基本排版和重建😊；
+如果不太满意，可以用截图指出问题局部问题不满的地方，他会自己再次修改，尽可能提交出还原的结果；
 你也可以：截图自己喜欢的素材，让他为你生成基本绘图素材😊，后续自己排版；
 你更可以：提供完整的语言描述，产出相应图像，但本用法比较依赖LLM本身的理解力；
+
 skill帮你做的是：
-> 让模型决定怎么画，让引擎负责画好。
+ **让模型决定怎么画，让引擎负责画好。**
 
 ## 植物科学参考图复刻示例
-
 ### 植物细胞氮同化
-
 | 完整参考图 | 整图重绘 |
 |---|---|
 | [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
