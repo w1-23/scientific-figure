@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "preparation-request 0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "task": {
+      "enum": [
+        "single_asset",
+        "asset_bundle"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_-]{0,63}$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "roi": {
+            "$ref": "#/$defs/roi"
+          },
+          "channels": {
+            "$ref": "#/$defs/channels"
+          },
+          "background": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^#[a-fA-F0-9]{6}$"
+              },
+              {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 255
+                }
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "path"
+        ]
+      }
+    },
+    "background": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$"
+        },
+        {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "task",
+    "inputs"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "task": {
+            "const": "single_asset"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "inputs": {
+            "maxItems": 1
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "roi": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": false,
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "integer",
+          "minimum": 1
+        }
+      ]
+    },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "contrast",
+          "detail",
+          "palette"
+        ]
+      }
+    }
+  }
+}

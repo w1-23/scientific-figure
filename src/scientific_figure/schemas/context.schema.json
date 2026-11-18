@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Figure Context 0.1",
+  "type": "object", "additionalProperties": false, "required": ["schema_version", "id"],
+  "properties": {
+    "schema_version": {"const": "0.1"}, "id": {"$ref": "#/$defs/id"},
+    "purpose": {"$ref": "#/$defs/description"},
+    "style_profile": {"$ref": "#/$defs/document_ref"},
+    "text_manifest": {"$ref": "#/$defs/document_ref"},
+    "layout_manifest": {"$ref": "#/$defs/document_ref"},
+    "evidence": {"type": "array", "maxItems": 1000, "items": {"$ref": "#/$defs/evidence_ref"}},
+    "roles": {"type": "array", "maxItems": 1000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "description"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "description": {"$ref": "#/$defs/description"}}
+    }},
+    "representations": {"type": "array", "maxItems": 1000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "description"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "description": {"$ref": "#/$defs/description"},
+        "kind": {"enum": ["shape", "boundary", "symbol", "label", "connector", "group", "simplified"]}
+      }
+    }},
+    "uncertainties": {"type": "array", "maxItems": 1000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "description"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "description": {"$ref": "#/$defs/description"}}
+    }},
+    "preserved_ids": {"$ref": "#/$defs/ids"},
+    "objects": {"type": "array", "maxItems": 3000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["object_id"],
+      "properties": {
+        "object_id": {"$ref": "#/$defs/id"}, "role_id": {"$ref": "#/$defs/id"},
+        "representation_id": {"$ref": "#/$defs/id"}, "preserve": {"type": "boolean"},
+        "uncertainty_ids": {"$ref": "#/$defs/ids"}, "evidence_ids": {"$ref": "#/$defs/ids"}
+      }
+    }},
+    "token_bindings": {"type": "array", "maxItems": 3000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["object_id", "field", "token"],
+      "properties": {
+        "object_id": {"$ref": "#/$defs/id"}, "token": {"$ref": "#/$defs/id"},
+        "field": {"enum": ["fill", "stroke", "stroke_width", "opacity", "fill_opacity", "stroke_opacity", "font_size", "font_family"]}
+      }
+    }}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,99}$"},
+    "hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "description": {"type": "string", "minLength": 1, "maxLength": 10000},
+    "ids": {"type": "array", "maxItems": 3000, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "file_ref": {
+      "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+      "properties": {"path": {"type": "string", "minLength": 1, "maxLength": 4096}, "sha256": {"$ref": "#/$defs/hash"}}
+    },
+    "document_ref": {"oneOf": [
+      {"$ref": "#/$defs/file_ref"},
+      {"type": "object", "additionalProperties": false, "required": ["document", "sha256"],
+       "properties": {"document": {"type": "object"}, "sha256": {"$ref": "#/$defs/hash"}}}
+    ]},
+    "evidence_ref": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["id", "path", "sha256"],
+       "properties": {"id": {"$ref": "#/$defs/id"}, "path": {"type": "string", "minLength": 1, "maxLength": 4096}, "sha256": {"$ref": "#/$defs/hash"}}},
+      {"type": "object", "additionalProperties": false, "required": ["id", "document", "sha256", "manifest", "manifest_sha256", "source_document_sha256"],
+       "properties": {
+         "id": {"$ref": "#/$defs/id"}, "document": {"type": "object"}, "sha256": {"$ref": "#/$defs/hash"},
+         "manifest": {"type": "object"}, "manifest_sha256": {"$ref": "#/$defs/hash"},
+         "source_document_sha256": {"$ref": "#/$defs/hash"}
+       }}
+    ]}
+  }
+}

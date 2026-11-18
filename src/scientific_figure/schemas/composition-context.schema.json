@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Figure Composition Context 0.1",
+  "description": "Inert member intent and exact original JSON bytes, bound to composition provenance. Aggregate values are deterministically rebuilt and crossvalidated by validate_composition_context; they never override Scene geometry or composite review.",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "bundle_sha256", "plan", "members", "instances", "metadata_id_maps", "aggregate", "protected_ids"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "bundle_sha256": {"$ref": "#/$defs/hash"},
+    "plan": {"$ref": "#/$defs/snapshot"},
+    "members": {"type": "object", "minProperties": 1, "maxProperties": 128, "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"$ref": "#/$defs/member"}},
+    "instances": {"type": "object", "minProperties": 1, "maxProperties": 128, "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"$ref": "#/$defs/instance"}},
+    "metadata_id_maps": {"type": "object", "minProperties": 1, "maxProperties": 128, "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"$ref": "#/$defs/metadata_maps"}},
+    "aggregate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["intent", "roles", "representations", "uncertainties", "evidence", "objects", "style_profiles", "tokens", "token_bindings", "text_manifests", "text_entries", "layout_manifests", "layout_entries", "plans", "protected_objects"],
+      "properties": {
+        "intent": {"$ref": "#/$defs/table"}, "roles": {"$ref": "#/$defs/table"},
+        "representations": {"$ref": "#/$defs/table"}, "uncertainties": {"$ref": "#/$defs/table"},
+        "evidence": {"$ref": "#/$defs/table"}, "objects": {"$ref": "#/$defs/table"},
+        "style_profiles": {"$ref": "#/$defs/table"}, "tokens": {"$ref": "#/$defs/table"},
+        "token_bindings": {"$ref": "#/$defs/table"}, "text_manifests": {"$ref": "#/$defs/table"},
+        "text_entries": {"$ref": "#/$defs/table"}, "layout_manifests": {"$ref": "#/$defs/table"},
+        "layout_entries": {"$ref": "#/$defs/table"}, "plans": {"$ref": "#/$defs/table"},
+        "protected_objects": {"$ref": "#/$defs/table"}
+      }
+    },
+    "protected_ids": {"$ref": "#/$defs/ids"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,99}$"},
+    "hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "ids": {"type": "array", "maxItems": 3000, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+    "id_map": {"type": "object", "maxProperties": 3000, "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"$ref": "#/$defs/id"}},
+    "snapshot": {"type": "object", "additionalProperties": false, "required": ["document", "sha256"], "properties": {"document": {"type": "object"}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "raw_snapshot": {"type": "object", "additionalProperties": false, "required": ["document", "text", "sha256"], "properties": {"document": {"type": "object"}, "text": {"type": "string", "maxLength": 20000000}, "sha256": {"$ref": "#/$defs/hash"}}},
+    "member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scene_sha256", "scene_version", "namespace", "provenance", "receipt", "documents"],
+      "properties": {
+        "scene_sha256": {"$ref": "#/$defs/hash"}, "scene_version": {"enum": ["0.1", "0.2", "0.3"]},
+        "namespace": {"type": "object", "additionalProperties": false, "required": ["objects", "resources", "relations"], "properties": {"objects": {"$ref": "#/$defs/ids"}, "resources": {"$ref": "#/$defs/ids"}, "relations": {"$ref": "#/$defs/ids"}}},
+        "provenance": {"$ref": "#/$defs/snapshot"}, "receipt": {"$ref": "#/$defs/raw_snapshot"},
+        "documents": {"type": "object", "maxProperties": 64, "propertyNames": {"pattern": "^[a-z][a-z0-9-]*\\.json$"}, "additionalProperties": {"$ref": "#/$defs/raw_snapshot"}}
+      }
+    },
+    "instance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["asset_id", "wrapper_id", "id_map", "source_viewBox", "asset_background"],
+      "properties": {
+        "asset_id": {"$ref": "#/$defs/id"}, "wrapper_id": {"$ref": "#/$defs/id"},
+        "background_id": {"$ref": "#/$defs/id"},
+        "id_map": {"type": "object", "additionalProperties": false, "required": ["objects", "resources"], "properties": {"objects": {"$ref": "#/$defs/id_map"}, "resources": {"$ref": "#/$defs/id_map"}}},
+        "source_viewBox": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
+        "asset_background": {"enum": ["omit", "preserve"]}
+      }
+    },
+    "metadata_maps": {
+      "type": "object", "additionalProperties": false,
+      "required": ["roles", "representations", "uncertainties", "evidence", "style_profiles", "tokens", "text_manifests", "text_entries", "layout_manifests", "layout_entries", "relations"],
+      "properties": {
+        "roles": {"$ref": "#/$defs/id_map"}, "representations": {"$ref": "#/$defs/id_map"},
+        "uncertainties": {"$ref": "#/$defs/id_map"}, "evidence": {"$ref": "#/$defs/id_map"},
+        "style_profiles": {"$ref": "#/$defs/id_map"}, "tokens": {"$ref": "#/$defs/id_map"},
+        "text_manifests": {"$ref": "#/$defs/id_map"}, "text_entries": {"$ref": "#/$defs/id_map"},
+        "layout_manifests": {"$ref": "#/$defs/id_map"}, "layout_entries": {"$ref": "#/$defs/id_map"},
+        "relations": {"$ref": "#/$defs/id_map"}
+      }
+    },
+    "table": {"type": "object", "maxProperties": 300000, "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {
+      "type": "object", "additionalProperties": false, "required": ["instance_id", "source_id", "value"],
+      "properties": {"instance_id": {"$ref": "#/$defs/id"}, "source_id": {"type": "string", "minLength": 1, "maxLength": 256}, "value": {"type": "object"}}
+    }}
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Figure Text Manifest 0.1",
+  "type": "object", "additionalProperties": false, "required": ["schema_version", "id", "entries"],
+  "properties": {
+    "schema_version": {"const": "0.1"}, "id": {"$ref": "#/$defs/id"},
+    "entries": {"type": "array", "maxItems": 3000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "object_id", "text"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "object_id": {"$ref": "#/$defs/id"},
+        "text": {"type": "string", "maxLength": 10000},
+        "uncertainty_ids": {"$ref": "#/$defs/ids"}, "evidence_ids": {"$ref": "#/$defs/ids"}
+      }
+    }}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,99}$"},
+    "ids": {"type": "array", "uniqueItems": true, "maxItems": 3000, "items": {"$ref": "#/$defs/id"}}
+  }
+}

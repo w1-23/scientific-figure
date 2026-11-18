@@ -1,0 +1,126 @@
+{
+  "status": "passed",
+  "installation": {
+    "module": "E:\\codex_WORKSPACES\\Scientific Figure Reconstruction & Drawing\\.venv-wheel09\\Lib\\site-packages\\scientific_figure\\__init__.py",
+    "prefix": "E:\\codex_WORKSPACES\\Scientific Figure Reconstruction & Drawing\\.venv-wheel09",
+    "version": "0.9.0",
+    "wheel_sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7",
+    "application_files_matched": 74
+  },
+  "events": [
+    {
+      "command": "doctor",
+      "status": "success"
+    },
+    {
+      "command": "registry",
+      "status": "completed"
+    },
+    {
+      "command": "plan",
+      "status": "completed"
+    },
+    {
+      "command": "evidence",
+      "status": "ok"
+    },
+    {
+      "command": "evidence",
+      "status": "ok"
+    },
+    {
+      "command": "evidence",
+      "status": "ok"
+    },
+    {
+      "command": "evidence",
+      "status": "ambiguous"
+    },
+    {
+      "command": "plan",
+      "status": "drafted"
+    },
+    {
+      "command": "plan",
+      "status": "needs_input"
+    },
+    {
+      "command": "plan",
+      "status": "compilable"
+    },
+    {
+      "command": "plan",
+      "status": "success"
+    },
+    {
+      "command": "edit",
+      "status": "success"
+    },
+    {
+      "command": "template",
+      "status": "success"
+    },
+    {
+      "command": "generation",
+      "status": "ready"
+    },
+    {
+      "command": "generation",
+      "status": "success"
+    },
+    {
+      "command": "plan",
+      "status": "needs_review"
+    },
+    {
+      "command": "export",
+      "status": "success"
+    },
+    {
+      "command": "export",
+      "status": "success"
+    },
+    {
+      "command": "bundle",
+      "status": "success"
+    },
+    {
+      "command": "bundle",
+      "status": "valid"
+    },
+    {
+      "command": "compose",
+      "status": "success"
+    },
+    {
+      "command": "bundle",
+      "status": "valid"
+    }
+  ],
+  "measurements": [
+    {
+      "kind": "measurement_result",
+      "status": "ok",
+      "result_sha256": "86f09b7120f4c4df087a15bcb8ef94a59733280a224a8eaaa9f8619351996082"
+    },
+    {
+      "kind": "measurement_result",
+      "status": "ok",
+      "result_sha256": "87da43ed132372d67ec3a331267fd5795f686c8870287de31edc33e19a05199d"
+    },
+    {
+      "kind": "measurement_result",
+      "status": "ok",
+      "result_sha256": "c4e6b86c63441bd371ad3db852a3e9485513aef40abe961adfeda22d251138ea"
+    },
+    {
+      "kind": "measurement_result",
+      "status": "ambiguous",
+      "result_sha256": "de2b0599d9bc5232cf605fe751e1a673ce80b807d9056ecbe29f95f3a26de293"
+    }
+  ],
+  "edit_merge_export_reopen": true,
+  "planning_context_survives_source_move_and_composition": true,
+  "visual_review": "not_executed_by_automated_script",
+  "scientific_review": "not_executed"
+}

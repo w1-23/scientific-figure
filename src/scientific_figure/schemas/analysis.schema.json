@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source visual evidence 0.2",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "source", "source_to_local", "background", "palette", "regions", "parts", "features", "relations", "uncertainties", "configuration"],
+  "properties": {
+    "schema_version": {"const": "0.2"},
+    "source": {"type": "object", "additionalProperties": false, "required": ["sha256", "size", "region"], "properties": {
+      "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+      "size": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 2, "maxItems": 2},
+      "region": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 4, "maxItems": 4}
+    }},
+    "source_to_local": {"type": "array", "items": {"type": "number"}, "minItems": 6, "maxItems": 6},
+    "background": {"type": "string", "pattern": "^#[a-fA-F0-9]{6}$"},
+    "palette": {"type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": {"type": "string", "pattern": "^#[a-fA-F0-9]{6}$"}},
+    "regions": {"type": "array", "items": {"type": "object"}},
+    "parts": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "color"], "properties": {
+      "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,69}$"},
+      "color": {"type": "string", "pattern": "^#[a-fA-F0-9]{6}$"},
+      "role": {"type": "string"}, "required": {"type": "boolean"}
+    }}},
+    "features": {"type": "object"},
+    "internal_structure": {"type": "object", "required": ["method", "evidence", "scientific_identity"], "properties": {"method": {"const": "rgb-contrast-v1"}, "evidence": {"const": "observed_rgb_contrast"}, "scientific_identity": {"const": "unknown"}}},
+    "relations": {"type": "array", "maxItems": 0},
+    "uncertainties": {"type": "array", "items": {"type": "string"}},
+    "configuration": {"type": "object"}
+  }
+}

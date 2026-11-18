@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Figure Editable Composition Plan 0.2",
+  "description": "Adds Scene0.3 containers, declared named ports and dash styles. Same-named member metadata always receives an instance namespace; token aliases/remapping are unsupported and rejected as unknown properties.",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "canvas", "placements"],
+  "properties": {
+    "schema_version": {"const": "0.2"},
+    "canvas": {
+      "type": "object", "additionalProperties": false, "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "number", "exclusiveMinimum": 0, "maximum": 8192},
+        "height": {"type": "number", "exclusiveMinimum": 0, "maximum": 8192},
+        "viewBox": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
+        "background": {"type": "string"}
+      }
+    },
+    "asset_background": {"enum": ["preserve", "omit"]},
+    "placements": {"type": "array", "minItems": 1, "maxItems": 128, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["asset_id", "instance_id", "transform"],
+      "properties": {
+        "asset_id": {"$ref": "#/$defs/id"}, "instance_id": {"$ref": "#/$defs/id"},
+        "parent": {"$ref": "#/$defs/id"}, "transform": {"$ref": "#/$defs/matrix"},
+        "asset_background": {"enum": ["preserve", "omit"]}
+      }
+    }},
+    "containers": {"type": "array", "maxItems": 3000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "kind": {"enum": ["group", "rect", "ellipse", "path", "text"]},
+        "parent": {"$ref": "#/$defs/id"}, "transform": {"$ref": "#/$defs/matrix"},
+        "geometry": {"type": "object"}, "style": {"type": "object"},
+        "visible": {"type": "boolean"}, "semantic": {"type": "object"},
+        "anchors": {
+          "type": "object", "maxProperties": 32,
+          "propertyNames": {"pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,63}$"},
+          "additionalProperties": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}}
+        }
+      }
+    }},
+    "connections": {"type": "array", "maxItems": 3000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "from", "to"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "from": {"$ref": "#/$defs/endpoint"},
+        "to": {"$ref": "#/$defs/endpoint"}, "style": {"type": "object"},
+        "parent": {"$ref": "#/$defs/id"}
+      }
+    }},
+    "order": {"type": "array", "maxItems": 3000, "items": {
+      "type": "object", "additionalProperties": false, "required": ["parent", "order"],
+      "properties": {
+        "parent": {"oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "order": {"type": "array", "uniqueItems": true, "maxItems": 3000, "items": {"$ref": "#/$defs/id"}}
+      }
+    }}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,99}$"},
+    "matrix": {"type": "array", "minItems": 6, "maxItems": 6, "items": {"type": "number"}},
+    "endpoint": {
+      "type": "object", "additionalProperties": false, "required": ["instance_id", "object_id", "anchor"],
+      "properties": {
+        "instance_id": {"$ref": "#/$defs/id"}, "object_id": {"$ref": "#/$defs/id"},
+        "anchor": {"oneOf": [
+          {"enum": ["left", "right", "top", "bottom", "center"]},
+          {"type": "string", "pattern": "^port:[A-Za-z_][A-Za-z0-9_.-]{0,63}$"}
+        ]}
+      }
+    }
+  }
+}

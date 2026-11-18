@@ -1,0 +1,77 @@
+{
+  "schema_version": "0.1",
+  "include_builtin_recipes": true,
+  "entries": [
+    {
+      "id": "twemoji.lemon",
+      "kind": "external_asset",
+      "version": "14.0.2",
+      "title": "Twemoji lemon U+1F34B",
+      "description": "Fixed Twemoji lemon vector, with a 144 by 144 viewport and the original 0 0 36 36 viewBox. Four editable filled paths; no raster replacement.",
+      "semantic_scope": ["Decorative lemon or fruit symbol", "Explicitly selected Twemoji artwork"],
+      "limitations": ["An emoji symbol, not botanical anatomy or a scientific cutaway", "Not a brand or standard scientific icon", "The original SVG SHA is a recorded upstream identity; the distributed viewport SVG has its own verified SHA"],
+      "source": {
+        "url": "https://github.com/twitter/twemoji/blob/v14.0.2/assets/svg/1f34b.svg",
+        "ref": "v14.0.2",
+        "author": "Twitter, Inc. and contributors",
+        "original_sha256": "d61acad4354635834f30e08921b03c2412f5bf0669846f8a93c7ac085b0315da"
+      },
+      "license": {
+        "identifier": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "text_path": "licenses/CC-BY-4.0.txt",
+        "text_sha256": "8ae9438818c26e4873b91d8c6ad620526c011e27e125677f13031eda903f007c",
+        "notice": "Twemoji graphics are licensed under Creative Commons Attribution 4.0 International. Retain attribution, source and license reference, indicate modifications, and retain the license disclaimer of warranties. No endorsement is implied.",
+        "attribution": "Twemoji lemon U+1F34B by Twitter, Inc. and contributors, v14.0.2. Source: https://github.com/twitter/twemoji/blob/v14.0.2/assets/svg/1f34b.svg . Licensed CC BY 4.0: https://creativecommons.org/licenses/by/4.0/ . Modification: explicit 144 by 144 viewport; viewBox remains 0 0 36 36; path data and colors unchanged."
+      },
+      "distribution": {
+        "scope": "redistributable_with_attribution",
+        "conditions": ["Keep creator, source URL, CC BY 4.0 license text or link, and disclaimer notices", "Indicate the viewport modification and any later modifications", "Do not imply endorsement or impose incompatible downstream restrictions"]
+      },
+      "modifications": ["Set explicit viewport width=144 and height=144; preserve viewBox=0 0 36 36", "Preserve all four original path geometries and source colors"],
+      "protected": {
+        "colors": ["#5C913B", "#77B255", "#FFCC4D"],
+        "geometry": true,
+        "meaning": ["Preserve source style by default; explicit scene edits remain possible and must be recorded by the host"]
+      },
+      "capabilities": {"minimum_scene_version": "0.2", "importer": "strict_svg"},
+      "asset": {
+        "path": "assets/twemoji-lemon-14.0.2.svg",
+        "sha256": "7cf1a9607d3532651fe5355f34c3340097ec5aa301f23a1519caba0f0abf348b",
+        "media_type": "image/svg+xml"
+      }
+    },
+    {
+      "id": "family.fruit",
+      "kind": "symbol_family",
+      "version": "1.0.0",
+      "title": "Fruit symbols",
+      "description": "Selection metadata for schematic fruit representations. This family is neither a concrete vector file nor an executable recipe.",
+      "semantic_scope": ["Explicit schematic fruit", "Host chooses cutaway and seed symbolism"],
+      "limitations": ["Family membership does not confer an external asset license", "Do not infer internal anatomy or identify a species"],
+      "source": {"url": null, "ref": null, "author": "Scientific Figure project contributors", "original_sha256": null},
+      "license": {"identifier": "project_license_unset", "url": null, "text_path": null, "text_sha256": null, "notice": "Original project selection metadata. Public distribution license is not set.", "attribution": "Scientific Figure project contributors; original selection metadata."},
+      "distribution": {"scope": "project_license_unset", "conditions": ["No project public distribution license has been selected"]},
+      "modifications": [],
+      "protected": {"colors": [], "geometry": false, "meaning": ["Symbolic internal features require explicit caller input"]},
+      "capabilities": {"minimum_scene_version": "0.1", "importer": "none"},
+      "related_recipes": ["fruit"]
+    },
+    {
+      "id": "family.cell_symbol",
+      "kind": "symbol_family",
+      "version": "1.0.0",
+      "title": "Cell and microbe symbols",
+      "description": "Selection metadata for schematic cell or microbe construction; not a licensed external image or a scientific classifier.",
+      "semantic_scope": ["Schematic cell membrane and optional nucleus", "Explicit microbial appendage symbols"],
+      "limitations": ["No automatic organism identity or unknown organelles", "Related recipes have their own fixed contracts"],
+      "source": {"url": null, "ref": null, "author": "Scientific Figure project contributors", "original_sha256": null},
+      "license": {"identifier": "project_license_unset", "url": null, "text_path": null, "text_sha256": null, "notice": "Original project selection metadata. Public distribution license is not set.", "attribution": "Scientific Figure project contributors; original selection metadata."},
+      "distribution": {"scope": "project_license_unset", "conditions": ["No project public distribution license has been selected"]},
+      "modifications": [],
+      "protected": {"colors": [], "geometry": false, "meaning": ["Scientific identity and unknown internal structure remain the host's responsibility"]},
+      "capabilities": {"minimum_scene_version": "0.1", "importer": "none"},
+      "related_recipes": ["cell_symbol", "simple_microbe"]
+    }
+  ]
+}

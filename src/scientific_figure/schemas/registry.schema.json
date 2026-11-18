@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Local Scientific Figure Registry 0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "entries"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "include_builtin_recipes": {"type": "boolean"},
+    "entries": {"type": "array", "maxItems": 64, "items": {"$ref": "#/$defs/entry"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,99}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$", "maxLength": 40},
+    "strings": {"type": "array", "maxItems": 32, "items": {"type": "string", "maxLength": 1000}},
+    "path": {"type": "string", "minLength": 1, "maxLength": 240, "pattern": "^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)*$"},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["url", "ref", "author", "original_sha256"],
+      "properties": {
+        "url": {"type": ["string", "null"], "maxLength": 2048, "pattern": "^https?://"},
+        "ref": {"type": ["string", "null"], "maxLength": 200},
+        "author": {"type": "string", "minLength": 1, "maxLength": 300},
+        "original_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}
+      }
+    },
+    "license": {
+      "type": "object", "additionalProperties": false,
+      "required": ["identifier", "url", "text_path", "text_sha256", "notice", "attribution"],
+      "properties": {
+        "identifier": {"type": "string", "minLength": 1, "maxLength": 100},
+        "url": {"type": ["string", "null"], "maxLength": 2048, "pattern": "^https?://"},
+        "text_path": {"oneOf": [{"$ref": "#/$defs/path"}, {"type": "null"}]},
+        "text_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "notice": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "attribution": {"type": "string", "minLength": 1, "maxLength": 4000}
+      },
+      "oneOf": [
+        {"properties": {"text_path": {"type": "null"}, "text_sha256": {"type": "null"}}},
+        {"properties": {"text_path": {"$ref": "#/$defs/path"}, "text_sha256": {"$ref": "#/$defs/sha256"}}}
+      ]
+    },
+    "distribution": {
+      "type": "object", "additionalProperties": false, "required": ["scope", "conditions"],
+      "properties": {
+        "scope": {"enum": ["local_only", "redistributable_with_attribution", "project_license_unset"]},
+        "conditions": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "protected": {
+      "type": "object", "additionalProperties": false, "required": ["colors", "geometry", "meaning"],
+      "properties": {
+        "colors": {"type": "array", "maxItems": 32, "uniqueItems": true, "items": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}},
+        "geometry": {"type": "boolean"},
+        "meaning": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "capabilities": {
+      "type": "object", "additionalProperties": false,
+      "required": ["minimum_scene_version", "importer"],
+      "properties": {
+        "minimum_scene_version": {"enum": ["0.1", "0.2", "0.3"]},
+        "importer": {"enum": ["strict_svg", "none"]}
+      }
+    },
+    "asset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "media_type"],
+      "properties": {
+        "path": {"$ref": "#/$defs/path"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "media_type": {"const": "image/svg+xml"}
+      }
+    },
+    "entry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "version", "title", "description", "semantic_scope", "limitations", "source", "license", "distribution", "modifications", "protected", "capabilities"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["recipe", "symbol_family", "external_asset"]},
+        "version": {"$ref": "#/$defs/version"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 200},
+        "description": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "semantic_scope": {"$ref": "#/$defs/strings"},
+        "limitations": {"$ref": "#/$defs/strings"},
+        "source": {"$ref": "#/$defs/source"},
+        "license": {"$ref": "#/$defs/license"},
+        "distribution": {"$ref": "#/$defs/distribution"},
+        "modifications": {"$ref": "#/$defs/strings"},
+        "protected": {"$ref": "#/$defs/protected"},
+        "capabilities": {"$ref": "#/$defs/capabilities"},
+        "asset": {"$ref": "#/$defs/asset"},
+        "recipe_id": {"$ref": "#/$defs/id"},
+        "related_recipes": {"type": "array", "maxItems": 16, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "external_asset"}}},
+         "then": {"required": ["asset"], "properties": {"recipe_id": false, "related_recipes": false, "source": {"properties": {"url": {"type": "string"}, "ref": {"type": "string", "minLength": 1}, "original_sha256": {"$ref": "#/$defs/sha256"}}}, "capabilities": {"properties": {"importer": {"const": "strict_svg"}}}}}},
+        {"if": {"properties": {"kind": {"const": "recipe"}}},
+         "then": {"required": ["recipe_id"], "properties": {"asset": false, "related_recipes": false, "capabilities": {"properties": {"importer": {"const": "none"}}}}}},
+        {"if": {"properties": {"kind": {"const": "symbol_family"}}},
+         "then": {"required": ["related_recipes"], "properties": {"asset": false, "recipe_id": false, "capabilities": {"properties": {"importer": {"const": "none"}}}}}}
+      ]
+    }
+  }
+}

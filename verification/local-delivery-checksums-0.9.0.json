@@ -1,0 +1,37 @@
+{
+  "algorithm": "SHA-256",
+  "signature": false,
+  "files": [
+    {
+      "file": "scientific-figure-skill-0.9.0.zip",
+      "bytes": 522362,
+      "sha256": "bc170ad923b86ad6c9d051f41a92d10c0ef0ba526b00c1996dd5acbd4e922675",
+      "files": 153,
+      "crc_and_member_sha256": "passed"
+    },
+    {
+      "file": "scientific_figure_skill-0.9.0-py3-none-any.whl",
+      "bytes": 219432,
+      "sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7"
+    },
+    {
+      "file": "scientific-figure-examples-0.9.0.zip",
+      "bytes": 1056413,
+      "sha256": "a35820e30a1797722503ffce94382664f6fc1d5d7eabf995989c53b5c3289e9b",
+      "files": 199,
+      "crc_and_member_sha256": "passed"
+    },
+    {
+      "file": "scientific-figure-private-reference-0.9.0.zip",
+      "bytes": 22666787,
+      "sha256": "98aac91d5357fe82900d5ff0d70beea5410ecc6d67e9b6cd50fa480b0758e217",
+      "files": 133,
+      "crc_and_member_sha256": "passed"
+    },
+    {
+      "file": "verification-0.9.0.json",
+      "bytes": 12704,
+      "sha256": "000c4a3e2ecc20a74d28992ddb000adecbd54d66680ea4d4cfe46ad558c2b8b5"
+    }
+  ]
+}

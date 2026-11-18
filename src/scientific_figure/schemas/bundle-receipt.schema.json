@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Figure Bundle Receipt 0.1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "kind", "status", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "scientific-figure-asset-bundle"},
+    "status": {"const": "success"},
+    "artifacts": {
+      "type": "object", "minProperties": 2, "maxProperties": 4096,
+      "additionalProperties": {
+        "type": "object", "additionalProperties": false, "required": ["sha256", "bytes"],
+        "properties": {
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "bytes": {"type": "integer", "minimum": 0, "maximum": 67108864}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,417 @@
+{
+  "version": "0.9.0",
+  "date": "2026-11-18",
+  "status": "completed_with_declared_schematic_limits",
+  "regression": {
+    "passed": 969,
+    "skipped": 5,
+    "subtests_passed": 10,
+    "seconds": 64.55,
+    "skip_reason": "Windows symlink privileges"
+  },
+  "platforms": {
+    "status": "passed",
+    "wheel_sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7",
+    "windows": {
+      "module": "E:\\codex_WORKSPACES\\Scientific Figure Reconstruction & Drawing\\.venv-wheel09\\Lib\\site-packages\\scientific_figure\\__init__.py",
+      "prefix": "E:\\codex_WORKSPACES\\Scientific Figure Reconstruction & Drawing\\.venv-wheel09",
+      "version": "0.9.0",
+      "wheel_sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7",
+      "application_files_matched": 74
+    },
+    "linux": {
+      "module": "/mnt/e/codex_WORKSPACES/Scientific Figure Reconstruction & Drawing/.venv-linux07/lib/python3.12/site-packages/scientific_figure/__init__.py",
+      "prefix": "/mnt/e/codex_WORKSPACES/Scientific Figure Reconstruction & Drawing/.venv-linux07",
+      "version": "0.9.0",
+      "wheel_sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7",
+      "application_files_matched": 74
+    },
+    "dependency_installation": "Existing dependencies reused; application installed from local wheel with --no-index --no-deps.",
+    "linux_filesystem": "Workflow executed under native /tmp, then evidence copied to workspace; no DrvFS atomic-rename claim.",
+    "cross_platform_font_pixel_identity": "not_asserted",
+    "network_used": false
+  },
+  "public_workflows": {
+    "windows": {
+      "status": "passed",
+      "installation": {
+        "module": "E:\\codex_WORKSPACES\\Scientific Figure Reconstruction & Drawing\\.venv-wheel09\\Lib\\site-packages\\scientific_figure\\__init__.py",
+        "prefix": "E:\\codex_WORKSPACES\\Scientific Figure Reconstruction & Drawing\\.venv-wheel09",
+        "version": "0.9.0",
+        "wheel_sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7",
+        "application_files_matched": 74
+      },
+      "events": [
+        {
+          "command": "doctor",
+          "status": "success"
+        },
+        {
+          "command": "registry",
+          "status": "completed"
+        },
+        {
+          "command": "plan",
+          "status": "completed"
+        },
+        {
+          "command": "evidence",
+          "status": "ok"
+        },
+        {
+          "command": "evidence",
+          "status": "ok"
+        },
+        {
+          "command": "evidence",
+          "status": "ok"
+        },
+        {
+          "command": "evidence",
+          "status": "ambiguous"
+        },
+        {
+          "command": "plan",
+          "status": "drafted"
+        },
+        {
+          "command": "plan",
+          "status": "needs_input"
+        },
+        {
+          "command": "plan",
+          "status": "compilable"
+        },
+        {
+          "command": "plan",
+          "status": "success"
+        },
+        {
+          "command": "edit",
+          "status": "success"
+        },
+        {
+          "command": "template",
+          "status": "success"
+        },
+        {
+          "command": "generation",
+          "status": "ready"
+        },
+        {
+          "command": "generation",
+          "status": "success"
+        },
+        {
+          "command": "plan",
+          "status": "needs_review"
+        },
+        {
+          "command": "export",
+          "status": "success"
+        },
+        {
+          "command": "export",
+          "status": "success"
+        },
+        {
+          "command": "bundle",
+          "status": "success"
+        },
+        {
+          "command": "bundle",
+          "status": "valid"
+        },
+        {
+          "command": "compose",
+          "status": "success"
+        },
+        {
+          "command": "bundle",
+          "status": "valid"
+        }
+      ],
+      "measurements": [
+        {
+          "kind": "measurement_result",
+          "status": "ok",
+          "result_sha256": "5db1a2566f077abafecdf2a38ffd4b845b792370cd63f383ba0a6140bded363f"
+        },
+        {
+          "kind": "measurement_result",
+          "status": "ok",
+          "result_sha256": "7e98ffbe8d802f59069d29754ff38b01651f5dcc008385f06ea3e1753c55c58f"
+        },
+        {
+          "kind": "measurement_result",
+          "status": "ok",
+          "result_sha256": "fee72b060d31fd7c35a680f5d1093eb741d5232df4657683abe57c09a6793694"
+        },
+        {
+          "kind": "measurement_result",
+          "status": "ambiguous",
+          "result_sha256": "8cc95ba2ccb98211b4d2fbae9bde5c2d56b64b034b7cce92dbb76459340f8c23"
+        }
+      ],
+      "edit_merge_export_reopen": true,
+      "planning_context_survives_source_move_and_composition": true,
+      "visual_review": "not_executed_by_automated_script",
+      "scientific_review": "not_executed"
+    },
+    "linux": {
+      "status": "passed",
+      "installation": {
+        "module": "/mnt/e/codex_WORKSPACES/Scientific Figure Reconstruction & Drawing/.venv-linux07/lib/python3.12/site-packages/scientific_figure/__init__.py",
+        "prefix": "/mnt/e/codex_WORKSPACES/Scientific Figure Reconstruction & Drawing/.venv-linux07",
+        "version": "0.9.0",
+        "wheel_sha256": "1b453b89c19765485fac826af09f8699c62666940475ed3edc010b06190a0fe7",
+        "application_files_matched": 74
+      },
+      "events": [
+        {
+          "command": "doctor",
+          "status": "success"
+        },
+        {
+          "command": "registry",
+          "status": "completed"
+        },
+        {
+          "command": "plan",
+          "status": "completed"
+        },
+        {
+          "command": "evidence",
+          "status": "ok"
+        },
+        {
+          "command": "evidence",
+          "status": "ok"
+        },
+        {
+          "command": "evidence",
+          "status": "ok"
+        },
+        {
+          "command": "evidence",
+          "status": "ambiguous"
+        },
+        {
+          "command": "plan",
+          "status": "drafted"
+        },
+        {
+          "command": "plan",
+          "status": "needs_input"
+        },
+        {
+          "command": "plan",
+          "status": "compilable"
+        },
+        {
+          "command": "plan",
+          "status": "success"
+        },
+        {
+          "command": "edit",
+          "status": "success"
+        },
+        {
+          "command": "template",
+          "status": "success"
+        },
+        {
+          "command": "generation",
+          "status": "ready"
+        },
+        {
+          "command": "generation",
+          "status": "success"
+        },
+        {
+          "command": "plan",
+          "status": "needs_review"
+        },
+        {
+          "command": "export",
+          "status": "success"
+        },
+        {
+          "command": "export",
+          "status": "success"
+        },
+        {
+          "command": "bundle",
+          "status": "success"
+        },
+        {
+          "command": "bundle",
+          "status": "valid"
+        },
+        {
+          "command": "compose",
+          "status": "success"
+        },
+        {
+          "command": "bundle",
+          "status": "valid"
+        }
+      ],
+      "measurements": [
+        {
+          "kind": "measurement_result",
+          "status": "ok",
+          "result_sha256": "6f8095f6f2392fe0e669591fbff0430392df652cfd4434dabe245d16003d7d4a"
+        },
+        {
+          "kind": "measurement_result",
+          "status": "ok",
+          "result_sha256": "641c1cb324f5e09ba6f85e02d762e940ed569ece1217c8ca68b90d53cf11017a"
+        },
+        {
+          "kind": "measurement_result",
+          "status": "ok",
+          "result_sha256": "3febaa9346c1b894935f05a962fac588620404b0109b3bf43b1184900d7fbce6"
+        },
+        {
+          "kind": "measurement_result",
+          "status": "ambiguous",
+          "result_sha256": "98557ecaf58bf90c0f4595707e0b1757d322647f6f2c55c313e7cec1656f31cf"
+        }
+      ],
+      "edit_merge_export_reopen": true,
+      "planning_context_survives_source_move_and_composition": true,
+      "visual_review": "not_executed_by_automated_script",
+      "scientific_review": "not_executed"
+    }
+  },
+  "artwork": {
+    "status": "passed_for_declared_editable_schematic_scope",
+    "proofs": {
+      "reference": {
+        "changed_exactly": [
+          "n_39d02b42938b2b75d027ebeb_o_baa3ec54c4af54851d89779d",
+          "n_af8f827a0c20db87fdd3be7f_o_66f34c4993d046511b0c1b76",
+          "n_295df243c6a33994c30b6e16_o_f99b73d5295f0f07758a88c5"
+        ],
+        "current_scene_preserved": true,
+        "edited_roundtrip": true,
+        "shared_resources_unchanged": true,
+        "exports": {
+          "carrier": {
+            "objects": 27,
+            "resources": 4,
+            "text_objects": 0,
+            "vector_only": true,
+            "same_svg_png_pixels": true
+          },
+          "cell": {
+            "objects": 84,
+            "resources": 6,
+            "text_objects": 3,
+            "vector_only": true,
+            "same_svg_png_pixels": true
+          }
+        },
+        "main": {
+          "objects": 602,
+          "resources": 38,
+          "text_objects": 22,
+          "vector_only": true,
+          "same_svg_png_pixels": true
+        },
+        "edited": {
+          "objects": 602,
+          "resources": 38,
+          "text_objects": 22,
+          "vector_only": true,
+          "same_svg_png_pixels": true
+        }
+      },
+      "text": {
+        "changed_exactly": [
+          "n_1d1d155e75844591220d5531_o_926de571f03579d0c63394fe",
+          "n_34a04005bcaf206eec990bd9_o_0525f1cf8ec0a24ff93d59fe",
+          "n_a4d451ec23463726f72c43d6_o_9fcbbb6f74b802747e850c32"
+        ],
+        "current_scene_preserved": true,
+        "edited_roundtrip": true,
+        "shared_resources_unchanged": true,
+        "exports": {
+          "particle": {
+            "objects": 14,
+            "resources": 1,
+            "text_objects": 0,
+            "vector_only": true,
+            "same_svg_png_pixels": true
+          },
+          "release": {
+            "objects": 27,
+            "resources": 1,
+            "text_objects": 4,
+            "vector_only": true,
+            "same_svg_png_pixels": true
+          }
+        },
+        "main": {
+          "objects": 122,
+          "resources": 3,
+          "text_objects": 17,
+          "vector_only": true,
+          "same_svg_png_pixels": true
+        },
+        "edited": {
+          "objects": 122,
+          "resources": 3,
+          "text_objects": 17,
+          "vector_only": true,
+          "same_svg_png_pixels": true
+        }
+      }
+    },
+    "all_original_text_preserved": true,
+    "reference_sources_removed_from_original_path": true,
+    "planning_context_bundle_composition_portable": true,
+    "correction_rounds": {
+      "reference": 1,
+      "text": 1
+    },
+    "scientific_review": "not_executed",
+    "host_visual_previews_read": true
+  },
+  "source_wheel_application_files_identical": 74,
+  "console_entry_points": {
+    "windows": "doctor 0.9.0 passed",
+    "linux": "doctor 0.9.0 passed"
+  },
+  "preserved_failure": "First WSL shell launcher failed before Linux tests. Native Python launcher passed; original logs retained locally.",
+  "scientific_review": "not_executed",
+  "external_artwork_used_in_two_drawings": [],
+  "private_public_separate": true,
+  "private_reference_image_hash_scan": "passed",
+  "system_fonts_environments_weights_distributed": false,
+  "git_publish_deploy": false,
+  "archive_checks": [
+    {
+      "file": "scientific-figure-skill-0.9.0.zip",
+      "bytes": 522362,
+      "sha256": "bc170ad923b86ad6c9d051f41a92d10c0ef0ba526b00c1996dd5acbd4e922675",
+      "files": 153,
+      "crc_and_member_sha256": "passed"
+    },
+    {
+      "file": "scientific-figure-examples-0.9.0.zip",
+      "bytes": 1056413,
+      "sha256": "a35820e30a1797722503ffce94382664f6fc1d5d7eabf995989c53b5c3289e9b",
+      "files": 199,
+      "crc_and_member_sha256": "passed"
+    },
+    {
+      "file": "scientific-figure-private-reference-0.9.0.zip",
+      "bytes": 22666787,
+      "sha256": "98aac91d5357fe82900d5ff0d70beea5410ecc6d67e9b6cd50fa480b0758e217",
+      "files": 133,
+      "crc_and_member_sha256": "passed"
+    }
+  ]
+}

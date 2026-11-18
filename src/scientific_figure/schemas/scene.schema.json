@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scientific Figure Scene 0.1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "revision", "canvas", "objects"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "revision": {"type": "integer", "minimum": 0},
+    "canvas": {
+      "type": "object", "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": {"type": "number", "exclusiveMinimum": 0, "maximum": 8192},
+        "height": {"type": "number", "exclusiveMinimum": 0, "maximum": 8192},
+        "background": {"type": "string"},
+        "viewBox": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4}
+      }
+    },
+    "objects": {"type": "array", "maxItems": 3000, "items": {"$ref": "#/$defs/object"}},
+    "resources": {"type": "array", "items": {"type": "object"}},
+    "provenance": {"type": "object"}
+  },
+  "$defs": {
+    "object": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$", "maxLength": 100},
+        "kind": {"enum": ["group", "rect", "ellipse", "path", "text", "connector"]},
+        "parent": {"type": ["string", "null"]},
+        "geometry": {"type": "object"},
+        "transform": {"type": "array", "items": {"type": "number"}, "minItems": 6, "maxItems": 6},
+        "style": {"type": "object"},
+        "visible": {"type": "boolean"},
+        "semantic": {"type": "object"}
+      }
+    }
+  }
+}

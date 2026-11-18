@@ -1,0 +1,4 @@
+name: ScientificFigure_skill
+dependencies:
+  - python=3.12
+  - pip

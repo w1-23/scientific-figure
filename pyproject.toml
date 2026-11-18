@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scientific-figure-skill"
+version = "0.9.0"
+description = "Agent-assisted scientific figure reconstruction into editable SVG"
+requires-python = ">=3.12"
+dependencies = [
+  "Pillow>=11,<13", "numpy>=2,<3", "opencv-python-headless>=4.10,<5",
+  "fonttools>=4.61,<5", "jsonschema>=4.23,<5", "resvg-py>=0.2,<1"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+construction = ["skia-pathops==0.9.2"]
+
+[project.scripts]
+figure-cli = "scientific_figure.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+scientific_figure = ["schemas/*.json", "data/registry/*.json", "data/registry/assets/*.svg", "data/registry/licenses/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

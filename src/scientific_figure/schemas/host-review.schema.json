@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Host-authored visual and scientific assessment 0.3",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "binding", "reviewer", "visual", "scientific"],
+  "properties": {
+    "schema_version": {"const": "0.3"},
+    "binding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scene_sha256", "revision", "source_sha256", "reference_sha256", "preview_sha256", "render_config_sha256"],
+      "properties": {
+        "scene_sha256": {"$ref": "#/$defs/sha"},
+        "revision": {"type": "integer", "minimum": 0},
+        "source_sha256": {"anyOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]},
+        "reference_sha256": {"anyOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]},
+        "preview_sha256": {"$ref": "#/$defs/sha"},
+        "render_config_sha256": {"$ref": "#/$defs/sha"}
+      }
+    },
+    "reviewer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "role"],
+      "properties": {"name": {"type": "string", "minLength": 1, "maxLength": 200}, "role": {"enum": ["host", "user", "domain_expert"]}, "model": {"type": "string", "maxLength": 200}}
+    },
+    "visual": {"$ref": "#/$defs/assessment"},
+    "scientific": {"$ref": "#/$defs/assessment"}
+  },
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "assessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "findings"],
+      "properties": {
+        "status": {"enum": ["passed", "failed", "uncertain", "not_executed"]},
+        "findings": {
+          "type": "array", "maxItems": 500,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["object_id", "issue", "evidence", "action", "remaining_uncertainty"],
+            "properties": {
+              "object_id": {"type": "string", "minLength": 1, "maxLength": 100},
+              "issue": {"type": "string", "maxLength": 4000},
+              "evidence": {"type": "string", "maxLength": 4000},
+              "action": {"type": "string", "maxLength": 4000},
+              "remaining_uncertainty": {"type": "string", "maxLength": 4000}
+            }
+          }
+        }
+      }
+    }
+  }
+}

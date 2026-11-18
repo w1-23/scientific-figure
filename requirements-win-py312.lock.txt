@@ -1,0 +1,20 @@
+# Tested Windows CPython 3.12 environment; versions only, not a hash/platform-independent lock.
+attrs==26.1.0
+colorama==0.4.6
+fonttools==4.68.0
+iniconfig==2.3.1
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+numpy==2.5.5
+opencv-python-headless==4.14.0.94
+packaging==26.3
+pillow==12.3.0
+pluggy==1.7.0
+Pygments==2.21.0
+pytest==9.2.0
+referencing==0.37.0
+resvg_py==0.5.0
+rpds-py==2026.9.1
+typing_extensions==4.16.0
+# Optional construction backend; old Scene0.1 workflows do not require it.
+skia-pathops==0.9.2
