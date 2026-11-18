@@ -1,0 +1,172 @@
+{
+  "cases": [
+    {
+      "case": "materials-layered",
+      "reference": "reference-materials-layered.png",
+      "edge_classes": [
+        "fine_stroke",
+        "strong_structural"
+      ],
+      "variants": {
+        "good": {
+          "overall": "passed",
+          "recall": 1.0,
+          "precision": 1.0,
+          "bindings": {
+            "substrate": "passed",
+            "layers": "passed"
+          },
+          "summary": {
+            "passed": 2,
+            "needs_review": 0,
+            "failed": 0
+          },
+          "expect": "passed",
+          "ok": true
+        },
+        "degraded": {
+          "overall": "failed",
+          "recall": 1.0,
+          "precision": 1.0,
+          "bindings": {
+            "substrate": "passed",
+            "layers": "failed"
+          },
+          "summary": {
+            "passed": 1,
+            "needs_review": 0,
+            "failed": 1
+          },
+          "expect": "failed",
+          "ok": true
+        }
+      },
+      "ok": true
+    },
+    {
+      "case": "chemistry-scheme",
+      "reference": "reference-chemistry-scheme.png",
+      "edge_classes": [
+        "fine_stroke",
+        "internal_boundary",
+        "strong_structural",
+        "uncertain"
+      ],
+      "variants": {
+        "good": {
+          "overall": "passed",
+          "recall": 1.0,
+          "precision": 1.0,
+          "bindings": {
+            "ring-1": "passed",
+            "ring-3": "passed",
+            "bonds": "passed"
+          },
+          "summary": {
+            "passed": 3,
+            "needs_review": 0,
+            "failed": 0
+          },
+          "expect": "passed",
+          "ok": true
+        },
+        "degraded": {
+          "overall": "failed",
+          "recall": 0.6683,
+          "precision": 1.0,
+          "bindings": {
+            "ring-1": "passed",
+            "ring-3": "failed",
+            "bonds": "failed"
+          },
+          "summary": {
+            "passed": 1,
+            "needs_review": 0,
+            "failed": 2
+          },
+          "expect": "failed",
+          "ok": true
+        }
+      },
+      "ok": true
+    },
+    {
+      "case": "physics-optics",
+      "reference": "reference-physics-optics.png",
+      "edge_classes": [
+        "fine_stroke",
+        "gradient_transition",
+        "strong_structural",
+        "uncertain"
+      ],
+      "variants": {
+        "good": {
+          "overall": "passed",
+          "recall": 0.9792,
+          "precision": 0.9913,
+          "bindings": {
+            "laser": "passed",
+            "lens": "passed",
+            "converging": "passed",
+            "screen": "passed"
+          },
+          "summary": {
+            "passed": 4,
+            "needs_review": 0,
+            "failed": 0
+          },
+          "expect": "passed",
+          "ok": true
+        },
+        "degraded": {
+          "overall": "failed",
+          "recall": 0.9075,
+          "precision": 0.9208,
+          "bindings": {
+            "laser": "passed",
+            "lens": "passed",
+            "converging": "failed",
+            "screen": "passed"
+          },
+          "summary": {
+            "passed": 3,
+            "needs_review": 0,
+            "failed": 1
+          },
+          "expect": "failed",
+          "ok": true
+        }
+      },
+      "ok": true
+    },
+    {
+      "case": "soft-illustration",
+      "reference": "reference-soft-illustration.png",
+      "edge_classes": [
+        "antialias",
+        "fine_stroke",
+        "gradient_transition"
+      ],
+      "variants": {
+        "good": {
+          "overall": "needs_review",
+          "recall": null,
+          "precision": 0.0,
+          "bindings": {
+            "blob": "needs_review"
+          },
+          "summary": {
+            "passed": 0,
+            "needs_review": 1,
+            "failed": 0
+          },
+          "expect": "needs_review",
+          "ok": true
+        }
+      },
+      "ok": true
+    }
+  ],
+  "render": "svg via engine, PNG from the same source",
+  "scope": "detection wiring; not a drawing-quality benchmark"
+}

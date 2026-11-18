@@ -94,7 +94,11 @@ python examples/citrus-quality/draw.py work/citrus --scale 2 --deliver examples/
 python examples/genomics-prioritization/draw.py work/genomics --scale 3 --deliver examples/genomics-prioritization
 ```
 
-两个脚本只依赖本仓库与 Pillow/FontTools；输出为 `figure.svg`、`preview.png`、`scene.json` 和对象清单。宿主指南见 [SKILL.md](SKILL.md)；参考图与自然语言两条流程见 [参考图重建](references/reference-reconstruction.md) 与 [自然语言设计](references/text-design.md)。
+```bash
+python examples/structural-regression/run.py work/regression --deliver examples/structural-regression
+```
+
+两个绘图脚本只依赖本仓库与 Pillow/FontTools；回归脚本另外用到 OpenCV——它为四种不同学科结构各生成参考图和约束包，并用同一套绑定分别检查忠实版与降级版，结果写入 [REPORT.md](examples/structural-regression/REPORT.md)。输出为 `figure.svg`、`preview.png`、`scene.json` 和对象清单。宿主指南见 [SKILL.md](SKILL.md)；参考图与自然语言两条流程见 [参考图重建](references/reference-reconstruction.md) 与 [自然语言设计](references/text-design.md)。
 
 ## 目录
 
@@ -108,6 +112,7 @@ tests/                            工程行为测试
 examples/citrus-quality/          自然语言示例：程序、SVG/PNG、Scene、对象清单、复核
 examples/genomics-prioritization/ 参考图重绘：参考、程序、SVG/PNG、Scene、对象清单、复核
 examples/v0.8/                    历史整图重绘与完整参考图
+examples/structural-regression/   跨学科结构回归：参考、程序、检查报告
 examples/plant-nitrogen-assimilation/、examples/pv2f/  参考图复刻
 ```
 

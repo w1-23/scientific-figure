@@ -540,7 +540,11 @@ def _edge_metrics(source_edges, render_edges, tolerance):
     if source_edges.shape != render_edges.shape:
         raise ValueError("edge maps must share one size")
     if not source_edges.any() or not render_edges.any():
-        return {"recall": 0.0, "precision": 0.0, "mean_offset": None, "max_offset": None,
+        # An absent map is not a zero score: a soft reference region has no
+        # edge evidence to satisfy, and a blank render has nothing to compare.
+        return {"recall": None if not source_edges.any() else 0.0,
+                "precision": None if not render_edges.any() else 0.0,
+                "mean_offset": None, "max_offset": None,
                 "source_edge_pixels": int(source_edges.sum() / 255),
                 "render_edge_pixels": int(render_edges.sum() / 255)}
     to_render = cv2.distanceTransform(255 - render_edges, cv2.DIST_L2, 5)
@@ -648,8 +652,8 @@ def check_constraints(project, pack_directory, *, bindings=None, output=None):
                   "region_delta": {key: region_render[key] - region_source[key]
                                    for key in region_source},
                   "recall_min": PARAMETERS["alignment"]["recall_min"],
-                  "status": "needs_review" if soft or hard else
-                            ("passed" if overall["recall"] >= PARAMETERS["alignment"]["recall_min"]
+                  "status": ("failed" if hard else "needs_review" if soft or overall["recall"] is None
+                             else "passed" if overall["recall"] >= PARAMETERS["alignment"]["recall_min"]
                              else "failed")},
               "bindings": results,
               "summary": {"passed": len(results) - len(soft) - len(hard),
@@ -671,7 +675,18 @@ def _check_binding(scene, pack, pack_edges, binding, size, root):
     tolerance = binding["allowed_deviation"]
     use = "medium" if "medium" in pack["scales"] else pack["scales"][0]
     source_edges = pack_edges[use][y:y + h, x:x + w]
-    subtree = _subtree(scene, binding["object_id"])
+    try:
+        subtree = _subtree(scene, binding["object_id"])
+    except ValueError:
+        # A bound object that no longer exists is a failed constraint, not a
+        # crash: the rest of the report must still be produced.
+        return {"object_id": binding["object_id"], "kind": binding["kind"], "source_region": roi,
+                "allowed_deviation": tolerance, "recall_min": binding["recall_min"],
+                "status": "failed",
+                "metrics": {"recall": None, "precision": None, "mean_offset": None,
+                            "max_offset": None, "source_edge_pixels": int(source_edges.sum() / 255),
+                            "render_edge_pixels": 0},
+                "detail": {}, "notes": ["Binding object missing from the project: " + binding["object_id"]]}
     render = _render(subtree)
     if render.size != size:
         render = render.resize(size, Image.Resampling.LANCZOS)
@@ -679,7 +694,10 @@ def _check_binding(scene, pack, pack_edges, binding, size, root):
     render_edges = _edges(gray, use)[y:y + h, x:x + w]
     metrics = _edge_metrics(source_edges, render_edges, tolerance)
     status, notes = "passed", []
-    if metrics["recall"] is None:
+    if metrics["source_edge_pixels"] == 0:
+        status = "needs_review"
+        notes.append("No edge evidence in this region; the boundary is not constrained.")
+    elif metrics["render_edge_pixels"] == 0:
         status = "failed"
         notes.append("No renderable edges for this object.")
     else:
