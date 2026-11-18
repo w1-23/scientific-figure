@@ -56,7 +56,7 @@
 | layout 意图/检查 | 已实现且通过 | aligned_left/top、same_width/height、contains、left_of、above 等检查；不是求解器 |
 | prepare/evidence/ROI 映射 | 已实现且通过 | 实际生成板、manifest、来源和变换；不产生科学语义或最终 SVG |
 | OCR/重复对象候选 | 尚未实现 | doctor 的 ocr=false；不能把已有 detail 图说成 OCR |
-| 宿主首次推理前 Runtime 集成 | 尚未实现 | preflight_status 固定 not_integrated；无 prepared 消费闭环 |
+| 宿主首次推理前 Runtime 集成 | 尚未实现 | 本地 runtime preflight 已接入 prepare/consume（ok/degraded/failed，含逐项探针）；模型 adapter 仍不可用，host_call_order_verified=false |
 | 完整成员 Bundle | 已实现且通过 | 完整工程、摘要、独立局部 ID、不可变包；不是 SVG 集合 |
 | 可编辑 compose/live connector | 已实现且通过 | 几何/资源/clip/mask/occlusion/连接重映射与多实例；bbox 锚点能力有限 |
 | compose 汇总 context/text/layout/style/protection | 部分实现 | 尚无组合级完整语义闭包；成员 review 不应继承为组合通过 |
@@ -96,7 +96,7 @@
 
 ### 4.5 prepare 的保证止于证据生成
 
-[preparation.py:24](../src/scientific_figure/preparation.py:24) 生成实际文件与 manifest，但 `preflight_status=not_integrated`；draw/reconstruct 当前没有 prepared 消费入口。独立 Skill 不能保证任意宿主首次推理前先执行，需实际 Runtime 插件/入口对接与消费回执。
+[preparation.py:24](../src/scientific_figure/preparation.py:24) 生成实际文件与 manifest。本地 runtime preflight 现在会在接触输入前运行，`preflight_status` 记录 ok/degraded/failed 并附逐项探针结果；但这只是本机 renderer/fonts/schemas/OpenCV/pathops 的探针，模型 adapter 仍是 `adapter_not_available`。独立 Skill 不能保证任意宿主首次推理前先执行，仍需实际 Runtime 插件/入口对接与消费回执。
 
 ## 5. 现有任务证据，不抹掉失败
 

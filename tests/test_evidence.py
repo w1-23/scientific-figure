@@ -382,11 +382,16 @@ def test_prepare_multiple_relative_inputs_and_manifest_bindings(tmp_path, monkey
     monkeypatch.chdir(tmp_path)
     output = tmp_path / "prepared"
     receipt = prepare(request_path, output)
-    assert receipt["preflight_status"] == "not_integrated"
+    # The host's own probes decide ok/degraded; a failed probe is a real failure
+    # and the receipt must say so rather than claim a clean run.
+    assert receipt["preflight_status"] in {"ok", "degraded", "failed"}
+    assert receipt["preflight"]["status"] == receipt["preflight_status"]
+    assert {c["id"] for c in receipt["preflight"]["checks"]} >= {"renderer", "fonts", "schemas"}
     assert all(Path(r["evidence_path"]).is_file() for r in receipt["inputs"])
     manifest = load_json(output / "input-manifest.json")
     schema_validate(manifest, "preparation-manifest")
-    assert manifest["preflight_status"] == "not_integrated"
+    assert manifest["preflight_status"] == receipt["preflight_status"]
+    assert manifest["preflight"] == receipt["preflight"]
     assert manifest["request"]["sha256"] == digest(request_path)
     for entry, expected in zip(manifest["inputs"], [a_hash, b_hash]):
         assert entry["source_sha256"] == expected

@@ -66,7 +66,9 @@ def test_consumes_actual_content_and_never_claims_runtime_integration(package):
                      host_stage="before_model_request",
                      expected_manifest_sha256=digest(root / "input-manifest.json"))
     assert result["status"] == "consumed" and result["boundary"] == "local_tool_return"
-    assert result["runtime_preflight"] == "not_integrated"
+    assert result["runtime_preflight"]["status"] in {"ok", "degraded"}
+    assert result["runtime_preflight"]["adapter_status"] == "adapter_not_available"
+    assert result["preparation_preflight"] == receipt["preflight"]
     assert result["host_call_order_verified"] is False
     assert result["inputs"][0]["source_sha256"] == digest(original)
     assert result["inputs"][0]["roi"] == [10, 8, 60, 40]
@@ -80,7 +82,7 @@ def test_consumes_actual_content_and_never_claims_runtime_integration(package):
     assert before == {p: p.read_bytes() for p in before}
     again = consume(root, views=["source.png", "evidence_board.png"])
     assert result["package_sha256"] == again["package_sha256"]
-    assert runtime_preflight()["status"] == "not_integrated"
+    assert runtime_preflight()["status"] in {"ok", "degraded"}
     assert runtime_preflight()["adapter_status"] == "adapter_not_available"
     with pytest.raises(TypeError):
         runtime_preflight({"status": "integrated", "first_request": True})

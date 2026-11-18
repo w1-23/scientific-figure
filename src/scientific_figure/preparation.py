@@ -7,6 +7,7 @@ import re
 
 from .evidence import (_hash, _now, _read_bounded, _receipt, _staged_directory,
                        _write_json, generate_evidence)
+from .preflight import preflight_status, run_preflight
 from .scene import load_json, schema_validate
 
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -25,8 +26,10 @@ def prepare(request_path, output):
     """Prepare all explicit inputs atomically; paths resolve against the request.
 
     A single_asset request has exactly one input. An asset_bundle has one or more.
-    The receipt and input-manifest explicitly report preflight_status as
-    not_integrated: these CPU diagnostics cannot verify a model runtime hookup.
+    The local runtime is preflighted before any input is touched: renderer,
+    fonts, schemas, OpenCV and the optional geometry backend are probed, and
+    their result is recorded in the receipt and the input-manifest. The probe
+    cannot reach a model, so ``adapter_status`` stays ``not_available``.
     """
     request_path = Path(request_path).resolve()
     request_bytes = _read_bounded(request_path, MAX_REQUEST_BYTES)
@@ -34,6 +37,7 @@ def prepare(request_path, output):
                          parse_constant=lambda value: (_ for _ in ()).throw(
                              ValueError(f"nonfinite JSON value: {value}")))
     schema_validate(request, "preparation-request")
+    preflight = run_preflight()
     ids = [item["id"] for item in request["inputs"]]
     if len({name.casefold() for name in ids}) != len(ids):
         raise ValueError("input IDs must be unique, including case")
@@ -62,7 +66,8 @@ def prepare(request_path, output):
                             "manifest": f"{prefix}/manifest.json",
                             "manifest_sha256": _hash((generated / "manifest.json").read_bytes())})
         manifest = {"schema_version": "0.1", "kind": "preparation_manifest",
-                    "task": request["task"], "preflight_status": "not_integrated",
+                    "task": request["task"], "preflight_status": preflight_status(preflight),
+                    "preflight": preflight,
                     "created_at": _now(),
                     "request": {"path": str(request_path), "sha256": _hash(request_bytes)},
                     "inputs": entries}
@@ -70,6 +75,7 @@ def prepare(request_path, output):
         _write_json(stage / "input-manifest.json", manifest)
     return {"schema_version": "0.1", "directory": str(target.resolve()),
             "input_manifest_path": str(target.resolve() / "input-manifest.json"),
-            "task": request["task"], "preflight_status": "not_integrated",
+            "task": request["task"], "preflight_status": preflight_status(preflight),
+            "preflight": preflight,
             "inputs": [{"id": entry["id"], **_receipt(target / "inputs" / entry["id"], entry["channels"])}
                        for entry in entries]}

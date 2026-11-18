@@ -275,6 +275,7 @@ def execute(args):
                              expected_revision=args.base_revision if target.resolve()==args.input.resolve() else None)
     if command=="doctor":
         from .pathops_backend import backend_info
+        from .preflight import run_preflight
         return {"status":"success","version":__version__,"runtime":runtime_info(),"optional_geometry_backend":backend_info(),
                 "capabilities":{"scene_svg_png":True,"region_contours":True,"object_edit_export":True,
                                 "adaptive_candidates":True,"structural_patch":True,"directed_repair":True,
@@ -288,8 +289,9 @@ def execute(args):
                                 "selected_template_update":True,"local_registry":True,"prepared_consumption":True,
                                 "plan_draft_check_suggest":True,"registry_search":True,"local_measurements":True,
                                 "text_measure_wrap":True,"composition_context":True,"vector_clip_alpha_mask":True,"local_occlusions":True,"bounded_svg_import":True,
-                                "runtime_preflight_integrated":False,
+                                "local_runtime_preflight":True,"runtime_adapter_integrated":False,
                                 "ocr":False,"automatic_semantic_recognition":False,"gpu":False},
+                "runtime_preflight":run_preflight(),
                 "device_policy":"auto uses CPU because implemented backends are CPU-only; explicit gpu is rejected"}
     if command=="inspect":
         if args.evidence!="legacy" and not args.analyze:

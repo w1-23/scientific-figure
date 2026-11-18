@@ -88,7 +88,7 @@ figure-cli text wrap wrap-request.json
 figure-cli consume work/prepared --ids input --views source.png,evidence_board.png --output consumption.json
 ```
 
-consume核对实际prepare目录、原始请求/源图SHA、ROI、映射、全部回执/文件和预算，返回真实文件内容及消费记录。它证明本地工具边界读取，不能证明模型看懂、内容已发给模型、发生在首轮之前。Runtime始终not_integrated；无OCR/重复识别模型。外部候选可用 `candidates proposals.json --source reference.png` 校验来源与坐标，候选不改Scene。
+consume核对实际prepare目录、原始请求/源图SHA、ROI、映射、全部回执/文件和预算，返回真实文件内容及消费记录。它证明本地工具边界读取，不能证明模型看懂、内容已发给模型、发生在首轮之前。返回的runtime_preflight只描述本机renderer/fonts/schemas/OpenCV/pathops，adapter仍是adapter_not_available；无OCR/重复识别模型。外部候选可用 `candidates proposals.json --source reference.png` 校验来源与坐标，候选不改Scene。
 
 ## Registry 与组合闭包
 

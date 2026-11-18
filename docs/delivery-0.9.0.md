@@ -13,6 +13,7 @@
 | P4 工程与修正 | planning_context内联generation输入，随receipt、Bundle/组合快照保存；必要部件/当前文字/基线差异追踪；参数更新撤销受影响输入确认；B/U/C保护沿用 |
 | P5 实际绘图 | 参考图与自然语言图均真实渲染、看图和一轮定向修正；均有改色/移动/改字、两项局部导出和重开；实际Bundle与组合保留输入快照 |
 | P6 版本与交付 | 0.9.0源码/wheel/公开示例/私有图分包，Windows/Linux独立应用文件一致性和新增入口验证，SHA清单 |
+| 本地 runtime preflight | prepare/consume在接触输入前探测renderer/fonts/schemas/OpenCV/pathops，回执与manifest记录`ok/degraded/failed`及逐项结果，`doctor`同样输出；模型adapter仍是`adapter_not_available`，`host_call_order_verified`为false |
 
 入口及请求示例见[语义规划流程](semantic-planning-workflow.md)、[局部测量契约](local-measurements.md)。协议保持独立：Engine0.9.0，FigurePlan0.1、Scene0.1/0.2/0.3、generation0.1和旧CLI继续支持。
 
@@ -32,7 +33,7 @@
 
 ## 验证事实
 
-- 完整回归：969 passed、5 skipped、10 subtests passed，64.55秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 完整回归：994 passed、5 skipped、10 subtests passed，65.61秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
 - 公开文件链：草稿→缺构造返回needs_input→真实检索→四种测量→内联上下文→编译→用户改色/移动/改字→候选合并保留编辑→局部SVG/PNG→Bundle/两个实例组合→源目录移走后重开。自动脚本的视觉字段明确not_executed。
 - 边界：复杂细胞Recipe报告缺少mitochondrion；不存在mouse/未知品牌返回空；模糊交叉的阈值变化为ambiguous，宿主保留上下层unknown；简单扁平流程节点不强加渐变或强制检索。
 - 实际参考测量：view/profile为ok；选定阈值孔洞和同源模板重复为ambiguous。没有据此宣称透明孔洞、隐藏ER连接或分子数量。

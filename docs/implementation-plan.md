@@ -18,7 +18,7 @@
 |---|---|---|
 | 语义构造与渲染 | 宿主提供对象，`_construct_semantic()`复制最终几何并机械检查；SVG→resvg PNG；稳定ID、组、仿射、text、线性渐变、复合孔洞 | `depends_on`只验证顺序，不计算构造几何；无内部模型或自动视觉判断 |
 | 编辑与持久化 | 对象/资源事务、兄弟重排、revision冲突、stage/backup失败回滚、回执摘要、复核过期 | 无成功编辑后的undo/redo；不能把替换子树当作保留用户修改的重跑机制 |
-| Evidence与prepare | 按需contrast/detail/palette、紧凑板、alpha假设、源/ROI/板坐标映射与预算 | 边缘是观测；prepare仍`not_integrated`，未接任意宿主首轮前钩子 |
+| Evidence与prepare | 按需contrast/detail/palette、紧凑板、alpha假设、源/ROI/板坐标映射与预算；prepare与consume记录本地runtime preflight | 边缘是观测；本地探针不等于模型adapter连通，`host_call_order_verified`仍为false |
 | Context与style | 严格契约、自包含快照、typed tokens/显式绑定、文字/布局来源关联、机械style-check | Scene已解析值决定渲染；无自动换风格、宽度范围完整诊断或审美判断 |
 | Asset Bundle | 完整成员工程、逐文件摘要、独立局部ID、不可变快照、来源与字体需求 | 不是SVG文件集合；修改成员须创建新包；不复制系统字体 |
 | Compose | 真正复制Scene、命名空间化对象/资源及typed refs；独立实例、内部及跨实例live connector；整体与局部导出 | 布局由宿主给transform；无自动对齐/分布/避让求解；静态选中导出会冻结connector |
@@ -255,7 +255,7 @@ Linux/WSL在可用项目级环境安装兼容依赖并实跑相同工程；Linux
 
 以下范围继续属于完整计划，已完成的不重复建设，未完成的不因新方向而消失。
 
-- **Evidence/prepare**：默认按需contrast，detail/palette显式；原图不改；透明ROI显式背景。ROI为[x,y,w,h]、bbox为[x0,y0,x1,y1]，源/ROI/板各有六元映射与逆矩阵。保持32MiB输入、40MP解码、1MP ROI、2MP board、16MP派生总量预算。prepare无模型；首轮前集成须真实Runtime钩子，当前not_integrated。
+- **Evidence/prepare**：默认按需contrast，detail/palette显式；原图不改；透明ROI显式背景。ROI为[x,y,w,h]、bbox为[x0,y0,x1,y1]，源/ROI/板各有六元映射与逆矩阵。保持32MiB输入、40MP解码、1MP ROI、2MP board、16MP派生总量预算。prepare无模型，但会先探测本地renderer/fonts/schemas/OpenCV/pathops并把`preflight_status`与完整报告写进回执和manifest；模型adapter仍不可用，首轮前集成须真实Runtime钩子。
 - **Context/style/text/layout**：完整自包含闭包和canonical SHA；原source-bound Scene与evidence源SHA匹配；修改意图走正式命令使review失效。Profile只解析实际支持字段，不自动重着色。文字清单保留原转录，当前文字编辑进入Scene；布局意图/索引不形成第二坐标树。
 - **Bundle/compose**：完整成员、路径/链接/预算/摘要校验、同素材独立实例、短确定性namespace、所有typed refs迁移、非零viewBox/组透明保真、背景preserve/omit显式、live内部/跨实例连接。组合复核不能继承成员通过。字体只记录需求。
 - **S05—S08扩展**：细胞/组织、剖面、叶脉、微生物等真实独立许可来源尚待完成；陌生几何/NL任务不抵作这些来源，裁剪变体不凑独立来源数。

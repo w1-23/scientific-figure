@@ -22,6 +22,7 @@ from PIL import Image
 from .evidence import (MAX_INPUT_BYTES, MAX_INPUT_PIXELS, _background, _channels,
                        _expected_names, _hash, _load_source, _read_bounded,
                        _region, _safe_artifact, validate_evidence)
+from .preflight import run_preflight
 from .preparation import MAX_REQUEST_BYTES, _unique
 from .scene import schema_validate
 
@@ -258,14 +259,18 @@ def consume(prepared, *, input_ids=None, views=None, host_stage="on_demand",
                          "mappings": evidence["mappings"], "views": contents})
     expected_receipt = {"schema_version": "0.1", "directory": str(root),
                         "input_manifest_path": str(manifest_path), "task": manifest["task"],
-                        "preflight_status": "not_integrated", "inputs": evidence_receipts}
+                        "preflight_status": manifest["preflight_status"], "inputs": evidence_receipts}
+    if "preflight" in manifest:
+        # Packages prepared before preflight was integrated carry no report.
+        expected_receipt["preflight"] = manifest["preflight"]
     if receipt is not None and json.dumps(receipt, sort_keys=True) != json.dumps(expected_receipt, sort_keys=True):
         raise ValueError("preparation receipt does not match actual directory")
     if total_bytes > max_bytes or _read_bounded(manifest_path, MAX_JSON_BYTES) != manifest_bytes:
         raise ValueError("preparation manifest changed or package exceeds byte budget")
     package_digest = _hash(json.dumps(package_files, sort_keys=True, separators=(",", ":")).encode())
     return {"schema_version": "0.1", "kind": "prepared_consumption", "status": "consumed",
-            "boundary": "local_tool_return", "runtime_preflight": "not_integrated",
+            "boundary": "local_tool_return", "runtime_preflight": run_preflight(),
+            "preparation_preflight": manifest.get("preflight"),
             "declared_host_stage": host_stage, "host_call_order_verified": False,
             "input_manifest_sha256": manifest_hash, "package_sha256": package_digest,
             "package_bytes": total_bytes, "package_files": package_files, "inputs": consumed,
@@ -275,10 +280,16 @@ def consume(prepared, *, input_ids=None, views=None, host_stage="on_demand",
 
 
 def runtime_preflight():
-    """No user-created receipt can upgrade this status to integrated."""
-    return {"status": "not_integrated", "adapter_status": "adapter_not_available",
-            "host_call_order_verified": False,
-            "reason": "No actual external runtime adapter is available."}
+    """Run the local runtime probes; the model adapter stays unavailable.
+
+    The returned status describes this process's renderer, fonts, schemas,
+    OpenCV and optional pathops. Nothing here observes a host's first
+    inference, and no user-created receipt can upgrade the adapter status.
+    """
+    report = run_preflight()
+    report["adapter_status"] = "adapter_not_available"
+    report["reason"] = "No external model runtime adapter is exposed; these are local probes only."
+    return report
 
 
 def candidate_adapter_status():
