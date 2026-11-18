@@ -139,3 +139,43 @@ def test_declared_evidence_ids_must_resolve_in_the_pack(tmp_path):
                               "params": {"label": "Sample"}}}]}],
             review_spec={"text_policy": "host_authored"}), evidence_pack=pack)
     assert report["evidence_bindings"][0]["object_id"] == "sample"
+
+
+def test_scope_decides_which_reference_edges_an_object_owns(tmp_path):
+    """``object`` holds an object accountable for its interior; ``outline`` does not.
+
+    Both scopes run against the same drawing, whose outer silhouette matches the
+    reference exactly but which omits the reference's internal bars.
+    """
+    from scientific_figure.builder import SceneBuilder
+    from scientific_figure.constraints import check_constraints
+    from scientific_figure.project import write_project
+
+    image = Image.new("RGB", (240, 160), "white")
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((30, 30, 209, 129), fill="#cfe8c0", outline="#3f5e33", width=3)
+    for x in range(55, 205, 20):
+        draw.rectangle((x, 45, x + 3, 115), fill="#4b7a3a")
+    source = tmp_path / "reference.png"
+    image.save(source)
+    request = tmp_path / "request.json"
+    request.write_text(json.dumps({"schema_version": "0.1", "background": "#ffffff"}), encoding="utf-8")
+    build_constraints(source, request, tmp_path / "pack")
+
+    builder = SceneBuilder(240, 160, background="#ffffff", schema_version="0.3")
+    builder.rect("cell", 30, 30, 180, 100,
+                 style={"fill": "#cfe8c0", "stroke": "#3f5e33", "stroke_width": 2})
+    write_project(builder.build(), tmp_path / "project", scale=1)
+
+    def run(scope):
+        bindings = [{"object_id": "cell", "kind": "boundary", "scope": scope,
+                     "source_region": [0, 0, 240, 160],
+                     "allowed_deviation": 2.0, "recall_min": 0.6}]
+        report = check_constraints(tmp_path / "project", tmp_path / "pack", bindings=bindings)
+        return report["bindings"][0]
+
+    outline, interior = run("outline"), run("object")
+    assert outline["status"] == "passed", (outline["status"], outline["metrics"], outline["notes"])
+    assert interior["status"] != "passed", (interior["status"], interior["metrics"], interior["notes"])
+    assert interior["metrics"]["recall"] < outline["metrics"]["recall"] - 0.2
+    assert any("recall" in note for note in interior["notes"])

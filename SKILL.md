@@ -76,6 +76,8 @@ conda run -n ScientificFigure_skill figure-cli plan review work/figure --constra
 
 Each binding reports recall, mean offset and region/hole/repetition detail as `passed`, `needs_review` or `failed`. A hard failure is a repair item for that object ID, not a styling preference. `hard`, `soft` and `ignore` decide which evidence constrains construction: do not turn every detected edge into a path, and do not read a passing pack as scientific meaning.
 
+`scope` decides which reference edges a binding owns: `region` (default) compares every edge in the box; `object` keeps only the edges inside the object's own drawn footprint, so internal cristae, grana and membrane folds are part of recall; `outline` keeps a band around its silhouette, which is the right question for a large fill whose interior belongs to other objects. Without a scope, a cell wall filled with cytoplasm is scored against every organelle drawn inside it.
+
 For drawing from a scientific description, supply a semantic Plan without `source`, or a normal Scene:
 
 ```bash

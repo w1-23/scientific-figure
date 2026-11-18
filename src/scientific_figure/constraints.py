@@ -138,7 +138,7 @@ def _bindings(value, size):
         if not isinstance(entry, dict):
             raise ValueError("binding must be an object")
         unknown = set(entry) - {"object_id", "source_region", "kind", "allowed_deviation",
-                                "recall_min", "group", "min_count", "notes"}
+                                "recall_min", "group", "min_count", "notes", "scope"}
         if unknown:
             raise ValueError("unsupported binding fields: " + ", ".join(sorted(unknown)))
         oid = entry.get("object_id")
@@ -156,11 +156,15 @@ def _bindings(value, size):
         recall = entry.get("recall_min", PARAMETERS["alignment"]["recall_min"])
         if type(recall) not in {int, float} or not 0 <= recall <= 1:
             raise ValueError("recall_min must be in [0, 1]")
+        scope = entry.get("scope", "region")
+        if scope not in {"region", "object", "outline"}:
+            raise ValueError("binding scope must be region, object or outline")
         out.append({"object_id": oid, "kind": kind,
                     "source_region": _region(entry["source_region"], size, "binding region")
                     if "source_region" in entry else None,
                     "allowed_deviation": float(deviation), "recall_min": float(recall),
                     "group": entry.get("group"), "min_count": entry.get("min_count", 2),
+                    "scope": scope,
                     "notes": str(entry.get("notes", ""))[:2000]})
     return out
 
@@ -690,8 +694,32 @@ def _check_binding(scene, pack, pack_edges, binding, size, root):
     render = _render(subtree)
     if render.size != size:
         render = render.resize(size, Image.Resampling.LANCZOS)
-    gray = cv2.cvtColor(np.asarray(render), cv2.COLOR_RGB2GRAY)
+    pixels = np.asarray(render)
+    gray = cv2.cvtColor(pixels, cv2.COLOR_RGB2GRAY)
     render_edges = _edges(gray, use)[y:y + h, x:x + w]
+    if binding.get("scope") in {"object", "outline"}:
+        # Compare only the reference edges this object is responsible for.
+        # ``object`` keeps everything inside its footprint (internal detail);
+        # ``outline`` keeps a band around its silhouette, which is the honest
+        # question for a large translucent fill whose interior holds other
+        # objects. Without either, a region scores the object against
+        # neighbouring structure it was never asked to draw.
+        from .render import render_svg
+        from .svg import to_svg
+        # Probe with a transparent canvas: an opaque page background would make
+        # every pixel "drawn" and collapse the footprint to the canvas frame.
+        probe = {**subtree, "canvas": {**subtree["canvas"], "background": "none"}}
+        with Image.open(BytesIO(render_svg(to_svg(probe), scale=1))) as image:
+            alpha = image.convert("RGBA")
+            if alpha.size != size:
+                alpha = alpha.resize(size, Image.Resampling.LANCZOS)
+            drawn = np.asarray(alpha)[:, :, 3] > 8
+        reachable = drawn.astype(np.uint8)
+        if binding["scope"] == "outline":
+            reachable = reachable - cv2.erode(reachable, np.ones((3, 3), np.uint8))
+        radius = int(round(tolerance)) + 1
+        reach = cv2.dilate(reachable, np.ones((2 * radius + 1, 2 * radius + 1), np.uint8)) > 0
+        source_edges = source_edges & reach[y:y + h, x:x + w]
     metrics = _edge_metrics(source_edges, render_edges, tolerance)
     status, notes = "passed", []
     if metrics["source_edge_pixels"] == 0:

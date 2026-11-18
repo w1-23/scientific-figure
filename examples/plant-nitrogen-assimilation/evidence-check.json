@@ -1,0 +1,177 @@
+{
+  "figure": "plant-nitrogen-assimilation",
+  "reference": "reference.webp (1456 x 1141)",
+  "drawing": "redraw.svg imported as Scene 0.3",
+  "overall": "needs_review",
+  "counts": {
+    "passed": 10,
+    "needs_review": 1,
+    "failed": 0
+  },
+  "missing_objects": [],
+  "bindings": [
+    {
+      "object_id": "cell-envelope",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        3,
+        15,
+        1425,
+        1126
+      ],
+      "recall": 1.0,
+      "mean_offset": 1.279,
+      "notes": []
+    },
+    {
+      "object_id": "vacuole",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        356,
+        566,
+        868,
+        500
+      ],
+      "recall": 0.9698,
+      "mean_offset": 1.538,
+      "notes": []
+    },
+    {
+      "object_id": "chloroplast-top-left",
+      "kind": "boundary",
+      "status": "needs_review",
+      "source_region": [
+        73,
+        68,
+        290,
+        241
+      ],
+      "recall": 0.5486,
+      "mean_offset": 4.048,
+      "notes": [
+        "Boundary recall 0.549 below 0.600.",
+        "Mean boundary offset 4.05px exceeds 3.00px."
+      ]
+    },
+    {
+      "object_id": "chloroplast-top-right",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        1048,
+        71,
+        318,
+        268
+      ],
+      "recall": 0.7075,
+      "mean_offset": 2.393,
+      "notes": []
+    },
+    {
+      "object_id": "chloroplast-bottom-left",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        58,
+        805,
+        317,
+        291
+      ],
+      "recall": 0.7386,
+      "mean_offset": 2.222,
+      "notes": []
+    },
+    {
+      "object_id": "mitochondrion-left",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        347,
+        462,
+        142,
+        126
+      ],
+      "recall": 0.8712,
+      "mean_offset": 1.494,
+      "notes": []
+    },
+    {
+      "object_id": "mitochondrion-upper-right",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        1039,
+        498,
+        172,
+        159
+      ],
+      "recall": 0.8139,
+      "mean_offset": 1.843,
+      "notes": []
+    },
+    {
+      "object_id": "mitochondrion-right",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        1192,
+        600,
+        178,
+        193
+      ],
+      "recall": 0.8162,
+      "mean_offset": 1.733,
+      "notes": []
+    },
+    {
+      "object_id": "nucleus",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        151,
+        523,
+        215,
+        196
+      ],
+      "recall": 0.6797,
+      "mean_offset": 2.698,
+      "notes": []
+    },
+    {
+      "object_id": "rough-endoplasmic-reticulum",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        83,
+        481,
+        380,
+        350
+      ],
+      "recall": 0.8518,
+      "mean_offset": 2.076,
+      "notes": []
+    },
+    {
+      "object_id": "golgi",
+      "kind": "boundary",
+      "status": "passed",
+      "source_region": [
+        473,
+        484,
+        253,
+        192
+      ],
+      "recall": 0.8449,
+      "mean_offset": 2.222,
+      "notes": []
+    }
+  ],
+  "limitations": [
+    "Edge agreement measures geometry near visible boundaries, not scientific meaning.",
+    "A high score cannot certify that an omitted structure was unimportant.",
+    "Typed edge classes are heuristic buckets, not object detection.",
+    "Figures with gradients or painterly edges need explicit soft constraints."
+  ]
+}
