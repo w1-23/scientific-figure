@@ -8,6 +8,18 @@
 skill帮你做的是：
 > 让模型决定怎么画，让引擎负责画好。
 
+## v0.8 整图重绘与完整参考图
+
+以下是 **v0.8 历史整图重绘结果**。左侧是完整参考图，右侧是使用本引擎完成的整张重绘，包含上方制备／给药流程、右侧肿瘤与血管、左下细胞放大图和底部色板。
+
+| 完整参考图 | v0.8 整张矢量重绘 |
+|---|---|
+| [![完整参考图](examples/v0.8/reference.png)](examples/v0.8/reference.png) | [![v0.8 整图重绘预览](examples/v0.8/full-redraw.png)](examples/v0.8/full-redraw.svg) |
+
+[查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
+
+SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考位图。ER 形态、小鼠解剖和柔和笔绘边缘仍有近似；原图疑似错字在主结果中保留。参考图的权利归原权利人，本项目不为其授予复用许可；未做领域科学审核。
+
 ## 植物科学参考图复刻示例
 
 ### 植物细胞氮同化
@@ -28,6 +40,8 @@ skill帮你做的是：
 
 两张参考图均由用户提供，权利归各原权利人。仓库代码许可不适用于参考图。
 
+## 能力
+
 | 能力 | 实际行为 |
 |---|---|
 | 两类任务共用流程 | 参考／描述 → 宿主解释 → FigurePlan → 选择画法 → Scene → 实际预览 → 定向修正 |
@@ -39,22 +53,6 @@ skill帮你做的是：
 | 安全重跑 | B/U/C 比较旧纯生成基线、用户当前图与新候选，保留用户单独改色、移动和文字；冲突拒绝覆盖 |
 | 工程与组合 | 保存重开、局部 SVG/PNG 导出、Bundle 与组合，保留实际采用的规划和测量输入 |
 | 同源 PNG | 由同一 SVG 使用 resvg 渲染；不能将测试通过当成视觉或科学正确性 |
-# Scientific Figure Reconstruction & Drawing Skill
-
-
-## v0.8 整图重绘与完整参考图
-
-以下是 **v0.8 历史整图重绘结果**，。左侧是完整参考图，右侧是使用本引擎完成的整张重绘，包含上方制备／给药流程、右侧肿瘤与血管、左下细胞放大图和底部色板。
-
-| 完整参考图 | v0.8 整张矢量重绘 |
-|---|---|
-| ![完整参考图](examples/v0.8/reference.png) | ![v0.8 整张矢量重绘 SVG](examples/v0.8/full-redraw.svg) |
-
-[查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
-
-SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考位图。ER 形态、小鼠解剖和柔和笔绘边缘仍有近似；原图疑似错字在主结果中保留。参考图的权利归原权利人，本项目不为其授予复用许可；未做领域科学审核。
-
-
 
 本地目录含 15 个 Recipe 族、2 个符号族元数据和 1 个有许可的 Twemoji 柠檬资产。复杂对象结构不匹配时可以直接使用自由程序；没有 mouse/flask/avatar Recipe，不伪造命中。
 
