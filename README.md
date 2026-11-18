@@ -1,7 +1,9 @@
-# Scientific Figure Reconstruction & Drawing Skill
+# 还在为科研绘图而烦恼么？推荐使用 Scientific Figure Reconstruction & Drawing Skill
 
 独立的科研矢量重绘与绘制 Skill：支持**参考图语义复刻**和**自然语言生图**。
 宿主负责理解对象、内部结构与关系，选择素材、Recipe 或自由绘图程序；引擎负责执行几何、样式、层级、编辑与 SVG/PNG 导出。不需要第二个看图模型、模型 API 或服务进程。
+
+推荐用法：用 GPT、seedance 等生图模型生成你想要的风格、内容和素材，本 Skill 负责基本排版与重建 😊；局部不满意时，用截图指出具体位置，它会继续修改，尽可能交付还原的结果。也可以截图喜欢的素材，让它先生成基础绘图素材，再自行排版；或者直接给一段完整描述产出图像——这一用法比较依赖 LLM 本身的理解力。
 
 > 让模型决定怎么画，让引擎负责画好。
 
@@ -36,7 +38,6 @@
 [查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
 
 ### 植物细胞氮同化
-
 | 完整参考图 | 整图重绘 |
 |---|---|
 | [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
