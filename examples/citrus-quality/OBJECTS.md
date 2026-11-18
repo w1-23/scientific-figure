@@ -1,388 +1,505 @@
-# Object ID inventory
+# Editable objects
 
-Generated from `scene.json` by `draw.py --deliver`: 365 objects, canvas 1400x1040.
+Object IDs follow the Scene hierarchy and match SVG element IDs.
 
-Every ID below is a real Scene object, selectable in the SVG or the project. Groups keep their children; text objects carry their exact string; geometry values are local to the parent group.
-
-## header
-
-- `header` - group
-  - `figure-title` - text "Non-destructive Assessment of Citrus Fruit Quality"
-  - `figure-subtitle` - text "From Orchard Sampling to Predictive Phenotyping"
-  - `header-rule` - path
-  - `figure-scope` - text "Schematic; no instrument model, wavelength or performance claim"
-
-## module-a
-
-- `module-a` - group
-  - `header-A` - group
-    - `header-A-chip` - ellipse cx=53, cy=140, rx=13, ry=13
-    - `header-A-letter` - text "A"
-    - `header-A-title` - text "Orchard Sampling"
-  - `module-a-note` - text "Canopy fruit at three maturity stages"
-  - `orchard-tree` - group
-    - `tree-trunk` - path
-    - `tree-branch-1` - path
-    - `tree-branch-2` - path
-    - `tree-branch-3` - path
-    - `tree-canopy` - path
-    - `tree-canopy-inner` - path
-    - `leaf-a1` - path
-    - `leaf-a1-vein` - path
-    - `leaf-a2` - path
-    - `leaf-a2-vein` - path
-    - `leaf-a3` - path
-    - `leaf-a3-vein` - path
-    - `leaf-a4` - path
-    - `leaf-a4-vein` - path
-    - `fruit-green` - group
-      - `fruit-green-body` - ellipse cx=128, cy=336, rx=29, ry=27.26
-      - `fruit-green-calyx` - path
-      - `fruit-green-shine` - ellipse cx=118.14, cy=324.4, rx=7.54, ry=4.64
-      - `fruit-green-stem` - path
-      - `fruit-green-leaf` - path
-      - `fruit-green-leaf-vein` - path
-    - `fruit-turning` - group
-      - `fruit-turning-body` - ellipse cx=256, cy=312, rx=30, ry=28.2
-      - `fruit-turning-calyx` - path
-      - `fruit-turning-shine` - ellipse cx=245.8, cy=300, rx=7.8, ry=4.8
-      - `fruit-turning-stem` - path
-      - `fruit-turning-leaf` - path
-      - `fruit-turning-leaf-vein` - path
-    - `fruit-mature` - group
-      - `fruit-mature-body` - ellipse cx=190, cy=408, rx=32, ry=30.08
-      - `fruit-mature-calyx` - path
-      - `fruit-mature-shine` - ellipse cx=179.12, cy=395.2, rx=8.32, ry=5.12
-      - `fruit-mature-stem` - path
-      - `fruit-mature-leaf` - path
-      - `fruit-mature-leaf-vein` - path
-  - `lead-green` - path
-  - `label-green` - text "Green"
-  - `lead-turning` - path
-  - `label-turning` - text "Turning"
-  - `lead-mature` - path
-  - `label-mature` - text "Mature"
-  - `harvest-tray` - group
-    - `tray-body` - path
-    - `tray-rim` - path
-    - `tray-fruit-1` - ellipse cx=282, cy=534, rx=12, ry=11
-    - `tray-fruit-2` - ellipse cx=304, cy=530, rx=11, ry=10
-    - `tray-fruit-3` - ellipse cx=296, cy=520, rx=10, ry=9
-  - `harvest-arrow` - group
-    - `harvest-arrow-shaft` - path
-    - `harvest-arrow-tip` - path
-  - `tray-label` - text "Sampled fruit"
-  - `subsample-arrow` - group
-    - `subsample-arrow-shaft` - path
-    - `subsample-arrow-tip` - path
-  - `subsample-label` - text "Sub-sample"
-  - `sampling-bag` - group
-    - `bag-body` - path
-    - `bag-gusset` - path
-    - `bag-fruit-1` - ellipse cx=158, cy=770, rx=14, ry=13
-    - `bag-fruit-2` - ellipse cx=186, cy=786, rx=14, ry=13
-    - `bag-fruit-3` - ellipse cx=212, cy=768, rx=14, ry=13
-    - `bag-top` - path
-    - `bag-tag` - rect x=202, y=726, width=34, height=20, rx=4
-    - `bag-tag-line-1` - path
-    - `bag-tag-line-2` - path
-  - `bag-label` - text "Labelled sample lot"
-  - `bag-note` - text "cool chain, traceable ID"
-
-## module-b
-
-- `module-b` - group
-  - `header-B` - group
-    - `header-B-chip` - ellipse cx=409, cy=140, rx=13, ry=13
-    - `header-B-letter` - text "B"
-    - `header-B-title` - text "Non-destructive Measurement"
-  - `module-b-note` - text "Whole-fruit optics, no sample destruction"
-  - `whole-fruit` - group
-    - `whole-fruit-body` - ellipse cx=468, cy=330, rx=52, ry=48.88
-    - `whole-fruit-calyx` - path
-    - `whole-fruit-shine` - ellipse cx=450.32, cy=309.2, rx=13.52, ry=8.32
-    - `whole-fruit-stem` - path
-    - `whole-fruit-leaf` - path
-    - `whole-fruit-leaf-vein` - path
-  - `fruit-to-cutaway` - group
-    - `fruit-to-cutaway-shaft` - path
-    - `fruit-to-cutaway-tip` - path
-  - `whole-fruit-label` - text "Whole fruit"
-  - `optical-beam` - path
-  - `optical-beam-core` - path
-  - `cutaway` - group
-    - `cutaway-peel` - ellipse cx=654, cy=326, rx=64, ry=61.44
-    - `cutaway-albedo` - ellipse cx=654, cy=326, rx=57.6, ry=55.04
-    - `cutaway-flesh` - ellipse cx=654, cy=326, rx=49.92, ry=47.36
-    - `cutaway-segment-1` - path
-    - `cutaway-vesicle-1-1` - ellipse cx=658.153, cy=304.64, rx=2.88, ry=1.792
-    - `cutaway-vesicle-1-2` - ellipse cx=664.069, cy=298.335, rx=2.88, ry=1.792
-    - `cutaway-vesicle-1-3` - ellipse cx=671.995, cy=293.533, rx=2.88, ry=1.792
-    - `cutaway-segment-2` - path
-    - `cutaway-vesicle-2-1` - ellipse cx=670.911, cy=312.307, rx=2.88, ry=1.792
-    - `cutaway-vesicle-2-2` - ellipse cx=679.496, cy=311.28, rx=2.88, ry=1.792
-    - `cutaway-vesicle-2-3` - ellipse cx=688.654, cy=312.696, rx=2.88, ry=1.792
-    - `cutaway-segment-3` - path
-    - `cutaway-vesicle-3-1` - ellipse cx=675.757, cy=326.381, rx=2.88, ry=1.792
-    - `cutaway-vesicle-3-2` - ellipse cx=682.993, cy=331.112, rx=2.88, ry=1.792
-    - `cutaway-vesicle-3-3` - ellipse cx=689.098, cy=338.083, rx=2.88, ry=1.792
-    - `cutaway-segment-4` - path
-    - `cutaway-vesicle-4-1` - ellipse cx=670.422, cy=340.277, rx=2.88, ry=1.792
-    - `cutaway-vesicle-4-2` - ellipse cx=672.924, cy=348.552, rx=2.88, ry=1.792
-    - `cutaway-vesicle-4-3` - ellipse cx=673.12, cy=357.817, rx=2.88, ry=1.792
-    - `cutaway-segment-5` - path
-    - `cutaway-vesicle-5-1` - ellipse cx=657.403, cy=347.492, rx=2.88, ry=1.792
-    - `cutaway-vesicle-5-2` - ellipse cx=654, cy=355.44, rx=2.88, ry=1.792
-    - `cutaway-vesicle-5-3` - ellipse cx=648.195, cy=362.663, rx=2.88, ry=1.792
-    - `cutaway-segment-6` - path
-    - `cutaway-vesicle-6-1` - ellipse cx=642.792, cy=344.651, rx=2.88, ry=1.792
-    - `cutaway-vesicle-6-2` - ellipse cx=635.076, cy=348.552, rx=2.88, ry=1.792
-    - `cutaway-vesicle-6-3` - ellipse cx=625.986, cy=350.354, rx=2.88, ry=1.792
-    - `cutaway-segment-7` - path
-    - `cutaway-vesicle-7-1` - ellipse cx=633.425, cy=333.083, rx=2.88, ry=1.792
-    - `cutaway-vesicle-7-2` - ellipse cx=625.007, cy=331.112, rx=2.88, ry=1.792
-    - `cutaway-vesicle-7-3` - ellipse cx=616.886, cy=326.65, rx=2.88, ry=1.792
-    - `cutaway-segment-8` - path
-    - `cutaway-vesicle-8-1` - ellipse cx=633.686, cy=318.201, rx=2.88, ry=1.792
-    - `cutaway-vesicle-8-2` - ellipse cx=628.504, cy=311.28, rx=2.88, ry=1.792
-    - `cutaway-vesicle-8-3` - ellipse cx=625.151, cy=302.641, rx=2.88, ry=1.792
-    - `cutaway-segment-9` - path
-    - `cutaway-vesicle-9-1` - ellipse cx=643.451, cy=306.968, rx=2.88, ry=1.792
-    - `cutaway-vesicle-9-2` - ellipse cx=643.931, cy=298.335, rx=2.88, ry=1.792
-    - `cutaway-vesicle-9-3` - ellipse cx=646.915, cy=289.562, rx=2.88, ry=1.792
-    - `cutaway-seed-1` - ellipse cx=672.601, cy=310.333, rx=3.52, ry=5.44
-    - `cutaway-seed-2` - ellipse cx=674.072, cy=339.732, rx=3.52, ry=5.44
-    - `cutaway-seed-3` - ellipse cx=636.067, cy=342.427, rx=3.52, ry=5.44
-    - `cutaway-core` - ellipse cx=654, cy=326, rx=7.04, ry=7.04
-    - `cutaway-highlight` - path
-  - `cutaway-label` - text "Peel · albedo"
-  - `cutaway-label-detail` - text "Segments · seeds"
-  - `signal-label` - text "Optical Signal"
-  - `signal-lead` - path
-  - `device` - group
-    - `device-body` - rect x=590, y=486, width=168, height=92, rx=10
-    - `device-screen` - rect x=604, y=500, width=78, height=50, rx=4
-    - `device-trace` - path
-    - `device-led` - ellipse cx=742, cy=508, rx=4, ry=4
-    - `device-knob` - ellipse cx=742, cy=528, rx=7, ry=7
-    - `device-vent` - rect x=700, y=548, width=42, height=14, rx=3
-    - `device-label` - text "NIR probe"
-    - `probe-arm` - path
-    - `probe-head` - rect x=626, y=414, width=28, height=18, rx=3
-  - `spectral-card` - group
-    - `spectral-card-bg` - rect x=396, y=470, width=182, height=118, rx=8
-    - `spectral-title` - text "Spectral Acquisition"
-    - `spectral-axis-x` - path
-    - `spectral-axis-y` - path
-    - `spectral-curve` - path
-    - `spectral-curve-2` - path
-
-## module-c
-
-- `module-c` - group
-  - `header-C` - group
-    - `header-C-chip` - ellipse cx=409, cy=640, rx=13, ry=13
-    - `header-C-letter` - text "C"
-    - `header-C-title` - text "Reference Quality Measurements"
-  - `module-c-note` - text "Destructive assays on representative sub-samples calibrate and validate the model"
-  - `bench-top` - rect x=380, y=866, width=430, height=10, rx=2
-  - `bench-shadow` - rect x=396, y=876, width=400, height=4, rx=2
-  - `balance` - group
-    - `balance-base` - rect x=412, y=806, width=92, height=56, rx=5
-    - `balance-pan` - rect x=426, y=792, width=64, height=10, rx=2
-    - `balance-display` - rect x=434, y=818, width=48, height=22, rx=2
-    - `balance-readout` - text "— g"
-    - `balance-sample` - rect x=442, y=782, width=32, height=10, rx=4
-  - `refractometer` - group
-    - `refract-body` - path
-    - `refract-window` - rect x=534, y=810, width=26, height=10, rx=2
-    - `refract-drop` - ellipse cx=547, cy=808, rx=4.5, ry=4
-    - `refract-eye` - rect x=562, y=826, width=8, height=8, rx=2
-  - `titration` - group
-    - `titr-stand` - path
-    - `titr-clamp` - rect x=604, y=762, width=40, height=6, rx=2
-    - `titr-burette` - rect x=636, y=726, width=9, height=84, rx=3
-    - `titr-tip` - path
-    - `flask` - path
-    - `flask-liquid` - path
-  - `data-sheet` - group
-    - `sheet-body` - rect x=700, y=700, width=106, height=100, rx=3
-    - `sheet-header` - rect x=700, y=700, width=106, height=18, rx=3
-    - `sheet-title` - text "Data sheet"
-    - `sheet-row-1` - path
-    - `sheet-entry-1` - path
-    - `sheet-unit-1` - text "—"
-    - `sheet-row-2` - path
-    - `sheet-entry-2` - path
-    - `sheet-unit-2` - text "—"
-    - `sheet-row-3` - path
-    - `sheet-entry-3` - path
-    - `sheet-unit-3` - text "—"
-    - `sheet-row-4` - path
-    - `sheet-entry-4` - path
-    - `sheet-unit-4` - text "—"
-  - `sample-tray` - group
-    - `tray-dish` - ellipse cx=756, cy=844, rx=36, ry=12
-    - `tray-dish-inner` - ellipse cx=756, cy=843, rx=30, ry=8
-    - `slice-peel` - ellipse cx=756, cy=838, rx=22, ry=9
-    - `slice-albedo` - ellipse cx=756, cy=838, rx=19.6, ry=7.6
-    - `slice-flesh` - ellipse cx=756, cy=838, rx=17.2, ry=6.2
-    - `slice-segment-1` - path
-    - `slice-segment-2` - path
-    - `slice-segment-3` - path
-    - `slice-segment-4` - path
-    - `slice-segment-5` - path
-  - `metric-chip-1` - rect x=400, y=906, width=40.1758, height=22, rx=11
-  - `metric-text-1` - text "SSC"
-  - `metric-chip-2` - rect x=448.176, y=906, width=31.8105, height=22, rx=11
-  - `metric-text-2` - text "TA"
-  - `metric-chip-3` - rect x=487.986, y=906, width=54.7129, height=22, rx=11
-  - `metric-text-3` - text "SSC/TA"
-  - `metric-chip-4` - rect x=550.699, y=906, width=60.3418, height=22, rx=11
-  - `metric-text-4` - text "Firmness"
-  - `metric-chip-5` - rect x=619.041, y=906, width=77.8203, height=22, rx=11
-  - `metric-text-5` - text "Juice content"
-  - `bench-label-balance` - text "Balance"
-  - `bench-label-refractometer` - text "Refractometer"
-  - `bench-label-titration` - text "Titration"
-  - `bench-label-slice` - text "Slice"
-
-## module-d
-
-- `module-d` - group
-  - `data-panel` - rect x=836, y=122, width=528, height=856, rx=14
-  - `header-D` - group
-    - `header-D-chip` - ellipse cx=871, cy=146, rx=13, ry=13
-    - `header-D-letter` - text "D"
-    - `header-D-title` - text "Data Analysis and Quality Prediction"
-  - `pipeline-1` - group
-    - `pipeline-1-box` - rect x=858, y=186, width=96, height=58, rx=8
-    - `pipeline-1-text-1` - text "Spectral matrix"
-  - `pipeline-arrow-1` - group
-    - `pipeline-arrow-1-shaft` - path
-    - `pipeline-arrow-1-tip` - path
-  - `pipeline-2` - group
-    - `pipeline-2-box` - rect x=966, y=186, width=96, height=58, rx=8
-    - `pipeline-2-text-1` - text "Pre-processing"
-  - `pipeline-arrow-2` - group
-    - `pipeline-arrow-2-shaft` - path
-    - `pipeline-arrow-2-tip` - path
-  - `pipeline-3` - group
-    - `pipeline-3-box` - rect x=1074, y=186, width=96, height=58, rx=8
-    - `pipeline-3-text-1` - text "Feature extraction"
-  - `pipeline-arrow-3` - group
-    - `pipeline-arrow-3-shaft` - path
-    - `pipeline-arrow-3-tip` - path
-  - `pipeline-4` - group
-    - `pipeline-4-box` - rect x=1182, y=186, width=96, height=58, rx=8
-    - `pipeline-4-text-1` - text "Model calibration"
-  - `pipeline-arrow-4` - group
-    - `pipeline-arrow-4-shaft` - path
-    - `pipeline-arrow-4-tip` - path
-  - `pipeline-5` - group
-    - `pipeline-5-box` - rect x=1290, y=186, width=96, height=58, rx=8
-    - `pipeline-5-text-1` - text "Quality prediction"
-  - `spectra` - group
-    - `spectra-bg` - rect x=858, y=268, width=484, height=152, rx=9
-    - `spectra-title` - text "Spectral profiles"
-    - `spectra-x` - path
-    - `spectra-y` - path
-    - `spectra-curve-a` - path
-    - `spectra-curve-b` - path
-    - `spectra-curve-c` - path
-  - `calibration` - group
-    - `calibration-bg` - rect x=858, y=436, width=484, height=58, rx=9
-    - `calibration-node-a` - ellipse cx=884, cy=465, rx=13, ry=13
-    - `calibration-node-b` - ellipse cx=936, cy=465, rx=13, ry=13
-    - `calibration-node-c` - ellipse cx=910, cy=448, rx=13, ry=13
-    - `calibration-edge-1` - path
-    - `calibration-edge-2` - path
-    - `calibration-title` - text "Calibrated model"
-    - `calibration-note` - text "fitted on paired spectra and reference assays"
-  - `individual` - group
-    - `individual-bg` - rect x=858, y=512, width=234, height=224, rx=9
-    - `individual-title` - text "Individual Fruit"
-    - `individual-fruit` - group
-      - `individual-fruit-body` - ellipse cx=884, cy=570, rx=18, ry=16.92
-      - `individual-fruit-calyx` - path
-      - `individual-fruit-shine` - ellipse cx=877.88, cy=562.8, rx=4.68, ry=2.88
-    - `individual-label-1` - text "SSC"
-    - `individual-track-1` - rect x=912, y=575, width=160, height=6, rx=3
-    - `individual-bar-1` - rect x=912, y=575, width=118.4, height=6, rx=3
-    - `individual-label-2` - text "TA"
-    - `individual-track-2` - rect x=912, y=611, width=160, height=6, rx=3
-    - `individual-bar-2` - rect x=912, y=611, width=76.8, height=6, rx=3
-    - `individual-label-3` - text "Firmness"
-    - `individual-track-3` - rect x=912, y=647, width=160, height=6, rx=3
-    - `individual-bar-3` - rect x=912, y=647, width=99.2, height=6, rx=3
-    - `individual-label-4` - text "Quality profile"
-    - `individual-track-4` - rect x=912, y=683, width=160, height=6, rx=3
-    - `individual-bar-4` - rect x=912, y=683, width=131.2, height=6, rx=3
-    - `individual-note` - text "Predicted per fruit; no numeric claims"
-  - `batch` - group
-    - `batch-bg` - rect x=1108, y=512, width=234, height=224, rx=9
-    - `batch-title` - text "Batch Assessment"
-    - `batch-axis` - path
-    - `batch-bar-1` - rect x=1128, y=618.88, width=8, height=21.12, rx=2
-    - `batch-bar-2` - rect x=1141, y=603.52, width=8, height=36.48, rx=2
-    - `batch-bar-3` - rect x=1154, y=587.2, width=8, height=52.8, rx=2
-    - `batch-bar-4` - rect x=1167, y=570.88, width=8, height=69.12, rx=2
-    - `batch-bar-5` - rect x=1180, y=557.44, width=8, height=82.56, rx=2
-    - `batch-bar-6` - rect x=1193, y=576.64, width=8, height=63.36, rx=2
-    - `batch-bar-7` - rect x=1206, y=595.84, width=8, height=44.16, rx=2
-    - `batch-bar-8` - rect x=1219, y=611.2, width=8, height=28.8, rx=2
-    - `batch-curve` - path
-    - `batch-mean-1` - path
-    - `batch-mean-2` - path
-    - `batch-mean-3` - path
-    - `batch-mean-label` - text "mean"
-    - `batch-axis-label` - text "fruit-to-fruit variation"
-    - `batch-donut` - ellipse cx=1290, cy=594, rx=32, ry=32
-    - `batch-donut-qualified` - path
-    - `batch-donut-label` - text "qualified"
-    - `batch-proportion` - text "proportion"
-    - `batch-count-note` - text "Counts and shares are illustrative"
-    - `batch-note` - text "and require measured batch data"
-  - `validation-loop` - group
-    - `loop-bg` - rect x=858, y=756, width=484, height=132, rx=9
-    - `loop-title` - text "Calibration and independent validation"
-    - `loop-chip-1` - rect x=872, y=796, width=93.0361, height=24, rx=6
-    - `loop-text-1` - text "Reference assays"
-    - `loop-chip-2` - rect x=989.036, y=796, width=65.9502, height=24, rx=6
-    - `loop-text-2` - text "Paired data"
-    - `loop-chip-3` - rect x=1078.99, y=796, width=88.8711, height=24, rx=6
-    - `loop-text-3` - text "Model calibration"
-    - `loop-chip-4` - rect x=1191.86, y=796, width=71.668, height=24, rx=6
-    - `loop-text-4` - text "Held-out fruit"
-    - `loop-arrow-1` - group
-      - `loop-arrow-1-shaft` - path
-      - `loop-arrow-1-tip` - path
-    - `loop-arrow-2` - group
-      - `loop-arrow-2-shaft` - path
-      - `loop-arrow-2-tip` - path
-    - `loop-arrow-3` - group
-      - `loop-arrow-3-shaft` - path
-      - `loop-arrow-3-tip` - path
-    - `loop-return` - group
-      - `loop-return-shaft` - path
-      - `loop-return-tip` - path
-    - `loop-return-label` - text "validation error returns to the model"
-
-## connections
-
-- `connections` - group
-  - `flow-a-b` - group
-    - `flow-a-b-shaft` - path
-    - `flow-a-b-tip` - path
-  - `flow-b-c` - group
-    - `flow-b-c-shaft` - path
-    - `flow-b-c-tip` - path
-  - `flow-b-d` - group
-    - `flow-b-d-shaft` - path
-    - `flow-b-d-tip` - path
-  - `flow-c-d-run` - path
-  - `flow-c-d-rise` - path
-  - `flow-c-d` - group
-    - `flow-c-d-shaft` - path
-    - `flow-c-d-tip` - path
-  - `flow-c-d-label` - text "reference assays"
+- `heading` — group
+  - `figure-title` — Non-destructive assessment of citrus fruit quality
+  - `title-rule` — path
+- `orchard` — group
+  - `orchard-panel` — rect
+  - `orchard-letter-bg` — ellipse
+  - `orchard-letter` — A
+  - `orchard-title` — Orchard sampling
+  - `orchard-caption` — Sample across maturity stages
+  - `fruiting-branch` — group
+    - `branch-main` — path
+    - `branch-shoots` — path
+    - `branch-leaf-left-upper` — group
+      - `branch-leaf-left-upper-blade` — path
+      - `branch-leaf-left-upper-midrib` — path
+      - `branch-leaf-left-upper-veins-1` — path
+      - `branch-leaf-left-upper-veins-2` — path
+      - `branch-leaf-left-upper-veins-3` — path
+    - `branch-leaf-left` — group
+      - `branch-leaf-left-blade` — path
+      - `branch-leaf-left-midrib` — path
+      - `branch-leaf-left-veins-1` — path
+      - `branch-leaf-left-veins-2` — path
+      - `branch-leaf-left-veins-3` — path
+    - `branch-leaf-middle-upper` — group
+      - `branch-leaf-middle-upper-blade` — path
+      - `branch-leaf-middle-upper-midrib` — path
+      - `branch-leaf-middle-upper-veins-1` — path
+      - `branch-leaf-middle-upper-veins-2` — path
+      - `branch-leaf-middle-upper-veins-3` — path
+    - `branch-leaf-upper` — group
+      - `branch-leaf-upper-blade` — path
+      - `branch-leaf-upper-midrib` — path
+      - `branch-leaf-upper-veins-1` — path
+      - `branch-leaf-upper-veins-2` — path
+      - `branch-leaf-upper-veins-3` — path
+    - `branch-leaf-centre` — group
+      - `branch-leaf-centre-blade` — path
+      - `branch-leaf-centre-midrib` — path
+      - `branch-leaf-centre-veins-1` — path
+      - `branch-leaf-centre-veins-2` — path
+      - `branch-leaf-centre-veins-3` — path
+    - `branch-leaf-right` — group
+      - `branch-leaf-right-blade` — path
+      - `branch-leaf-right-midrib` — path
+      - `branch-leaf-right-veins-1` — path
+      - `branch-leaf-right-veins-2` — path
+      - `branch-leaf-right-veins-3` — path
+    - `branch-leaf-lower` — group
+      - `branch-leaf-lower-blade` — path
+      - `branch-leaf-lower-midrib` — path
+      - `branch-leaf-lower-veins-1` — path
+      - `branch-leaf-lower-veins-2` — path
+      - `branch-leaf-lower-veins-3` — path
+    - `branch-leaf-tip` — group
+      - `branch-leaf-tip-blade` — path
+      - `branch-leaf-tip-midrib` — path
+      - `branch-leaf-tip-veins-1` — path
+      - `branch-leaf-tip-veins-2` — path
+      - `branch-leaf-tip-veins-3` — path
+    - `branch-green-fruit` — group
+      - `branch-green-fruit-skin` — path
+      - `branch-green-fruit-stem` — path
+      - `branch-green-fruit-calyx` — path
+      - `branch-green-fruit-light` — ellipse
+      - `branch-green-fruit-pore-1` — ellipse
+      - `branch-green-fruit-pore-2` — ellipse
+      - `branch-green-fruit-pore-3` — ellipse
+      - `branch-green-fruit-pore-4` — ellipse
+      - `branch-green-fruit-pore-5` — ellipse
+      - `branch-green-fruit-pore-6` — ellipse
+      - `branch-green-fruit-pore-7` — ellipse
+      - `branch-green-fruit-pore-8` — ellipse
+      - `branch-green-fruit-pore-9` — ellipse
+      - `branch-green-fruit-pore-10` — ellipse
+      - `branch-green-fruit-pore-11` — ellipse
+      - `branch-green-fruit-pore-12` — ellipse
+      - `branch-green-fruit-pore-13` — ellipse
+      - `branch-green-fruit-pore-14` — ellipse
+      - `branch-green-fruit-pore-15` — ellipse
+    - `branch-turning-fruit` — group
+      - `branch-turning-fruit-skin` — path
+      - `branch-turning-fruit-stem` — path
+      - `branch-turning-fruit-calyx` — path
+      - `branch-turning-fruit-light` — ellipse
+      - `branch-turning-fruit-pore-1` — ellipse
+      - `branch-turning-fruit-pore-2` — ellipse
+      - `branch-turning-fruit-pore-3` — ellipse
+      - `branch-turning-fruit-pore-4` — ellipse
+      - `branch-turning-fruit-pore-5` — ellipse
+      - `branch-turning-fruit-pore-6` — ellipse
+      - `branch-turning-fruit-pore-7` — ellipse
+      - `branch-turning-fruit-pore-8` — ellipse
+      - `branch-turning-fruit-pore-9` — ellipse
+      - `branch-turning-fruit-pore-10` — ellipse
+      - `branch-turning-fruit-pore-11` — ellipse
+      - `branch-turning-fruit-pore-12` — ellipse
+      - `branch-turning-fruit-pore-13` — ellipse
+      - `branch-turning-fruit-pore-14` — ellipse
+      - `branch-turning-fruit-pore-15` — ellipse
+    - `branch-ripe-fruit` — group
+      - `branch-ripe-fruit-skin` — path
+      - `branch-ripe-fruit-stem` — path
+      - `branch-ripe-fruit-calyx` — path
+      - `branch-ripe-fruit-light` — ellipse
+      - `branch-ripe-fruit-pore-1` — ellipse
+      - `branch-ripe-fruit-pore-2` — ellipse
+      - `branch-ripe-fruit-pore-3` — ellipse
+      - `branch-ripe-fruit-pore-4` — ellipse
+      - `branch-ripe-fruit-pore-5` — ellipse
+      - `branch-ripe-fruit-pore-6` — ellipse
+      - `branch-ripe-fruit-pore-7` — ellipse
+      - `branch-ripe-fruit-pore-8` — ellipse
+      - `branch-ripe-fruit-pore-9` — ellipse
+      - `branch-ripe-fruit-pore-10` — ellipse
+      - `branch-ripe-fruit-pore-11` — ellipse
+      - `branch-ripe-fruit-pore-12` — ellipse
+      - `branch-ripe-fruit-pore-13` — ellipse
+      - `branch-ripe-fruit-pore-14` — ellipse
+      - `branch-ripe-fruit-pore-15` — ellipse
+  - `maturity-swatch-1` — ellipse
+  - `maturity-label-1` — Green
+  - `maturity-swatch-2` — ellipse
+  - `maturity-label-2` — Turning
+  - `maturity-swatch-3` — ellipse
+  - `maturity-label-3` — Ripe
+  - `harvest` — group
+    - `harvest-shaft` — path
+    - `harvest-tip` — path
+  - `sampling-crate` — group
+    - `crate-shadow` — ellipse
+    - `crate-back` — path
+    - `crate-green-fruit` — group
+      - `crate-green-fruit-skin` — path
+      - `crate-green-fruit-stem` — path
+      - `crate-green-fruit-calyx` — path
+      - `crate-green-fruit-light` — ellipse
+      - `crate-green-fruit-pore-1` — ellipse
+      - `crate-green-fruit-pore-2` — ellipse
+      - `crate-green-fruit-pore-3` — ellipse
+      - `crate-green-fruit-pore-4` — ellipse
+      - `crate-green-fruit-pore-5` — ellipse
+      - `crate-green-fruit-pore-6` — ellipse
+      - `crate-green-fruit-pore-7` — ellipse
+      - `crate-green-fruit-pore-8` — ellipse
+      - `crate-green-fruit-pore-9` — ellipse
+      - `crate-green-fruit-pore-10` — ellipse
+      - `crate-green-fruit-pore-11` — ellipse
+      - `crate-green-fruit-pore-12` — ellipse
+      - `crate-green-fruit-pore-13` — ellipse
+      - `crate-green-fruit-pore-14` — ellipse
+      - `crate-green-fruit-pore-15` — ellipse
+    - `crate-turning-fruit` — group
+      - `crate-turning-fruit-skin` — path
+      - `crate-turning-fruit-stem` — path
+      - `crate-turning-fruit-calyx` — path
+      - `crate-turning-fruit-light` — ellipse
+      - `crate-turning-fruit-pore-1` — ellipse
+      - `crate-turning-fruit-pore-2` — ellipse
+      - `crate-turning-fruit-pore-3` — ellipse
+      - `crate-turning-fruit-pore-4` — ellipse
+      - `crate-turning-fruit-pore-5` — ellipse
+      - `crate-turning-fruit-pore-6` — ellipse
+      - `crate-turning-fruit-pore-7` — ellipse
+      - `crate-turning-fruit-pore-8` — ellipse
+      - `crate-turning-fruit-pore-9` — ellipse
+      - `crate-turning-fruit-pore-10` — ellipse
+      - `crate-turning-fruit-pore-11` — ellipse
+      - `crate-turning-fruit-pore-12` — ellipse
+      - `crate-turning-fruit-pore-13` — ellipse
+      - `crate-turning-fruit-pore-14` — ellipse
+      - `crate-turning-fruit-pore-15` — ellipse
+    - `crate-ripe-fruit` — group
+      - `crate-ripe-fruit-skin` — path
+      - `crate-ripe-fruit-stem` — path
+      - `crate-ripe-fruit-calyx` — path
+      - `crate-ripe-fruit-light` — ellipse
+      - `crate-ripe-fruit-pore-1` — ellipse
+      - `crate-ripe-fruit-pore-2` — ellipse
+      - `crate-ripe-fruit-pore-3` — ellipse
+      - `crate-ripe-fruit-pore-4` — ellipse
+      - `crate-ripe-fruit-pore-5` — ellipse
+      - `crate-ripe-fruit-pore-6` — ellipse
+      - `crate-ripe-fruit-pore-7` — ellipse
+      - `crate-ripe-fruit-pore-8` — ellipse
+      - `crate-ripe-fruit-pore-9` — ellipse
+      - `crate-ripe-fruit-pore-10` — ellipse
+      - `crate-ripe-fruit-pore-11` — ellipse
+      - `crate-ripe-fruit-pore-12` — ellipse
+      - `crate-ripe-fruit-pore-13` — ellipse
+      - `crate-ripe-fruit-pore-14` — ellipse
+      - `crate-ripe-fruit-pore-15` — ellipse
+    - `crate-front-fruit` — group
+      - `crate-front-fruit-skin` — path
+      - `crate-front-fruit-stem` — path
+      - `crate-front-fruit-calyx` — path
+      - `crate-front-fruit-light` — ellipse
+      - `crate-front-fruit-pore-1` — ellipse
+      - `crate-front-fruit-pore-2` — ellipse
+      - `crate-front-fruit-pore-3` — ellipse
+      - `crate-front-fruit-pore-4` — ellipse
+      - `crate-front-fruit-pore-5` — ellipse
+      - `crate-front-fruit-pore-6` — ellipse
+      - `crate-front-fruit-pore-7` — ellipse
+      - `crate-front-fruit-pore-8` — ellipse
+      - `crate-front-fruit-pore-9` — ellipse
+      - `crate-front-fruit-pore-10` — ellipse
+      - `crate-front-fruit-pore-11` — ellipse
+      - `crate-front-fruit-pore-12` — ellipse
+      - `crate-front-fruit-pore-13` — ellipse
+      - `crate-front-fruit-pore-14` — ellipse
+      - `crate-front-fruit-pore-15` — ellipse
+    - `crate-front` — path
+    - `crate-plank-gap` — path
+    - `crate-front-lip` — path
+    - `crate-handle` — rect
+    - `crate-tag-string` — path
+    - `crate-tag` — rect
+    - `crate-tag-id` — C-01
+  - `orchard-output` — Label each fruit
+  - `orchard-output-note` — Keep its ID with every record
+- `optical-scan` — group
+  - `optical-scan-panel` — rect
+  - `optical-scan-letter-bg` — ellipse
+  - `optical-scan-letter` — B
+  - `optical-scan-title` — Whole-fruit optical scan
+  - `scan-caption` — Record the spectrum from the intact fruit
+  - `optical-station` — group
+    - `station-shadow` — ellipse
+    - `station-frame` — path
+    - `station-frame-light` — path
+    - `station-probe` — rect
+    - `station-probe-window` — rect
+    - `incident-light` — path
+    - `incident-ray` — path
+    - `return-ray` — path
+    - `sample-seat` — ellipse
+    - `sample-seat-top` — ellipse
+    - `scanned-fruit` — group
+      - `scanned-fruit-skin` — path
+      - `scanned-fruit-stem` — path
+      - `scanned-fruit-calyx` — path
+      - `scanned-fruit-light` — ellipse
+      - `scanned-fruit-pore-1` — ellipse
+      - `scanned-fruit-pore-2` — ellipse
+      - `scanned-fruit-pore-3` — ellipse
+      - `scanned-fruit-pore-4` — ellipse
+      - `scanned-fruit-pore-5` — ellipse
+      - `scanned-fruit-pore-6` — ellipse
+      - `scanned-fruit-pore-7` — ellipse
+      - `scanned-fruit-pore-8` — ellipse
+      - `scanned-fruit-pore-9` — ellipse
+      - `scanned-fruit-pore-10` — ellipse
+      - `scanned-fruit-pore-11` — ellipse
+      - `scanned-fruit-pore-12` — ellipse
+      - `scanned-fruit-pore-13` — ellipse
+      - `scanned-fruit-pore-14` — ellipse
+      - `scanned-fruit-pore-15` — ellipse
+    - `station-base` — rect
+    - `station-base-light` — rect
+    - `station-led` — ellipse
+  - `station-to-record` — group
+    - `station-to-record-shaft` — path
+    - `station-to-record-tip` — path
+  - `spectrum-record` — group
+    - `spectrum-record-sheet` — rect
+    - `spectrum-record-title` — Spectrum record
+    - `spectrum-record-rule` — path
+    - `spectrum-field-1` — Fruit ID
+    - `spectrum-field-2` — Scan
+    - `spectrum-id-chip` — rect
+    - `spectrum-id` — C-01
+    - `spectrum-channel-1` — rect
+    - `spectrum-channel-2` — rect
+    - `spectrum-channel-3` — rect
+    - `spectrum-channel-4` — rect
+    - `spectrum-channel-5` — rect
+  - `optical-station-label` — Optical probe
+- `lab` — group
+  - `lab-panel` — rect
+  - `lab-letter-bg` — ellipse
+  - `lab-letter` — C
+  - `lab-title` — Reference quality assays
+  - `lab-caption` — Assay selected fruit after scanning
+  - `lab-bench` — path
+  - `sample-dish` — group
+    - `dish-shadow` — ellipse
+    - `dish-rim` — ellipse
+    - `dish-inner` — ellipse
+    - `citrus-slice` — group
+      - `slice-peel-side` — ellipse
+      - `slice-peel` — ellipse
+      - `slice-pith` — ellipse
+      - `slice-segment-1` — path
+      - `slice-vesicle-1-1` — ellipse
+      - `slice-vesicle-1-2` — ellipse
+      - `slice-segment-2` — path
+      - `slice-vesicle-2-1` — ellipse
+      - `slice-vesicle-2-2` — ellipse
+      - `slice-segment-3` — path
+      - `slice-vesicle-3-1` — ellipse
+      - `slice-vesicle-3-2` — ellipse
+      - `slice-segment-4` — path
+      - `slice-vesicle-4-1` — ellipse
+      - `slice-vesicle-4-2` — ellipse
+      - `slice-segment-5` — path
+      - `slice-vesicle-5-1` — ellipse
+      - `slice-vesicle-5-2` — ellipse
+      - `slice-segment-6` — path
+      - `slice-vesicle-6-1` — ellipse
+      - `slice-vesicle-6-2` — ellipse
+      - `slice-segment-7` — path
+      - `slice-vesicle-7-1` — ellipse
+      - `slice-vesicle-7-2` — ellipse
+      - `slice-segment-8` — path
+      - `slice-vesicle-8-1` — ellipse
+      - `slice-vesicle-8-2` — ellipse
+      - `slice-core` — ellipse
+  - `refractometer` — group
+    - `refractometer-side` — path
+    - `refractometer-top` — path
+    - `refractometer-screen` — path
+    - `refractometer-sample-well` — ellipse
+    - `refractometer-droplet` — path
+    - `refractometer-button` — rect
+  - `titration` — group
+    - `titration-stand-base` — rect
+    - `titration-stand-pole` — path
+    - `titration-clamp` — path
+    - `burette-tube` — rect
+    - `burette-fluid` — rect
+    - `burette-mark-1` — path
+    - `burette-mark-2` — path
+    - `burette-mark-3` — path
+    - `burette-mark-4` — path
+    - `burette-tip` — path
+    - `burette-stopcock` — path
+    - `titration-flask` — path
+    - `titration-liquid` — path
+  - `lab-label-slice` — Sample prep
+  - `lab-label-refractometer` — Soluble solids
+  - `lab-label-titration` — Titratable acidity
+  - `assay-output-box` — rect
+  - `assay-output-label` — Reference measurements
+  - `assay-output-id` — C-01
+- `modelling` — group
+  - `modelling-panel` — rect
+  - `modelling-letter-bg` — ellipse
+  - `modelling-letter` — D
+  - `modelling-title` — Model and predict
+  - `pairing-title` — Match records by fruit ID
+  - `paired-records` — group
+    - `paired-spectra` — rect
+    - `paired-spectra-tag` — rect
+    - `paired-spectra-id` — C-01
+    - `paired-spectra-label` — Spectrum record
+    - `paired-assays` — rect
+    - `paired-assays-tag` — rect
+    - `paired-assays-id` — C-01
+    - `paired-assays-label` — Reference measurements
+    - `paired-id-link` — path
+  - `split-caption` — Split by fruit
+  - `split-stem` — path
+  - `split-branch` — path
+  - `split-calibration` — group
+    - `split-calibration-shaft` — path
+    - `split-calibration-tip` — path
+  - `split-validation` — group
+    - `split-validation-shaft` — path
+    - `split-validation-tip` — path
+  - `calibrate-box` — rect
+  - `calibrate-title` — Fit model
+  - `calibrate-input` — Calibration fruit
+  - `calibrate-comparison` — Spectra + assays
+  - `validate-box` — rect
+  - `validate-title` — Validate model
+  - `validate-input` — Held-out fruit
+  - `validate-comparison` — Prediction vs. assay
+  - `model-to-validation` — group
+    - `model-to-validation-shaft` — path
+    - `model-to-validation-tip` — path
+  - `validation-to-deployment` — group
+    - `validation-to-deployment-shaft` — path
+    - `validation-to-deployment-tip` — path
+  - `prediction-banner` — rect
+  - `prediction-title` — Predict quality from new scans
+  - `output-split-stem` — path
+  - `output-split-branch` — path
+  - `prediction-to-individual` — group
+    - `prediction-to-individual-shaft` — path
+    - `prediction-to-individual-tip` — path
+  - `individual-box` — rect
+  - `individual-title` — Individual fruit
+  - `individual-note` — Predicted traits
+  - `prediction-to-batch` — group
+    - `prediction-to-batch-shaft` — path
+    - `prediction-to-batch-tip` — path
+  - `batch-box` — rect
+  - `batch-title` — Batch assessment
+  - `batch-note` — Quality summary
+  - `prediction-fruit` — group
+    - `prediction-fruit-skin` — path
+    - `prediction-fruit-stem` — path
+    - `prediction-fruit-calyx` — path
+    - `prediction-fruit-light` — ellipse
+    - `prediction-fruit-pore-1` — ellipse
+    - `prediction-fruit-pore-2` — ellipse
+    - `prediction-fruit-pore-3` — ellipse
+    - `prediction-fruit-pore-4` — ellipse
+    - `prediction-fruit-pore-5` — ellipse
+    - `prediction-fruit-pore-6` — ellipse
+    - `prediction-fruit-pore-7` — ellipse
+    - `prediction-fruit-pore-8` — ellipse
+    - `prediction-fruit-pore-9` — ellipse
+    - `prediction-fruit-pore-10` — ellipse
+    - `prediction-fruit-pore-11` — ellipse
+    - `prediction-fruit-pore-12` — ellipse
+    - `prediction-fruit-pore-13` — ellipse
+    - `prediction-fruit-pore-14` — ellipse
+    - `prediction-fruit-pore-15` — ellipse
+  - `prediction-report` — rect
+  - `prediction-report-bullet-1` — ellipse
+  - `prediction-report-line-1` — path
+  - `prediction-report-bullet-2` — ellipse
+  - `prediction-report-line-2` — path
+  - `prediction-report-bullet-3` — ellipse
+  - `prediction-report-line-3` — path
+  - `batch-fruit-1` — group
+    - `batch-fruit-1-skin` — path
+    - `batch-fruit-1-stem` — path
+    - `batch-fruit-1-calyx` — path
+    - `batch-fruit-1-light` — ellipse
+    - `batch-fruit-1-pore-1` — ellipse
+    - `batch-fruit-1-pore-2` — ellipse
+    - `batch-fruit-1-pore-3` — ellipse
+    - `batch-fruit-1-pore-4` — ellipse
+    - `batch-fruit-1-pore-5` — ellipse
+    - `batch-fruit-1-pore-6` — ellipse
+    - `batch-fruit-1-pore-7` — ellipse
+    - `batch-fruit-1-pore-8` — ellipse
+    - `batch-fruit-1-pore-9` — ellipse
+    - `batch-fruit-1-pore-10` — ellipse
+    - `batch-fruit-1-pore-11` — ellipse
+    - `batch-fruit-1-pore-12` — ellipse
+    - `batch-fruit-1-pore-13` — ellipse
+    - `batch-fruit-1-pore-14` — ellipse
+    - `batch-fruit-1-pore-15` — ellipse
+  - `batch-fruit-2` — group
+    - `batch-fruit-2-skin` — path
+    - `batch-fruit-2-stem` — path
+    - `batch-fruit-2-calyx` — path
+    - `batch-fruit-2-light` — ellipse
+    - `batch-fruit-2-pore-1` — ellipse
+    - `batch-fruit-2-pore-2` — ellipse
+    - `batch-fruit-2-pore-3` — ellipse
+    - `batch-fruit-2-pore-4` — ellipse
+    - `batch-fruit-2-pore-5` — ellipse
+    - `batch-fruit-2-pore-6` — ellipse
+    - `batch-fruit-2-pore-7` — ellipse
+    - `batch-fruit-2-pore-8` — ellipse
+    - `batch-fruit-2-pore-9` — ellipse
+    - `batch-fruit-2-pore-10` — ellipse
+    - `batch-fruit-2-pore-11` — ellipse
+    - `batch-fruit-2-pore-12` — ellipse
+    - `batch-fruit-2-pore-13` — ellipse
+    - `batch-fruit-2-pore-14` — ellipse
+    - `batch-fruit-2-pore-15` — ellipse
+  - `batch-fruit-3` — group
+    - `batch-fruit-3-skin` — path
+    - `batch-fruit-3-stem` — path
+    - `batch-fruit-3-calyx` — path
+    - `batch-fruit-3-light` — ellipse
+    - `batch-fruit-3-pore-1` — ellipse
+    - `batch-fruit-3-pore-2` — ellipse
+    - `batch-fruit-3-pore-3` — ellipse
+    - `batch-fruit-3-pore-4` — ellipse
+    - `batch-fruit-3-pore-5` — ellipse
+    - `batch-fruit-3-pore-6` — ellipse
+    - `batch-fruit-3-pore-7` — ellipse
+    - `batch-fruit-3-pore-8` — ellipse
+    - `batch-fruit-3-pore-9` — ellipse
+    - `batch-fruit-3-pore-10` — ellipse
+    - `batch-fruit-3-pore-11` — ellipse
+    - `batch-fruit-3-pore-12` — ellipse
+    - `batch-fruit-3-pore-13` — ellipse
+    - `batch-fruit-3-pore-14` — ellipse
+    - `batch-fruit-3-pore-15` — ellipse
+  - `batch-tray` — path
+- `inter-panel-flow` — group
+  - `sampling-to-scan` — group
+    - `sampling-to-scan-shaft` — path
+    - `sampling-to-scan-tip` — path
+  - `scan-to-assay` — group
+    - `scan-to-assay-shaft` — path
+    - `scan-to-assay-tip` — path
+  - `spectra-to-pairing` — group
+    - `spectra-to-pairing-shaft` — path
+    - `spectra-to-pairing-tip` — path
+  - `assays-to-pairing` — group
+    - `assays-to-pairing-shaft` — path
+    - `assays-to-pairing-tip` — path
