@@ -9,16 +9,6 @@
 
 ## 结果
 
-### 多组学 xQTL 参考图重绘（新）
-
-一张四分区植物基因组图：GWAS/QTL 与关联分析、关联作图时间线、xQTL 分子数据、候选基因整合。重绘保留了全部分区结构、表内基因型、时间线气泡数值与物种图例、C 区每个方法标签、D 区八种 xQTL 与工具列。
-
-| 完整参考图 | 整图矢量重绘 |
-|---|---|
-| [![xQTL 参考图](examples/genomics-prioritization/reference.png)](examples/genomics-prioritization/reference.png) | [![xQTL 重绘预览](examples/genomics-prioritization/redraw.png)](examples/genomics-prioritization/redraw.svg) |
-
-[可编辑 SVG](examples/genomics-prioritization/redraw.svg) · [PNG](examples/genomics-prioritization/redraw.png) · [绘图程序](examples/genomics-prioritization/draw.py) · [对象 ID 清单](examples/genomics-prioritization/OBJECTS.md) · [质量复核](examples/genomics-prioritization/QA.md)
-
 ### 柑橘无损品质评价（新，自然语言）
 
 只给一段描述，不给参考图：果园取样 → 无损检测 → 参考品质测定 → 数据分析与品质预测。图中没有编造 R²、RMSE、波长、仪器型号或性能数值；比例尺仅为示意，批量统计明确标注为示意。
