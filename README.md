@@ -1,52 +1,82 @@
-# 还在为科研绘图而烦恼么？推荐使用 Scientific Figure Reconstruction & Drawing Skill
+# Scientific Figure Reconstruction & Drawing Skill
 
-这是一个独立的科研绘图 Skill。可以根据参考图重绘，也可以根据一段自然语言描述设计新图，交付可编辑的 SVG 和 PNG 预览。可以用截图指定要修改的局部，也可以先绘制需要的素材，再自行排版。
+一个独立的科研绘图 Skill：根据参考图重绘，或根据自然语言描述设计新图。交付可编辑的 SVG 和 PNG 预览，也可以用截图指出需要修改的局部。
 
-## 结果
+A standalone skill for redrawing scientific figures from references and creating new figures from natural-language descriptions. It delivers editable SVGs and PNG previews. Use a screenshot to identify any region you want revised.
+
+## 示例 / Examples
 
 ### 柑橘无损品质评价
 
-**本次重绘使用的自然语言提示词**
+*Non-destructive assessment of citrus fruit quality*
+
+**本次绘图提示词（中文原文） / Drawing prompt for the new figure (original Chinese)**
 
 > 绘制一张横向科研示意图，说明如何从果园取样到无损预测柑橘品质。画出挂有不同成熟阶段果实的柑橘枝条和取样箱，为每个果实分配编号。用光学探头扫描完整果实，保存带编号的光谱记录。扫描后，从同一批果实中选取样品做参考测定，以可溶性固形物和可滴定酸为例。用相同的果实编号连接光谱和参考测定记录，按果实划分校准集和独立验证集，然后用模型预测新果实的品质，展示单果预测和批次评价两种输出。用清晰的英文标签和箭头串起四个模块，采用浅色底和植物学插画风格，交付可编辑的矢量图。
 
-![柑橘无损品质评价示意图](examples/citrus-quality/citrus-quality.png)
+**English translation / 英文译文**
 
-[可编辑 SVG](examples/citrus-quality/citrus-quality.svg) · [Scene 工程文件](examples/citrus-quality/citrus-quality.scene.json) · [绘图程序](examples/citrus-quality/draw.py) · [对象清单](examples/citrus-quality/OBJECTS.md)
+> Draw a landscape scientific schematic that explains how citrus quality is predicted non-destructively, from orchard sampling through prediction. Show a citrus branch with fruit at different stages of maturity and a sampling crate, and assign each fruit an ID. Scan the intact fruit with an optical probe and store the spectra with their fruit IDs. After scanning, select fruit from the same batch for reference assays, using soluble solids and titratable acidity as examples. Match the spectral and reference records by fruit ID, split by fruit into calibration and independent validation sets, then use the model to predict fruit quality from new scans. Show two outputs: individual-fruit predictions and batch assessment. Use clear English labels and arrows to connect the four modules, with a light background and a botanical illustration style. Deliver an editable vector figure.
 
-### v0.8 科研示意图整图重绘
+**新版 / Current drawing**
 
-| 完整参考图 | 整图重绘 |
+[![新版柑橘品质评价图 / Current citrus quality workflow](examples/citrus-quality/citrus-quality.png)](examples/citrus-quality/citrus-quality.svg)
+
+[可编辑 SVG / Editable SVG](examples/citrus-quality/citrus-quality.svg) · [Scene 工程 / Scene project](examples/citrus-quality/citrus-quality.scene.json) · [绘图程序 / Drawing script](examples/citrus-quality/draw.py) · [对象清单 / Object inventory](examples/citrus-quality/OBJECTS.md)
+
+**旧版 / Original drawing**
+
+![旧版柑橘品质评价图 / Original citrus quality workflow](examples/citrus-quality/previous.png)
+
+#### 同一提示词：高能力模型与轻量模型 / Same prompt: higher-capability vs. lightweight model
+
+下面是独立生成的两张新图。两种模型使用同一份[中文提示词](examples/citrus-quality/PROMPT.md)和同一个绘图引擎，各运行一次，均未看到上面两张图。旧版仅用于版本对照，不属于这组模型对比。
+
+These are two independent runs using the same [Chinese prompt](examples/citrus-quality/PROMPT.md) and drawing engine, with neither of the images above supplied as a reference. The original drawing is shown for version comparison only and is not part of this model comparison.
+
+**Claude Opus 5.5 — 高能力模型 / Higher-capability model**
+
+[![Opus 5.5 绘图结果 / Opus 5.5 drawing](examples/citrus-quality/comparison/opus.png)](examples/citrus-quality/comparison/opus.svg)
+
+[可编辑 SVG / Editable SVG](examples/citrus-quality/comparison/opus.svg) · [绘图程序 / Drawing script](examples/citrus-quality/comparison/opus.py)
+
+**Claude Haiku 5.5 — 轻量模型 / Lightweight model**
+
+[![Haiku 5.5 绘图结果 / Haiku 5.5 drawing](examples/citrus-quality/comparison/haiku.png)](examples/citrus-quality/comparison/haiku.svg)
+
+[可编辑 SVG / Editable SVG](examples/citrus-quality/comparison/haiku.svg) · [绘图程序 / Drawing script](examples/citrus-quality/comparison/haiku.py)
+
+### v0.8 科研示意图整图重绘 / Full scientific schematic redraw
+
+| 完整参考图 / Full reference | 整图重绘 / Redraw |
 |---|---|
-| [![完整参考图](examples/v0.8/reference.png)](examples/v0.8/reference.png) | [![v0.8 整图重绘预览](examples/v0.8/full-redraw.png)](examples/v0.8/full-redraw.svg) |
+| [![完整参考图 / Full reference](examples/v0.8/reference.png)](examples/v0.8/reference.png) | [![v0.8 整图重绘预览 / Full v0.8 redraw](examples/v0.8/full-redraw.png)](examples/v0.8/full-redraw.svg) |
 
-[可编辑 SVG](examples/v0.8/full-redraw.svg)
+### 植物细胞氮同化 / Nitrogen assimilation in a plant cell
 
-### 植物细胞氮同化
-
-| 完整参考图 | 整图重绘 |
+| 完整参考图 / Full reference | 整图重绘 / Redraw |
 |---|---|
-| [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
+| [![植物细胞氮同化参考图 / Plant-cell reference](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘 / Plant-cell redraw](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
 
-[可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg)
+### PV2F 植物基因组图 / PV2F plant genome figure
 
-### PV2F 植物基因组图
-
-| 完整参考图 | 整图重绘 |
+| 完整参考图 / Full reference | 整图重绘 / Redraw |
 |---|---|
-| [![PV2F 完整参考图](examples/pv2f/reference.png)](examples/pv2f/reference.png) | [![PV2F 三分区重绘预览](examples/pv2f/redraw.png)](examples/pv2f/redraw.svg) |
+| [![PV2F 完整参考图 / Full PV2F reference](examples/pv2f/reference.png)](examples/pv2f/reference.png) | [![PV2F 三分区重绘 / Three-panel PV2F redraw](examples/pv2f/redraw.png)](examples/pv2f/redraw.svg) |
 
-[可编辑 SVG](examples/pv2f/redraw.svg) · [相关论文（Han 等，*Molecular Plant*，2026）](https://doi.org/10.1016/j.molp.2026.05.014)
+[相关论文 / Source paper: Han et al., *Molecular Plant* (2026)](https://doi.org/10.1016/j.molp.2026.05.014)
 
-> 以上参考图均由用户提供或按用户要求用于对照，权利归各原权利人。仓库的代码许可不适用于参考图；重绘是技术性重建，不构成对原图的再许可。
+## 绘图方式与技术栈 / How it works
 
-## 绘图方式与技术栈
+宿主模型先理解参考图或文字描述，梳理阅读顺序、对象和相互关系。参考图重绘可以按需测量局部轮廓、颜色和位置；根据描述新画时，宿主负责设计版式。两类任务都可用 FigurePlan 组织绘图决策，按对象选用绘图模板、授权素材、基础几何或自定义绘图程序。
 
-宿主模型先读参考图或文字描述，梳理图的阅读顺序、主要对象和相互关系。重绘时按需测量参考图的局部轮廓、颜色和位置。根据描述新画时，宿主负责设计版式和示意表达。两类任务都可用 FigurePlan 组织绘图决策，再按对象选用可复用的绘图模板、授权素材、基础几何或自定义绘图程序。
+The host model interprets the image or text and decides the reading order, objects, and relationships. For a redraw, it can measure local contours, colors, or positions; for a new figure, it designs the layout. Both workflows can organize drawing decisions in FigurePlan and choose among reusable templates, licensed assets, geometric primitives, and custom drawing scripts.
 
-Python 引擎用 Scene 保存图层、形状、连接和可编辑文字。FontTools 用于字体和路径处理，可选的 skia-pathops 用于几何布尔运算，Pillow 和 OpenCV 用于图像读取与局部分析。引擎导出 SVG，再由 resvg 在 CPU 上渲染 PNG。宿主查看实际预览后，可以定位到对象进行局部调整，再导出同一工程。
+Python 引擎用 Scene 保存图层、形状、连接和可编辑文字。FontTools 处理字体与路径，可选的 skia-pathops 处理几何布尔运算，Pillow 和 OpenCV 用于图像读取与局部分析。引擎导出 SVG，由 resvg 在 CPU 上渲染 PNG。宿主检查实际预览后，可以在同一工程里调整指定对象。
 
-## 运行示例
+The Python engine stores layers, shapes, connectors, and editable text in a Scene. It uses FontTools for fonts and paths, optional skia-pathops for Boolean geometry, and Pillow and OpenCV for image handling and local analysis. It exports SVG and uses resvg to render PNG previews on the CPU. The host can inspect the preview and revise specific objects in the same project.
+
+## 运行示例 / Run the examples
 
 ```bash
 python -m pip install ".[dev,construction]"
@@ -60,25 +90,23 @@ python examples/citrus-quality/draw.py work/citrus --scale 2 --deliver examples/
 python examples/structural-regression/run.py work/regression --deliver examples/structural-regression
 ```
 
-柑橘示例输出 `figure.svg`、`preview.png` 和 `scene.json`。宿主指南和两类任务的操作说明见 [SKILL.md](SKILL.md)、[参考图重建](references/reference-reconstruction.md) 和 [自然语言设计](references/text-design.md)。
+柑橘示例输出 `figure.svg`、`preview.png` 和 `scene.json`。
 
-## 目录
+The citrus example writes `figure.svg`, `preview.png`, and `scene.json`.
 
-```text
-SKILL.md                          宿主工作指南
-src/scientific_figure/            引擎、CLI、Schema 与固定 Registry
-references/                       两类任务与构造选择指南
-docs/                             API、依赖、脚本与设计文档
-scripts/                          安装、验证与本地交付脚本
-tests/                            工程行为测试
-examples/citrus-quality/          自然语言示例与绘图程序
-examples/v0.8/                    历史整图重绘与完整参考图
-examples/structural-regression/   跨学科结构回归
-examples/plant-nitrogen-assimilation/、examples/pv2f/  参考图复刻
-```
+[宿主指南 / Skill guide](SKILL.md) · [参考图重建 / Reference reconstruction](references/reference-reconstruction.md) · [自然语言设计 / Text-to-figure design](references/text-design.md)
 
-## 许可
+## 目录 / Repository layout
 
-本仓库代码采用 **PolyForm Noncommercial License 1.0.0**（源码可见、仅限非商业用途），全文见 [LICENSE](LICENSE)。第三方依赖与 Registry 资产遵守各自条款，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+| 路径 / Path | 内容 / Contents |
+|---|---|
+| `src/scientific_figure/` | 引擎、CLI、Schema 与 Registry / Engine, CLI, schemas, and registry |
+| `references/`, `docs/` | 绘图指南与技术文档 / Drawing guides and technical docs |
+| `scripts/`, `tests/` | 安装、验证和工程测试 / Setup, verification, and tests |
+| `examples/` | 自然语言绘图与参考图重绘 / Text-to-figure and reference redraw examples |
 
-参考图不属于代码许可范围：其权利归原作者／出版方，仅用于本仓库的对照展示，不随本仓库授予任何复用许可。商业使用请联系各参考图权利人与本仓库作者。本仓库独立于 QAagent。
+## 许可 / License
+
+仓库代码采用 **PolyForm Noncommercial License 1.0.0**，详见 [LICENSE](LICENSE)。第三方依赖和素材遵守各自条款，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。参考图仅作对照展示，版权归各原权利人，不适用仓库的代码许可。本仓库独立于 QAagent。
+
+Code is available under the **PolyForm Noncommercial License 1.0.0**; see [LICENSE](LICENSE). Third-party dependencies and assets retain their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference images are shown for comparison, remain the property of their respective rights holders, and are not covered by the code license. This repository is independent of QAagent.
