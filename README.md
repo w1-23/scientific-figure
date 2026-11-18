@@ -16,7 +16,7 @@ skill帮你做的是：
 |---|---|
 | [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
 
-修订版重绘了核周内质网的多圈膜带、膜缘和膜面圆点，以及高尔基体的侧壁与堆叠关系。[下载可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg)
+[下载可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg)
 
 ### PV2F 植物基因组图
 
@@ -24,9 +24,7 @@ skill帮你做的是：
 |---|---|
 | [![PV2F 完整参考图](examples/pv2f/reference.png)](examples/pv2f/reference.png) | [![PV2F 三分区重绘预览](examples/pv2f/redraw.png)](examples/pv2f/redraw.svg) |
 
-重绘保留 A 区流程图、B 区水稻遗传变异资源时间线和 C 区冰山图表。A 区微型图标和曲线作了简化，C 区堆叠柱高度及发表量从参考图估读。[下载可编辑 SVG](examples/pv2f/redraw.svg) · [相关论文（Han 等，*Molecular Plant*，2026）](https://doi.org/10.1016/j.molp.2026.05.014)
-
-两张参考图均由用户提供，权利归各原权利人。仓库代码许可不适用于参考图。
+[下载可编辑 SVG](examples/pv2f/redraw.svg) · [相关论文（Han 等，*Molecular Plant*，2026）](https://doi.org/10.1016/j.molp.2026.05.014)
 
 | 能力 | 实际行为 |
 |---|---|
@@ -41,7 +39,6 @@ skill帮你做的是：
 | 同源 PNG | 由同一 SVG 使用 resvg 渲染；不能将测试通过当成视觉或科学正确性 |
 # Scientific Figure Reconstruction & Drawing Skill
 
-
 ## v0.8 整图重绘与完整参考图
 
 以下是 **v0.8 历史整图重绘结果**，。左侧是完整参考图，右侧是使用本引擎完成的整张重绘，包含上方制备／给药流程、右侧肿瘤与血管、左下细胞放大图和底部色板。
@@ -51,14 +48,6 @@ skill帮你做的是：
 | ![完整参考图](examples/v0.8/reference.png) | ![v0.8 整张矢量重绘 SVG](examples/v0.8/full-redraw.svg) |
 
 [查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
-
-SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考位图。ER 形态、小鼠解剖和柔和笔绘边缘仍有近似；原图疑似错字在主结果中保留。参考图的权利归原权利人，本项目不为其授予复用许可；未做领域科学审核。
-
-
-
-本地目录含 15 个 Recipe 族、2 个符号族元数据和 1 个有许可的 Twemoji 柠檬资产。复杂对象结构不匹配时可以直接使用自由程序；没有 mouse/flask/avatar Recipe，不伪造命中。
-
-Scene 是当前几何、文字和样式的唯一权威；Plan、程序、参数和测量为输入快照。加载工程、渲染、Bundle、diff/accept 不运行保存源码。`python -I` 是隔离解释器选项，不是安全沙箱。
 
 ## v0.9 自然语言绘图示例
 
