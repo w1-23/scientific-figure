@@ -48,10 +48,10 @@
         270,
         214
       ],
-      "recall": 0.6803,
-      "mean_offset": 3.297,
+      "recall": 0.6685,
+      "mean_offset": 3.534,
       "notes": [
-        "Mean boundary offset 3.30px exceeds 3.00px."
+        "Mean boundary offset 3.53px exceeds 3.00px."
       ]
     },
     {

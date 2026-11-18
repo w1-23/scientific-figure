@@ -78,6 +78,8 @@ Each binding reports recall, mean offset and region/hole/repetition detail as `p
 
 `scope` decides which reference edges a binding owns: `region` (default) compares every edge in the box; `object` keeps only the edges inside the object's own drawn footprint, so internal cristae, grana and membrane folds are part of recall; `outline` keeps a band around its silhouette, which is the right question for a large fill whose interior belongs to other objects. Without a scope, a cell wall filled with cytoplasm is scored against every organelle drawn inside it.
 
+Edge density is not fidelity. Adding parallel edges or stretching a periodic pattern inside an object raises recall and precision without matching the reference; `object` scope makes that easy to do by accident. A jump in the score is a prompt to look at the preview, and a structure that matches the reference wins over a slightly better number.
+
 For drawing from a scientific description, supply a semantic Plan without `source`, or a normal Scene:
 
 ```bash
