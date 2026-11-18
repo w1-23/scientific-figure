@@ -8,6 +8,26 @@
 skill帮你做的是：
 > 让模型决定怎么画，让引擎负责画好。
 
+## 植物科学参考图复刻示例
+
+### 植物细胞氮同化
+
+| 完整参考图 | 整图重绘 |
+|---|---|
+| [![植物细胞氮同化参考图](examples/plant-nitrogen-assimilation/reference.webp)](examples/plant-nitrogen-assimilation/reference.webp) | [![植物细胞氮同化重绘预览](examples/plant-nitrogen-assimilation/redraw.png)](examples/plant-nitrogen-assimilation/redraw.svg) |
+
+修订版重绘了核周内质网的多圈膜带、膜缘和膜面圆点，以及高尔基体的侧壁与堆叠关系。[下载可编辑 SVG](examples/plant-nitrogen-assimilation/redraw.svg)
+
+### PV2F 植物基因组图
+
+| 完整参考图 | 整图重绘 |
+|---|---|
+| [![PV2F 完整参考图](examples/pv2f/reference.png)](examples/pv2f/reference.png) | [![PV2F 三分区重绘预览](examples/pv2f/redraw.png)](examples/pv2f/redraw.svg) |
+
+重绘保留 A 区流程图、B 区水稻遗传变异资源时间线和 C 区冰山图表。A 区微型图标和曲线作了简化，C 区堆叠柱高度及发表量从参考图估读。[下载可编辑 SVG](examples/pv2f/redraw.svg) · [相关论文（Han 等，*Molecular Plant*，2026）](https://doi.org/10.1016/j.molp.2026.05.014)
+
+两张参考图均由用户提供，权利归各原权利人。仓库代码许可不适用于参考图。
+
 | 能力 | 实际行为 |
 |---|---|
 | 两类任务共用流程 | 参考／描述 → 宿主解释 → FigurePlan → 选择画法 → Scene → 实际预览 → 定向修正 |
