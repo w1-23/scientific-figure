@@ -1,24 +1,12 @@
-# Scientific Figure Reconstruction & Drawing Skill
-
-**Skill：`scientific-figure` · Engine：v0.9.0 · Python：>=3.12 · CPU / 无 GUI**
-
+#还在为科研绘图而烦恼么？推荐使用Scientific Figure Reconstruction & Drawing Skill！！！
 独立的科研矢量重绘与绘制 Skill。支持**参考图语义复刻**和**自然语言生图**：调用它的宿主负责理解对象、内部结构与关系，选择素材、Recipe 或自由绘图程序；引擎负责执行几何、样式、层级、编辑和 SVG/PNG 导出。无需增加第二个看图模型、模型 API 或服务进程。
 
+推荐用法：利用GPT，seedance等生图模型生成你希望的风格和内容，素材，本skill可以一次性完成排版和重建😊；
+
+你也可以：截图自己喜欢的素材，让他为你生成基本绘图素材😊，后续自己排版；
+你更可以：提供完整的语言描述，产出相应图像，但本用法比较依赖LLM本身的理解力；
+skill帮你做的是：
 > 让模型决定怎么画，让引擎负责画好。
-
-## v0.8 整图重绘与完整参考图
-
-以下按提供者要求展示 **v0.8 历史整图重绘结果**，不将它标成 v0.9 新重绘成绩。左侧是完整参考图，右侧是使用本引擎完成的整张重绘，包含上方制备／给药流程、右侧肿瘤与血管、左下细胞放大图和底部色板。
-
-| 完整参考图 | v0.8 整张矢量重绘 |
-|---|---|
-| ![完整参考图](examples/v0.8/reference.png) | ![v0.8 整张矢量重绘 SVG](examples/v0.8/full-redraw.svg) |
-
-[查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
-
-SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考位图。ER 形态、小鼠解剖和柔和笔绘边缘仍有近似；原图疑似错字在主结果中保留。参考图的权利归原权利人，本项目不为其授予复用许可；未做领域科学审核。
-
-## v0.9 能做什么
 
 | 能力 | 实际行为 |
 |---|---|
@@ -31,6 +19,22 @@ SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考�
 | 安全重跑 | B/U/C 比较旧纯生成基线、用户当前图与新候选，保留用户单独改色、移动和文字；冲突拒绝覆盖 |
 | 工程与组合 | 保存重开、局部 SVG/PNG 导出、Bundle 与组合，保留实际采用的规划和测量输入 |
 | 同源 PNG | 由同一 SVG 使用 resvg 渲染；不能将测试通过当成视觉或科学正确性 |
+# Scientific Figure Reconstruction & Drawing Skill
+
+
+## v0.8 整图重绘与完整参考图
+
+以下是 **v0.8 历史整图重绘结果**，。左侧是完整参考图，右侧是使用本引擎完成的整张重绘，包含上方制备／给药流程、右侧肿瘤与血管、左下细胞放大图和底部色板。
+
+| 完整参考图 | v0.8 整张矢量重绘 |
+|---|---|
+| ![完整参考图](examples/v0.8/reference.png) | ![v0.8 整张矢量重绘 SVG](examples/v0.8/full-redraw.svg) |
+
+[查看完整参考图](examples/v0.8/reference.png) · [下载 v0.8 整图 SVG](examples/v0.8/full-redraw.svg) · [整图 PNG 预览](examples/v0.8/full-redraw.png) · [示例来源与限制](examples/v0.8/README.md)
+
+SVG 中保留可编辑路径、分组、渐变和真实文字，不嵌入参考位图。ER 形态、小鼠解剖和柔和笔绘边缘仍有近似；原图疑似错字在主结果中保留。参考图的权利归原权利人，本项目不为其授予复用许可；未做领域科学审核。
+
+
 
 本地目录含 15 个 Recipe 族、2 个符号族元数据和 1 个有许可的 Twemoji 柠檬资产。复杂对象结构不匹配时可以直接使用自由程序；没有 mouse/flask/avatar Recipe，不伪造命中。
 
@@ -106,16 +110,7 @@ python -I scripts/draw_targeted_release_v09.py --output work/targeted-release --
 
 [脚本用途、参数、输入输出及可移植范围](docs/scripts.md) · [CLI 与请求契约](docs/semantic-planning-workflow.md) · [局部测量](docs/local-measurements.md) · [构造 API](docs/construction-tools.md) · [编辑与生成协议](docs/generation-and-effects.md) · [Bundle/组合](docs/bundles-and-composition.md)
 
-## 验证事实
 
-- v0.9 完整回归：**969 passed、5 skipped、10 subtests passed**；5 项跳过为 Windows 符号链接权限限制。
-- Windows/Linux 的实际命令入口、保存、编辑、导出和组合链通过；同一 wheel 内 **74 个应用文件**与两个独立应用安装位置逐字节一致。
-- 参考与描述两类图均实际看图、各一轮定向修正，均验证改色／移动／改字、两项局部导出与重开。
-- 本地源码、示例和私有包已校验 CRC/SHA-256；私有包独立程序解压复现通过。此仓库不上传完整私有包。
-
-[实际验证记录](verification/README.md) · [v0.9 交付说明与限制](docs/delivery-0.9.0.md)
-
-这些是开发与工程验证，不是视觉得分或科学认证。两平台复用已有依赖安装应用，不称空环境全依赖离线安装；不保证不同字体平台像素相同。没有 OCR、自动科学理解、隐藏结构恢复或全自动任意图高保真能力。
 
 ## 目录与许可
 
