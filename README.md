@@ -18,33 +18,12 @@ A standalone skill for redrawing scientific figures from references and creating
 
 > Draw a landscape scientific schematic that explains how citrus quality is predicted non-destructively, from orchard sampling through prediction. Show a citrus branch with fruit at different stages of maturity and a sampling crate, and assign each fruit an ID. Scan the intact fruit with an optical probe and store the spectra with their fruit IDs. After scanning, select fruit from the same batch for reference assays, using soluble solids and titratable acidity as examples. Match the spectral and reference records by fruit ID, split by fruit into calibration and independent validation sets, then use the model to predict fruit quality from new scans. Show two outputs: individual-fruit predictions and batch assessment. Use clear English labels and arrows to connect the four modules, with a light background and a botanical illustration style. Deliver an editable vector figure.
 
-**新版 / Current drawing**
+**** 高能力模型 / Higher-capability model** / Current drawing**
 
 [![新版柑橘品质评价图 / Current citrus quality workflow](examples/citrus-quality/citrus-quality.png)](examples/citrus-quality/citrus-quality.svg)
 
 [可编辑 SVG / Editable SVG](examples/citrus-quality/citrus-quality.svg) · [Scene 工程 / Scene project](examples/citrus-quality/citrus-quality.scene.json) · [绘图程序 / Drawing script](examples/citrus-quality/draw.py) · [对象清单 / Object inventory](examples/citrus-quality/OBJECTS.md)
 
-**旧版 / Original drawing**
-
-![旧版柑橘品质评价图 / Original citrus quality workflow](examples/citrus-quality/previous.png)
-
-#### 同一提示词：高能力模型与轻量模型 / Same prompt: higher-capability vs. lightweight model
-
-下面是独立生成的两张新图。两种模型使用同一份[中文提示词](examples/citrus-quality/PROMPT.md)和同一个绘图引擎，各运行一次，均未看到上面两张图。旧版仅用于版本对照，不属于这组模型对比。
-
-These are two independent runs using the same [Chinese prompt](examples/citrus-quality/PROMPT.md) and drawing engine, with neither of the images above supplied as a reference. The original drawing is shown for version comparison only and is not part of this model comparison.
-
-**Claude Opus 5.5 — 高能力模型 / Higher-capability model**
-
-[![Opus 5.5 绘图结果 / Opus 5.5 drawing](examples/citrus-quality/comparison/opus.png)](examples/citrus-quality/comparison/opus.svg)
-
-[可编辑 SVG / Editable SVG](examples/citrus-quality/comparison/opus.svg) · [绘图程序 / Drawing script](examples/citrus-quality/comparison/opus.py)
-
-**Claude Haiku 5.5 — 轻量模型 / Lightweight model**
-
-[![Haiku 5.5 绘图结果 / Haiku 5.5 drawing](examples/citrus-quality/comparison/haiku.png)](examples/citrus-quality/comparison/haiku.svg)
-
-[可编辑 SVG / Editable SVG](examples/citrus-quality/comparison/haiku.svg) · [绘图程序 / Drawing script](examples/citrus-quality/comparison/haiku.py)
 
 ### v0.8 科研示意图整图重绘 / Full scientific schematic redraw
 
