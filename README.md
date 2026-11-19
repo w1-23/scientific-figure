@@ -18,7 +18,7 @@ A standalone skill for redrawing scientific figures from references and creating
 
 > Draw a landscape scientific schematic that explains how citrus quality is predicted non-destructively, from orchard sampling through prediction. Show a citrus branch with fruit at different stages of maturity and a sampling crate, and assign each fruit an ID. Scan the intact fruit with an optical probe and store the spectra with their fruit IDs. After scanning, select fruit from the same batch for reference assays, using soluble solids and titratable acidity as examples. Match the spectral and reference records by fruit ID, split by fruit into calibration and independent validation sets, then use the model to predict fruit quality from new scans. Show two outputs: individual-fruit predictions and batch assessment. Use clear English labels and arrows to connect the four modules, with a light background and a botanical illustration style. Deliver an editable vector figure.
 
-**** 高能力模型 / Higher-capability model** / Current drawing**
+**** GPT 6.1sol+skill / Current drawing**
 
 [![新版柑橘品质评价图 / Current citrus quality workflow](examples/citrus-quality/citrus-quality.png)](examples/citrus-quality/citrus-quality.svg)
 
