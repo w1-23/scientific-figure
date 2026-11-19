@@ -88,6 +88,17 @@ def _rename_new(stage, target):
             error = ctypes.get_errno()
             raise OSError(error, os.strerror(error), str(target))
         return
+    if platform.system() == "Darwin":
+        libc = ctypes.CDLL(None, use_errno=True)
+        rename = getattr(libc, "renamex_np", None)
+        if rename is None:
+            raise OSError("atomic no-replace directory publication needs renamex_np")
+        rename.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint]
+        rename.restype = ctypes.c_int
+        if rename(os.fsencode(stage), os.fsencode(target), 0x00000004):  # RENAME_EXCL
+            error = ctypes.get_errno()
+            raise OSError(error, os.strerror(error), str(target))
+        return
     raise OSError("atomic no-replace directory publication unsupported on this platform")
 
 
