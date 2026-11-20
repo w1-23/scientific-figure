@@ -139,7 +139,7 @@ def test_server_serves_svg_state_and_records_feedback(tmp_path):
         base = f"http://127.0.0.1:{info['port']}"
         query = "?t=" + info["token"]
         status, html, headers = server_request(info["url"])
-        assert status == 200 and "Pinned comments" in html
+        assert status == 200 and "Scientific Figure" in html and "批注" in html
         assert "default-src 'none'" in headers.get("Content-Security-Policy", "")
         assert server_request(base + "/svg")[0] == 403
         status, served, headers = server_request(base + "/svg" + query)
