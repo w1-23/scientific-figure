@@ -37,7 +37,8 @@
 
 ## 验证事实
 
-- 完整回归：1056 passed、5 skipped、10 subtests passed，72.61秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 完整回归：1056 passed、5 skipped、10 subtests passed，69.95秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 柑橘示例实测：501个对象、45个text对象、39条文字/632字符（47个去重字符）；`font-probe`选Arial且无缺失并画出全部39条；`export-variants`得456个图形对象，`figure.final.svg`与工程`figure.svg`字节一致。
 - 审阅与双SVG：本地服务实测`/svg`、`/state`、`/feedback`三路由，无令牌403、旧摘要409、未知对象400；反馈按轮次追加且不被预览替换删除。双SVG测试逐属性比较共用对象的id/transform/style，并验证文字、文字装饰、指向文字的引线和空组被排除，祖先/occlusion冲突明确失败而不是猜。
 - 字体预检：在本机Windows字体目录枚举64个候选；Arial缺一个私用区字符时返回needs_input并列出来源，指定真实候选可报告覆盖与需要用户设置的环境变量。样例图用被选字体实际绘制。
 - fidelity映射：hard/soft/shape/detail/holes各自产生独立阈值；有约束包时只移除已覆盖项，未覆盖与无机械检查的拓扑项保持needs_review；失败约束使总状态为failed。

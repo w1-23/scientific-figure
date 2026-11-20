@@ -15,10 +15,6 @@ from .project import json_text, load_project
 from .svg import to_svg
 
 
-def svg_sha256(text):
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
 def _semantic(obj):
     value = obj.get("semantic")
     return value if isinstance(value, dict) else {}
@@ -108,12 +104,15 @@ def export_variants(project, output, *, exclude=()):
         if (output / name).exists():
             raise ValueError("variant output already exists: " + str(output / name))
     for name, text in targets.items():
-        (output / name).write_bytes(text.encode("utf-8"))
+        # Same newline handling as the project's own publish, so final.svg is
+        # byte-identical to figure.svg on the host that produced both.
+        (output / name).write_text(text, encoding="utf-8")
     report = {"schema_version": "0.1", "kind": "export_variants",
               "project": str(Path(project).resolve()), "revision": scene["revision"],
               "canvas": scene["canvas"],
-              "variants": {name: {"sha256": svg_sha256(text), "bytes": len(text.encode("utf-8"))}
-                           for name, text in targets.items()},
+              "variants": {name: {"sha256": hashlib.sha256((output / name).read_bytes()).hexdigest(),
+                                  "bytes": (output / name).stat().st_size}
+                           for name in targets},
               "object_count": len(scene["objects"]),
               "graphics_object_count": len(graphics_scene_value["objects"]),
               "excluded_objects": excluded, "pruned_groups": pruned,
@@ -121,9 +120,10 @@ def export_variants(project, output, *, exclude=()):
               "limitations": [
                   "Path-drawn text is removed only when the host marks that object with semantic.layer='text'.",
                   "Both variants share the Scene canvas, IDs and untouched geometry; nothing is redrawn.",
+                  "figure.final.svg is byte-identical to the project's published figure.svg.",
                   "Unused gradients, clips and masks may remain in defs; they are inert.",
                   "The project itself is unchanged; this writes a new directory only."]}
-    (output / "variants.json").write_bytes(json_text(report).encode("utf-8"))
+    (output / "variants.json").write_text(json_text(report), encoding="utf-8")
     return {"status": "success", "output": str(output.resolve()),
             "project": report["project"], "revision": report["revision"],
             "object_count": report["object_count"],

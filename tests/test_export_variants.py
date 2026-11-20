@@ -1,4 +1,5 @@
 """Two SVGs from one Scene: shared geometry, no text left in the graphics variant."""
+import hashlib
 import json
 import xml.etree.ElementTree as ET
 
@@ -87,6 +88,10 @@ def test_report_binds_both_variants_and_lists_exclusions(tmp_path):
     assert report["excluded_objects"] == ["glyph_path", "label", "label_box", "leader", "title"]
     assert set(report["variants"]) == {"figure.graphics.svg", "figure.final.svg"}
     assert result["variants"] == report["variants"]
+    for name, info in report["variants"].items():
+        data = (output / name).read_bytes()
+        assert info == {"sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+    assert (output / "figure.final.svg").read_bytes() == (project / "figure.svg").read_bytes()
     rendered = {oid for oid in ids(output / "figure.graphics.svg") if not oid.startswith("sf-")}
     assert report["graphics_object_count"] == len(rendered)
 

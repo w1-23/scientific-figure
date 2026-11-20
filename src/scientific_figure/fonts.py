@@ -206,7 +206,8 @@ def probe_fonts(texts, *, candidates=None, font_size=14,
     missing = [] if selected else (active["missing_characters"] if active else characters)
     return {"schema_version": "0.1", "kind": "font_probe",
             "status": "ok" if selected else "needs_input",
-            "texts": {"count": len(texts), "characters": len(characters),
+            "texts": {"count": len(texts), "unique_characters": len(characters),
+                      "total_characters": sum(len(text) for text in texts),
                       "sha256": hashlib.sha256(json.dumps(texts, ensure_ascii=False).encode("utf-8")).hexdigest()},
             "font_size": float(font_size),
             "active_font": active, "selected": selected,
@@ -221,17 +222,23 @@ def probe_fonts(texts, *, candidates=None, font_size=14,
                 "Only TTC face 0 can be selected through SCIENTIFIC_FIGURE_FONT; other faces are reported only."]}
 
 
-def write_font_sample(texts, output, *, font_path=None, font_size=14, max_lines=14):
+def write_font_sample(texts, output, *, font_path=None, font_size=14, max_lines=50):
     """Draw a labelled sample using the selected (or given) font only."""
     path = Path(font_path) if font_path else Path(font_info()["path"])
     size = max(1, round(float(font_size)))
     font = ImageFont.truetype(str(path), size)
-    lines = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz",
-             "0123456789 .,;:!?()[]{}%+-*/=<>≤≥±×÷°µ",
-             "αβγδεθλμσφωΩΔΣ ∑ ∫ √ ∞ → ← ↑ ↓ ↔",
-             "H₂O CO₂ O₂⁻ x² y₁ ΔT° 中文测试：细胞膜、线粒体",
-             "The quick brown fox jumps over the lazy dog."]
-    lines += [line for text in texts for line in text.splitlines() if line.strip()][:max_lines]
+    glyphs = _font_faces(path, limit=1)[0].get("glyphs") or set()
+    sample = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz",
+              "0123456789 .,;:!?()[]{}%+-*/=<>≤≥±×÷°µ",
+              "αβγδεθλμσφωΩΔΣ ∑ ∫ √ ∞ → ← ↑ ↓ ↔",
+              "H₂O CO₂ O₂⁻ x² y₁ ΔT° 中文测试：细胞膜、线粒体",
+              "The quick brown fox jumps over the lazy dog."]
+    # A sample line whose characters are missing from the chosen font would
+    # draw tofu and read as a failed probe; omit it instead.
+    lines = [line for line in sample
+             if all(character.isspace() or ord(character) in glyphs for character in line)]
+    task_lines = [line for text in texts for line in text.splitlines() if line.strip()][:max_lines]
+    lines += task_lines
     lines = [line if len(line) <= 90 else line[:87] + "..." for line in lines]
     width, margin = 960, 16
     line_height = round(size * 1.9)
@@ -242,4 +249,5 @@ def write_font_sample(texts, output, *, font_path=None, font_size=14, max_lines=
     Path(output).parent.mkdir(parents=True, exist_ok=True)
     image.save(output)
     return {"path": str(Path(output).resolve()), "size": [width, image.height],
-            "lines": len(lines), "font": str(path.resolve()), "font_size": size}
+            "lines": len(lines), "texts": len(texts), "text_lines_drawn": len(task_lines),
+            "font": str(path.resolve()), "font_size": size}

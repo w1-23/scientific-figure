@@ -78,7 +78,8 @@ def test_font_candidates_are_bounded_and_filtered(tmp_path):
 def test_sample_board_writes_a_png_with_the_requested_lines(tmp_path):
     output = tmp_path / "sample.png"
     info = write_font_sample(["细胞膜", "second line"], output, font_size=18)
-    assert info["lines"] >= 7 and info["size"] == [960, Image.open(output).height]
+    assert info["lines"] >= 6 and info["size"] == [960, Image.open(output).height]
+    assert info["texts"] == 2 and info["text_lines_drawn"] == 2
     with Image.open(output) as image:
         assert image.format == "PNG" and image.size[0] == 960 and image.height > 0
 
