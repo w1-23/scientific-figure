@@ -2,7 +2,7 @@
 
 ## 当前入口与准确基线（2026-11-18）
 
-当前为Engine0.9.0，保留FigurePlan0.1和Scene0.3，协议版本彼此独立。当前接口、调用顺序与文件契约见[语义规划工作流](semantic-planning-workflow.md)，实测与限制见[0.9交付记录](delivery-0.9.0.md)。[0.8工作流](drawing-workflow-0.8.md)保留底座用法；[完整0.9计划](next-stage-plan-0.9.md)是本轮实施依据。下文0.4结果为历史记录。
+当前为Engine0.10.0（新增排版质检、受限修正与字体预设），保留FigurePlan0.1和Scene0.3，协议版本彼此独立。当前接口、调用顺序与文件契约见[语义规划工作流](semantic-planning-workflow.md)，实测与限制见[0.9交付记录](delivery-0.9.0.md)。[0.8工作流](drawing-workflow-0.8.md)保留底座用法；[完整0.9计划](next-stage-plan-0.9.md)是本轮实施依据。下文0.4结果为历史记录。
 
 当前宿主就是执行理解、设计和视觉判断的模型；Skill提供专业方法，引擎执行明确几何，无第二模型服务。参考图与自然语言共享FigurePlan、构造和Scene，不以“有对象清单”冒充理解完成，也不新增第二套对象图。
 

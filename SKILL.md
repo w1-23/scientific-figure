@@ -7,9 +7,9 @@ description: Understand a reference or scientific description and redraw it as c
 
 An independent, provider-neutral skill. The calling host decides what to draw; the engine executes declared geometry, paints, layers, edits and exports. Deliver SVG plus a PNG rendered from that SVG. Use Anaconda `ScientificFigure_skill` and the installed `figure-cli`.
 
-## 0.9 guide: two tasks, one host and Scene
+## 0.10 guide: two tasks, one host and Scene
 
-Current Engine 0.9.0 retains FigurePlan 0.1 and Scene 0.3. The 0.8 execution, editing and rendering base is preserved. The calling host is already the model doing the interpretation and visual review; do not add a second model or Agent. See the [complete 0.9 plan](docs/next-stage-plan-0.9.md), [0.8 capabilities](docs/drawing-workflow-0.8.md) and [semantic planning / new CLI workflow](docs/semantic-planning-workflow.md). The workflow page defines the implemented entry points and exact file contracts; [delivery notes](docs/delivery-0.9.0.md) record actual verification and limits.
+Current Engine 0.10.0 adds deterministic layout QA (`layout-audit`), bounded layout repairs (`--fix`) and a font-profile pre-check on top of 0.9. FigurePlan 0.1 and Scene 0.3 are unchanged, and the 0.8 execution, editing and rendering base is preserved. The calling host is already the model doing the interpretation and visual review; do not add a second model or Agent. See the [0.10 plan](docs/next-stage-plan-0.10.md) and [QA contract](references/qa-contract.md); [0.9 plan](docs/next-stage-plan-0.9.md), [0.8 capabilities](docs/drawing-workflow-0.8.md) and [semantic planning / new CLI workflow](docs/semantic-planning-workflow.md) remain current for everything below. The workflow page defines the implemented entry points and exact file contracts; [delivery notes](docs/delivery-0.9.0.md) record actual verification and limits.
 
 Choose the task guide before constructing a complex figure:
 
