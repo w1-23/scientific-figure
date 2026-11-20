@@ -33,7 +33,8 @@
 
 ## 验证事实
 
-- 完整回归：1006 passed、5 skipped、10 subtests passed，82.52秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 完整回归：1014 passed、5 skipped、10 subtests passed，79.28秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 显式测量缓存：`--cache-dir`关闭时不读不写；命中前重验源字节SHA、完整规范化请求、实现标记和numpy/opencv/pillow版本，并重算`result_sha256`。测试以禁止`_load_source`证明命中不重新解码或计算，并覆盖ROI/问题/源/版本变化与损坏条目按未命中重算。
 - 快速预览与分段计时：501对象的柑橘Scene用`--preview`（scale 1）0.33秒，完整交付（scale 3）1.16秒，差主要来自PNG渲染；两条路径都返回`validate/to_svg/render/.../total`秒数，回执记录发布前各段。为本机单次测量，只说明同一台机器上的路径差异，不含模型推理时间。
 - 公开文件链：草稿→缺构造返回needs_input→真实检索→四种测量→内联上下文→编译→用户改色/移动/改字→候选合并保留编辑→局部SVG/PNG→Bundle/两个实例组合→源目录移走后重开。自动脚本的视觉字段明确not_executed。
 - 边界：复杂细胞Recipe报告缺少mitochondrion；不存在mouse/未知品牌返回空；模糊交叉的阈值变化为ambiguous，宿主保留上下层unknown；简单扁平流程节点不强加渐变或强制检索。
@@ -61,6 +62,6 @@ python -m pip install --no-deps scientific_figure_skill-0.9.0-py3-none-any.whl
 
 该命令假设依赖已满足；全新环境正常安装应允许pip安装pyproject列出的依赖。需要面域布尔/定宽stroke_outline时安装construction可选依赖skia-pathops==0.9.2。
 
-程序始终由宿主显式执行；加载、render、diff/accept和Bundle不执行保存源码。python -I不是安全沙箱。规划确认只表示当次输入，不是当前工程审批；当前审核依赖Scene/preview绑定。无持久缓存自动读取，无OCR，无自动科学理解。原始外部源未打包时明确external_not_packaged，内联测量仍可读。
+程序始终由宿主显式执行；加载、render、diff/accept和Bundle不执行保存源码。python -I不是安全沙箱。规划确认只表示当次输入，不是当前工程审批；当前审核依赖Scene/preview绑定。无隐式持久缓存；测量缓存只在显式`--cache-dir`时读写，命中前重验源字节、完整请求、实现与库版本。无OCR，无自动科学理解。原始外部源未打包时明确external_not_packaged，内联测量仍可读。
 
 未重新引入用户排除的正式大评测、独立宿主消融、盲评、科学认证、Runtime首轮接线、跨版本部件迁移或实验轮廓扩展。系统字体、环境、模型权重和私图没有混入公共包。未初始化Git、未提交/推送QAagent、未启动或部署服务、未修改网络/安全设置。

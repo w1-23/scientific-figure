@@ -54,6 +54,28 @@ conda run -n ScientificFigure_skill figure-cli draw plan.json --output work/quic
 
 Both paths return `timings` in seconds: `validate`, `to_svg`, `render`, `inventory`, `qa`, `publish`, `total`; a preview omits the delivery stages and the receipt records the same pre-publish stages. On this host a 501-object Scene takes about 0.33 s as a preview and 1.16 s as a full project, most of the difference being PNG rendering at scale 1 versus 3. The engine cannot see model-side time: when measuring a reconstruction, record the host's first inference, output tokens and correction rounds beside these numbers, and never attribute engine seconds to model latency or the reverse.
 
+### Build repeated structure from tables
+
+For more than a handful of similar objects — particles, cells, ticks, legend swatches, panel frames — write one data table and one loop into `add_many` instead of a hand-written block per object. The table keeps counts and spacing easy to change, puts the shared style in one place, and is short enough to review. `add_many` is atomic: one bad row rejects the whole batch, so a failed call never leaves half the objects behind. Keep genuinely different objects out of the loop; give each its own `add` call beside it rather than branching inside the loop. If the table is harder to read than the few objects it replaces, write those objects directly.
+
+```python
+from scientific_figure.builder import SceneBuilder
+
+particles = [  # id, cx, cy, r, fill — one row per repeated object
+    ("p1", 120, 90, 7, "#7fb3d5"),
+    ("p2", 156, 118, 6, "#5d8aa8"),
+    ("p3", 188, 86, 8, "#a9cce3"),
+]
+b = SceneBuilder(320, 200, background="#ffffff")
+b.add_many([{"id": name, "kind": "ellipse",
+             "geometry": {"cx": cx, "cy": cy, "rx": r, "ry": r},
+             "style": {"fill": fill, "stroke": "#1b3a4b", "stroke_width": 1}}
+            for name, cx, cy, r, fill in particles])
+scene = b.build()  # pass to write_project or dump as scene.json for draw
+```
+
+This applies to both tasks: a reference may need 30 mitochondria or 120 repeated symbols, and a described mechanism may need a ligand row, a receptor row and a release row. Derive stable IDs from the row's own key so later corrections can target one instance, and record any deliberately varied row (size, color, missing part) as its own entry rather than a special case buried in the comprehension. A hand-written Scene JSON is still valid; choose the form that keeps the actual structure visible.
+
 ### Evidence constraints for reference reconstruction
 
 Reference work runs one evidence loop; the figure is its output, not a substitute for it.

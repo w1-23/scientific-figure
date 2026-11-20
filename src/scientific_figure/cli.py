@@ -26,7 +26,7 @@ def parser():
     doctor=sub.add_parser("doctor");doctor.add_argument("--json",action="store_true")
     evidence=sub.add_parser("evidence");evidence.add_argument("input",type=Path);evidence.add_argument("request",type=Path,nargs="?")
     evidence.add_argument("--output",type=Path)
-    evidence.add_argument("--channels",default="contrast");evidence.add_argument("--roi")
+    evidence.add_argument("--channels",default="contrast");evidence.add_argument("--roi");evidence.add_argument("--cache-dir",type=Path)
     evidence.add_argument("--background");evidence.add_argument("--validate",action="store_true")
     prepare=sub.add_parser("prepare");prepare.add_argument("input",type=Path);prepare.add_argument("--output",type=Path,required=True)
     consume=sub.add_parser("consume");consume.add_argument("input",type=Path);consume.add_argument("--ids");consume.add_argument("--views",default="source.png");consume.add_argument("--output",type=Path)
@@ -217,7 +217,7 @@ def execute(args):
         if args.input == Path('measure'):
             from .measurements import measure
             if args.request is None or args.output is None:raise ValueError('evidence measure requires request and --output')
-            return measure(load_json(args.request),args.output,base_directory=args.request.resolve().parent)
+            return measure(load_json(args.request),args.output,base_directory=args.request.resolve().parent,cache_dir=args.cache_dir)
         if args.request is not None:raise ValueError('unexpected evidence argument')
         from .evidence import generate_evidence, validate_evidence
         if args.validate:return validate_evidence(args.input)

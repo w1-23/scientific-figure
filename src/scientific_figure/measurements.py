@@ -1,8 +1,9 @@
 """Bounded CPU pixel measurements, never semantics, OCR, Scene or true counts.
 
-Public API: ``measure(request, output, *, base_directory=None)`` accepts a JSON
-file or JSON dict and atomically publishes a *new* directory (result.json and
-inspection_board.png). It returns the self-contained result, not a path receipt.
+Public API: ``measure(request, output, *, base_directory=None, cache_dir=None)``
+accepts a JSON file or JSON dict and atomically publishes a *new* directory
+(result.json and inspection_board.png). It returns the self-contained result,
+not a path receipt.
 ``validate_measurement(result)`` validates/copies that inline snapshot without
 reading any files. Hashes are consistency checks, not independent authenticity.
 
@@ -16,7 +17,12 @@ No current drawing geometry is stored. request_sha256 hashes the canonical JSON
 request (normalized background/default params/full budget); result_sha256 hashes
 canonical result JSON excluding result_sha256. cache_key ignores source.path and
 question and binds source bytes, ROI, background, params, budgets and versions.
-There is no persistent cache reader: consumers may reuse content by that key.
+``cache_dir`` enables an optional persistent cache: on a hit the validated,
+re-signed snapshot is republished instead of recomputed, but only if the source
+bytes still hash to the request's sha256, the full normalized request is equal,
+and the entry's implementation and library versions match the current ones.
+cache.json in the output directory records ``hit`` or ``miss``; the result
+schema is unchanged. Without ``cache_dir`` no entry is read or written.
 
 Minimal params (unknown fields are errors):
 * view: optional context_margin=16 (0..1024), max_side=128 (16..512).
@@ -54,7 +60,9 @@ import base64
 from io import BytesIO
 import json
 import math
+import os
 from pathlib import Path
+import tempfile
 
 import cv2
 import numpy as np
@@ -345,8 +353,56 @@ def _repeat(rgb, template, roi, params, budget):
             "suppressed": suppressed, "ambiguity_reasons": reasons}, "ambiguous" if reasons else "ok"
 
 
-def measure(request, output, *, base_directory=None):
-    """Measure an explicit ROI and return/publish one portable validated snapshot."""
+def _publish(result, output, cache_status=None):
+    """Publish one validated snapshot; a cache marker stays outside the result."""
+    board_bytes = base64.b64decode(result["board"]["content"], validate=True)
+    with _staged_directory(output) as (stage, _):
+        (stage / "result.json").write_bytes(_canonical(result) + b"\n")
+        (stage / "inspection_board.png").write_bytes(board_bytes)
+        if cache_status is not None:
+            marker = {"schema_version": "0.1", "kind": "measurement_cache",
+                      "status": cache_status, "cache_key": result["cache_key"]}
+            (stage / "cache.json").write_bytes(_canonical(marker) + b"\n")
+
+
+def _cached(cache_dir, request):
+    """Return a revalidated entry only when it binds exactly this request."""
+    key = _cache_key(request)
+    path = Path(cache_dir) / (key + ".json")
+    if not path.is_file():
+        return None
+    try:
+        data = validate_measurement(_json_object(_json(_read_bounded(path, MAX_JSON_BYTES))))
+    except (OSError, ValueError):
+        return None
+    if data["cache_key"] != key or data["method"]["versions"] != VERSIONS or data["request"] != request:
+        return None
+    return data
+
+
+def _store(cache_dir, result):
+    """Atomically add one validated result under its content key."""
+    directory = Path(cache_dir)
+    directory.mkdir(parents=True, exist_ok=True)
+    descriptor, name = tempfile.mkstemp(prefix="." + result["cache_key"] + "-", dir=directory)
+    try:
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(_canonical(result) + b"\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(name, directory / (result["cache_key"] + ".json"))
+    except BaseException:
+        Path(name).unlink(missing_ok=True)
+        raise
+
+
+def measure(request, output, *, base_directory=None, cache_dir=None):
+    """Measure an explicit ROI and return/publish one portable validated snapshot.
+
+    ``cache_dir`` is opt-in. A republished hit still verifies the source bytes,
+    and the full normalized request plus implementation and library versions
+    must match; anything else recomputes and replaces the entry.
+    """
     if type(request) is dict:
         value, default_base = request, Path.cwd()
     else:
@@ -363,6 +419,11 @@ def measure(request, output, *, base_directory=None):
     with Image.open(BytesIO(data)) as raw:
         if raw.width * raw.height > budget["input_pixels"]:
             raise ValueError("input pixels exceed budget")
+    if cache_dir is not None:
+        cached = _cached(cache_dir, request)
+        if cached is not None:
+            _publish(cached, output, "hit")
+            return cached
     # Reuse evidence's decode/orientation/frame/ROI checks. Black is a display-only
     # fallback for null; raw RGBA and measurement assumptions are handled below.
     _, source = _load_source(path, roi, request["background"] or "#000000")
@@ -409,7 +470,7 @@ def measure(request, output, *, base_directory=None):
     if request["background"] is None:
         _, rgb = _crop(data, roi, "#000000")
         _, context_rgb = _crop(data, context_roi, "#000000")
-    board, board_bytes, board_pixels = _make_board(rgb, context_rgb, roi, context_roi, params.get("max_side", 128))
+    board, _, board_pixels = _make_board(rgb, context_rgb, roi, context_roi, params.get("max_side", 128))
     if math.prod(board["size"]) > budget["board_pixels"]:
         raise ValueError("board exceeds pixel budget")
     used = _charge(used, board_pixels, budget)
@@ -424,9 +485,9 @@ def measure(request, output, *, base_directory=None):
     if len(_canonical(result)) > budget["result_bytes"]:
         raise ValueError("result JSON exceeds byte budget")
     result = validate_measurement(result)
-    with _staged_directory(output) as (stage, _):
-        (stage / "result.json").write_bytes(_canonical(result) + b"\n")
-        (stage / "inspection_board.png").write_bytes(board_bytes)
+    if cache_dir is not None:
+        _store(cache_dir, result)
+    _publish(result, output, "miss" if cache_dir is not None else None)
     return result
 
 

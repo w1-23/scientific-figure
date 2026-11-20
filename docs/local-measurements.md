@@ -21,9 +21,10 @@
 
 ```bash
 figure-cli evidence measure request.json --output work/local
+figure-cli evidence measure request.json --output work/local2 --cache-dir work/measure-cache
 ```
 
-输出目录必须不存在且父目录存在；原子发布 result.json 和 inspection_board.png。Python `measurements.measure` 返回自包含结果，`validate_measurement(result)` 离线校验并复制快照，不读取源或缓存。
+输出目录必须不存在且父目录存在；原子发布 result.json 和 inspection_board.png。Python `measurements.measure` 返回自包含结果，`validate_measurement(result)` 离线校验并复制快照，不读取源或缓存。`--cache-dir`（Python 的 `cache_dir=`）默认关闭；启用时输出目录另写 cache.json 记录 `hit`/`miss`，结果本身不增加字段。
 
 ## 四项操作
 
@@ -40,7 +41,9 @@ profile 至少一个采样，允许 points 或 lines 之一为空。透明topolo
 
 结果含原始源SHA、ROI、question、明确参数和方法版本、坐标映射、状态、限制、测量/候选、内联PNG检查板、request_sha256、result_sha256和cache_key。校验绑定实际规范化请求与完整内容；摘要保证一致性，不能当第三方真实性签名。采用的结果可以直接内联进planning_context；临时源路径无需随工程存在。
 
-cache_key绑定源字节、ROI、背景、参数、预算和库/算法版本，忽略位置路径和问题措辞。用户更改阈值或源会产生新键。这里提供内容寻址键，未实现隐式磁盘缓存读取；宿主可显式复用已校验结果。缓存和未采用预览不是工程依赖。
+cache_key绑定源字节、ROI、背景、参数、预算和库/算法版本，忽略位置路径和问题措辞。用户更改阈值或源会产生新键。
+
+显式缓存目录按 `cache_key.json` 存取完整已校验结果。命中前仍校验源字节SHA（不改动请求摘要则明确失败），并要求规范化请求完全相等（含问题措辞）、实现标记和当前numpy/opencv/pillow版本一致；摘要重算通过才复用，损坏或被改动的条目按未命中重算并覆盖。命中时用同一快照重新发布 result.json 与 inspection_board.png，不重新解码、裁切或计算。缓存和未采用预览不是工程依赖；不传目录时不读不写。
 
 默认硬上限：输入32MiB/4000万像素；ROI100万像素；板200万像素；派生缓冲1600万像素；总采样4096；候选256；匹配 placements×template_pixels 2000万；去重工作65536；完整结果JSON1MiB。budget可以逐项降低，不能提高硬上限；字段见 measurements.LIMITS。超限明确失败，不静默截掉候选。大ROI、多阈值时应缩小局部，而非全图跑分析。
 
