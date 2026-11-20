@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-figure.local/schemas/scene-qa-request.schema.json",
+  "title": "Scene layout QA request",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "width_mm": {"type": "number", "exclusiveMinimum": 0, "maximum": 2000},
+        "width_px": {"type": "number", "exclusiveMinimum": 0, "maximum": 200000},
+        "dpi": {"type": "number", "exclusiveMinimum": 0, "maximum": 5000},
+        "kind": {"enum": ["print", "screen"]}
+      },
+      "anyOf": [
+        {"required": ["width_mm"]},
+        {"required": ["width_px", "dpi"]}
+      ]
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": {"type": "number", "minimum": 0}
+    },
+    "exemptions": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check", "reason"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 80},
+          "check": {"type": "string", "minLength": 1, "maxLength": 80},
+          "objects": {"type": "array", "maxItems": 50, "items": {"type": "string", "minLength": 1}},
+          "role": {"type": "string", "minLength": 1, "maxLength": 80},
+          "parent": {"type": "string", "minLength": 1, "maxLength": 200},
+          "allow_overlap": {"type": "boolean"},
+          "reason": {"type": "string", "minLength": 1, "maxLength": 500}
+        }
+      }
+    },
+    "required": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kind": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "text": {"type": "string"}
+        }
+      }
+    },
+    "color_semantics": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    }
+  }
+}

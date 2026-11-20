@@ -24,7 +24,7 @@ figure-cli = "scientific_figure.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-scientific_figure = ["schemas/*.json", "data/registry/*.json", "data/registry/assets/*.svg", "data/registry/licenses/*.txt"]
+scientific_figure = ["schemas/*.json", "data/*.json", "data/registry/*.json", "data/registry/assets/*.svg", "data/registry/licenses/*.txt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -30,6 +30,30 @@ figure-cli font-probe texts.json --output work/fonts
 
 `--output` 同时写 `font-probe-sample.png`，用被选字体实际绘制英文、数字、希腊字母、上下标、中文和请求中的文本行。若被选字体不含某条固定样例的字符（例如西文字体没有中文），该行不画，避免乱码方块被误读为预检失败；`sample` 里的 `texts`/`text_lines_drawn` 说明请求文本及实际画出的行数（超长时截断，PNG 本身不提示）。覆盖只证明字形存在，不证明字形形状或度量适合该图。
 
+## 字体预设（只做建议与预检）
+
+```bash
+figure-cli font-probe texts.json --profile --output work/fonts
+```
+
+`--profile` 默认加载包内 `data/font_profile.json`（名称 `scientific-default`）：
+
+| role | 建议家族 |
+|---|---|
+| `text.latin` | Times New Roman |
+| `text.cjk` | Microsoft YaHei |
+| `math.family` | Cambria Math |
+
+`fallback` 固定为 `single_font_only`。`resolve_profile()` 扫描本机字体（TTC 按真实 face 数枚举，能识别 `cambria.ttc` 里的 Cambria Math），报告每个 role 的：
+
+- `available`；
+- `matches`：文件路径、face 序号、家族名、SHA-256；
+- `sample_missing`：示例字符（`细胞膜线粒体αβγΔ∑∞→`）在该 face 中缺失的字符。
+
+找不到的家族进入 `missing` 列表，**不**用其他字体顶替。报告写明 `rendering: "single_font_only"` 与 `mixed_font_layout: "unsupported"`。
+
+这个预设**只影响报告**：`to_svg`、`render_svg`、`text_bounds` 仍使用 `SCIENTIFIC_FIGURE_FONT` 指向的单一字体。不随包分发任何微软字体；字体授权由使用者自行确认。
+
 ## 双 SVG 导出
 
 ```bash

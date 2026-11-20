@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-figure.local/schemas/scene-qa-report.schema.json",
+  "title": "Scene layout QA report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "status", "scene_revision", "canvas", "target",
+               "thresholds", "units", "summary", "checks", "exemptions", "limitations", "scope"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "kind": {"const": "scene_qa"},
+    "status": {"enum": ["failed", "needs_review", "clear", "not_auditable"]},
+    "scene_revision": {"type": "integer", "minimum": 0},
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "width": {"type": "number"},
+        "height": {"type": "number"},
+        "viewBox": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4}
+      }
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "width_mm": {"type": ["number", "null"]},
+        "dpi": {"type": ["number", "null"]},
+        "units_per_mm": {"type": ["number", "null"]},
+        "units_to_pt": {"type": ["number", "null"]},
+        "source": {"enum": ["request", "provenance"]},
+        "auditable": {"type": "boolean"}
+      }
+    },
+    "thresholds": {"type": "object", "additionalProperties": {"type": "number"}},
+    "units": {"enum": ["pt", "world_units"]},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fail", "warn", "info", "exempted", "not_auditable", "clear"],
+      "properties": {
+        "fail": {"type": "integer", "minimum": 0},
+        "warn": {"type": "integer", "minimum": 0},
+        "info": {"type": "integer", "minimum": 0},
+        "exempted": {"type": "integer", "minimum": 0},
+        "not_auditable": {"type": "integer", "minimum": 0},
+        "clear": {"type": "integer", "minimum": 0}
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "status", "severity", "objects", "measurement",
+                     "threshold", "exemptions", "message", "fixable", "not_auditable_reason"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kind": {
+            "enum": ["text_text_overlap", "text_stroke_intersection", "text_container_padding",
+                     "object_canvas_overflow", "font_glyph_size", "aligned_panels_and_gutters",
+                     "connector_clearance", "contrast_semantic_color", "negative_space_balance",
+                     "required_structure", "stale_exemption"]
+          },
+          "status": {"enum": ["fail", "warn", "info", "clear", "exempted", "not_auditable"]},
+          "severity": {"enum": ["fail", "warn", "info"]},
+          "objects": {"type": "array", "items": {"type": "string"}},
+          "measurement": {"type": "object"},
+          "threshold": {"type": ["object", "null"]},
+          "exemptions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "reason"],
+              "properties": {"id": {"type": "string"}, "reason": {"type": "string"}}
+            }
+          },
+          "message": {"type": "string"},
+          "fixable": {"type": "boolean"},
+          "not_auditable_reason": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "exemptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "applied", "check", "objects", "reason"],
+        "properties": {
+          "id": {"type": "string"},
+          "applied": {"type": "boolean"},
+          "check": {"type": ["string", "null"]},
+          "objects": {"type": "array", "items": {"type": "string"}},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "scope": {"type": "string"},
+    "elapsed_ms": {"type": "number"}
+  }
+}

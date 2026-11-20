@@ -34,6 +34,14 @@ The package now includes one explicitly licensed artwork asset, `data/registry/a
 
 The fifteen Recipe families are original project geometric formulas and declare `project_license_unset`. Methods learned from external work do not imply copied code or a new public license. New registry/planner/consumption/text adapters use existing installed dependencies; no additional core dependency, downloaded font, model weights or external executable is distributed.
 
+## Layout QA research for 0.10
+
+The deterministic layout audit (`layout_audit.py`) and bounded repairs (`auto_layout_fix.py`) were informed by the locally installed `nature-figure` skill (manifest version 2.8.0, installed copy under `~/.claude/skills/nature-figure`). Its README declares the repository to be MIT-licensed, but that copy contains no LICENSE file and records no upstream URL or commit, so no fixed upstream revision can be asserted here. Only the problem list and thresholds were used as a checklist; the implementation is project code written against this project's own `Geometry` and `fonts` helpers, not copied source. Before any future code is copied from that repository, record its fixed commit and the license text actually shipped at that commit.
+
+The upstream collision and panel scripts depend on PyMuPDF (AGPL) for their PDF adaptation layer. PyMuPDF is not installed, imported or copied here, and no PDF pipeline was added.
+
+Segment–rectangle clipping uses the Liang–Barsky parametric line-clipping algorithm (You-Dong Liang and Brian A. Barsky, 1984, "A New Concept and Method for Line Clipping", ACM Transactions on Graphics 3(1)). This is algorithm attribution, not a redistribution of any third-party implementation.
+
 ## Installed runtime dependencies
 
 | Dependency | License information |

@@ -78,7 +78,7 @@ Collect every string the figure will draw — labels, formulas, units, axis text
 conda run -n ScientificFigure_skill figure-cli font-probe texts.json --output work/fonts
 ```
 
-`status: ok` selects one real local font and writes `font-probe.json` plus `font-probe-sample.png`; `needs_input` lists missing characters and per-face coverage. `--font PATH` adds a specific file. The engine renders one family, so do not claim mixed-font fallback: set `SCIENTIFIC_FIGURE_FONT` to the selected path yourself, or simplify the text. For several pages, probe the union of all pages once, before page 1. A missing glyph is a construction decision, not a last-minute export error.
+`status: ok` selects one real local font and writes `font-probe.json` plus `font-probe-sample.png`; `needs_input` lists missing characters and per-face coverage. `--font PATH` adds a specific file. `--profile` (default name `scientific-default`) additionally resolves the packaged recommendation (Times New Roman / Microsoft YaHei / Cambria Math) against installed fonts and reports each role's path, face, digest and missing sample characters; a family that is absent is reported as missing, never substituted. The engine renders one family, so do not claim mixed-font fallback: set `SCIENTIFIC_FIGURE_FONT` to the selected path yourself, or simplify the text. For several pages, probe the union of all pages once, before page 1. A missing glyph is a construction decision, not a last-minute export error.
 
 ### Show the figure while you draw
 
@@ -99,6 +99,19 @@ conda run -n ScientificFigure_skill figure-cli export-variants work/figure --out
 ```
 
 This reads one validated project and writes `figure.final.svg` plus `figure.graphics.svg` (no text) and `variants.json`. Both come from the same Scene, so shared IDs keep identical geometry and style; nothing is redrawn. Text is removed by `kind=text` and by `semantic.layer="text"`, `semantic.text_decoration` or `semantic.label_for`; mark path-drawn glyphs with `semantic.layer="text"` or pass `--exclude id1,id2`. Leaders pointing at removed text are removed with it; an occlusion that references removed text refuses rather than guessing. The project and receipt are unchanged. PNG remains an optional format, not a required deliverable.
+
+### Audit the layout before you call it finished
+
+```bash
+conda run -n ScientificFigure_skill figure-cli layout-audit work/figure \
+  --target-width-mm 183 --output work/qa.json --overlay work/qa.overlay.svg
+```
+
+This is a deterministic geometry pass, not a beauty check. It measures text-text overlap, text crossing strokes, text leaving its container, canvas overflow, effective font size, panel alignment and gutters, connector clearance, contrast and negative space, and writes a JSON report plus an optional diagnostic SVG. Statuses are `fail`, `warn`, `info`, `clear`, `exempted` and `not_auditable`; the overall verdict is `failed`, `needs_review`, `clear` or `not_auditable`. There is deliberately no "pass": `clear` only means those mechanical checks ran and found nothing.
+
+Treat every `fail` as must-fix. `not_auditable` is not a pass — declare the target width with `--target-width-mm`, or say in the delivery that the item was not audited. Warnings are judgment calls: read the measurement, then either fix it or record an exemption with a real `reason` in `--request qa.json`. Font size is only auditable when a physical target is declared. The full contract, thresholds and exit codes are in [references/qa-contract.md](references/qa-contract.md).
+
+`--fix` proposes bounded repairs (wrap text into its container and shift it back inside, move a label off a connector, equalise panel gutters, move an object back on-canvas), re-audits each candidate, and keeps it only when the finding clears and no new `fail` appears. It never edits the input project: write the result to a new directory with `--fix-output` and review that copy.
 
 ### Build repeated structure from tables
 

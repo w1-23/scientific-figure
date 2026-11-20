@@ -35,3 +35,35 @@ def test_installed_cli_end_to_end(tmp_path):
     assert run("review",project)["drawing_review"]["status"]=="stale_after_edit"
     run("edit",project,"--patch",patch,expected=2)
     assert run("validate",project)["revision"]==1
+
+
+def test_layout_audit_cli_reports_and_fixes_a_copy(tmp_path):
+    from scientific_figure.builder import SceneBuilder
+    from scientific_figure.project import write_project
+
+    builder=SceneBuilder(600,300,schema_version="0.3")
+    builder.rect("card",40,100,140,90,style={"fill":"#ffffff","stroke":"#88aacc","stroke_width":2},semantic={"role":"panel"})
+    builder.text("label",110,145,"A very long label that will not fit inside this card",style={"font_size":14,"anchor":"middle"})
+    project=tmp_path/"project"
+    write_project(builder.build(),project)
+    original=(project/"scene.json").read_bytes()
+
+    env={**os.environ,"DISPLAY":""}
+    def audit(*args,expected=0):
+        result=subprocess.run([sys.executable,"-I","-m","scientific_figure.cli","layout-audit",
+                               *map(str,args)],cwd=tmp_path,env=env,capture_output=True,text=True)
+        assert result.returncode==expected,(result.stdout,result.stderr)
+        return json.loads(result.stdout)
+
+    failing=audit(project,"--target-width-mm",183,"--output",tmp_path/"qa.json",
+                  "--overlay",tmp_path/"qa.overlay.svg",expected=1)
+    assert failing["verdict"]=="failed"
+    assert failing["summary"]["fail"]>=1
+    assert json.loads((tmp_path/"qa.json").read_text(encoding="utf-8"))["kind"]=="scene_qa"
+    assert 'id="qa-overlay"' in (tmp_path/"qa.overlay.svg").read_text(encoding="utf-8")
+
+    fixed=audit(project,"--target-width-mm",183,"--fix","--fix-output",tmp_path/"fixed")
+    assert fixed["fix_status"] in {"fixed","partially_fixed"}
+    assert fixed["verdict"] in {"clear","needs_review"}
+    assert fixed["fix_output"]["revision"]==1
+    assert (project/"scene.json").read_bytes()==original

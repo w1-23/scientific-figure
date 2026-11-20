@@ -27,6 +27,7 @@ def parser():
     probe=sub.add_parser("font-probe");probe.add_argument("input",type=Path)
     probe.add_argument("--output",type=Path);probe.add_argument("--font",type=Path,action="append")
     probe.add_argument("--font-size",type=float)
+    probe.add_argument("--profile",nargs="?",const="scientific-default")
     review_serve=sub.add_parser("review-serve");review_serve.add_argument("input",type=Path)
     review_serve.add_argument("--session",type=Path);review_serve.add_argument("--host",default="127.0.0.1")
     review_serve.add_argument("--port",type=int,default=0);review_serve.add_argument("--open",action="store_true")
@@ -105,6 +106,17 @@ def parser():
             cmd.add_argument("--objects",required=True)
             cmd.add_argument("--format",choices=["svg","png"],default="svg")
             cmd.add_argument("--padding",type=float,default=4)
+    layout=sub.add_parser("layout-audit",help="Deterministic Scene layout audit")
+    layout.add_argument("input",type=Path)
+    layout.add_argument("--request",type=Path,help="QA request: target size, thresholds, exemptions, required objects")
+    layout.add_argument("--output",type=Path,help="Write the JSON report here")
+    layout.add_argument("--overlay",type=Path,help="Write a diagnostic SVG overlay here")
+    layout.add_argument("--target-width-mm",type=float)
+    layout.add_argument("--target-dpi",type=float,default=300)
+    layout.add_argument("--strict",action="store_true",help="Treat warnings as a failing verdict")
+    layout.add_argument("--fix",action="store_true",help="Propose and apply bounded automatic fixes")
+    layout.add_argument("--fix-output",type=Path,help="Write the fixed candidate project here")
+    layout.add_argument("--max-rounds",type=int,default=3)
     return p
 
 
@@ -235,6 +247,9 @@ def execute(args):
         if any(not isinstance(item,str) for item in candidates):raise ValueError("candidate fonts must be paths")
         size=args.font_size if args.font_size is not None else document.get("font_size",14)
         report=probe_fonts(document.get("texts"),candidates=candidates or None,font_size=size)
+        if args.profile:
+            from .fonts import resolve_profile
+            report["profile"]=resolve_profile(name=args.profile)
         if args.output:
             if args.output.exists() and not args.output.is_dir():raise ValueError("font-probe output must be a directory")
             args.output.mkdir(parents=True,exist_ok=True)
@@ -435,6 +450,42 @@ def execute(args):
     if command=="export-variants":
         from .export_variants import export_variants
         return export_variants(args.input,args.output,exclude=[item for item in args.exclude.split(",") if item])
+    if command=="layout-audit":
+        from .layout_audit import audit_scene,load_request,write_json
+        from .qa_overlay import write_overlay
+        request=load_request(args.request) if args.request else {}
+        if args.target_width_mm is not None:
+            request={**request,"target":{"width_mm":args.target_width_mm,"dpi":args.target_dpi}}
+        if args.input.is_dir():scene=load_project(args.input)
+        else:
+            from .svg_import import import_svg
+            scene=import_svg(args.input,schema_version="0.3")
+        report=audit_scene(scene,request=request)
+        receipt={"status":report["status"],"kind":"layout_audit","input":str(args.input.resolve()),
+                 "revision":report["scene_revision"],"summary":report["summary"],
+                 "checks":report["checks"],"exemptions":report["exemptions"],
+                 "target":report["target"],"report":report}
+        if args.output:receipt["report_path"]=write_json(report,args.output)
+        if args.overlay:receipt["overlay"]=write_overlay(scene,report,args.overlay)
+        if args.fix:
+            from .auto_layout_fix import fix_scene
+            fixed=fix_scene(scene,report,request=request or None,max_rounds=args.max_rounds)
+            receipt["fix"]={key:value for key,value in fixed.items() if key!="scene"}
+            if args.fix_output:
+                extras={}
+                for name in PROJECT_JSON_EXTRAS-{"analysis.json","candidates.json"}:
+                    if (args.input/name).is_file():extras[name]=load_json(args.input/name)
+                result=write_project(fixed["scene"],args.fix_output,extras=extras)
+                receipt["fix_output"]={"project":str(args.fix_output.resolve()),
+                                       "revision":result["revision"],
+                                       "status":fixed["status"]}
+            receipt["fix_status"]=fixed["status"]
+        final=receipt["fix"]["report_after"] if args.fix else report
+        verdict=final["status"]
+        if args.strict and any(check["status"]=="warn" for check in final["checks"]):verdict="failed"
+        receipt["verdict"]=verdict
+        receipt["exit_code"]=0 if verdict in {"clear","needs_review"} else 1 if verdict=="failed" else 5
+        return receipt
     if command=="export":
         selected=export_scene(scene,args.objects.split(","),args.padding)
         svg=to_svg(selected)
@@ -448,8 +499,9 @@ def execute(args):
 def main(argv=None):
     try:
         result=execute(parser().parse_args(argv))
+        code=result.pop("exit_code",0) if isinstance(result,dict) else 0
         print(json.dumps(result,ensure_ascii=False,allow_nan=False))
-        return 0
+        return code
     except (ValueError,TypeError,KeyError,OSError,ImportError) as error:
         text=str(error)
         status="needs_input" if text.startswith("needs_input:") else "unsupported" if text.startswith("unsupported:") else "failed"

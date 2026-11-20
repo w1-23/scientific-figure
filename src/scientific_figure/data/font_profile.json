@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1",
+  "kind": "font_profile",
+  "name": "scientific-default",
+  "roles": {
+    "text": {
+      "latin": "Times New Roman",
+      "cjk": "Microsoft YaHei"
+    },
+    "math": {
+      "family": "Cambria Math"
+    }
+  },
+  "fallback": "single_font_only",
+  "notes": "Recommendation only: rendering stays single-font until mixed-script tspan output is verified end to end."
+}

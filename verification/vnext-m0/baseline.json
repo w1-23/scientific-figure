@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1",
+  "kind": "vnext_m0_baseline",
+  "recorded_at": "2026-11-20",
+  "repository": "https://github.com/w1-23/scientific-figure",
+  "commit": "3650083c2d75b4a093827dd595ad46b9788b8e1e",
+  "remote_main_matches_local": true,
+  "note": "The vNext design document named 8e9177c as the baseline; that commit is an ancestor of 3650083, which is the actual local and remote main at recording time.",
+  "engine": {
+    "version": "0.9.0",
+    "package": "scientific-figure-skill",
+    "python": "3.12.16"
+  },
+  "tests": {
+    "command": "python -m pytest -q",
+    "result": "1056 passed, 5 skipped, 10 subtests passed",
+    "seconds": 80.61,
+    "skipped_reason": "Windows symlink privilege limits"
+  },
+  "runtime": {
+    "renderer": "resvg-py",
+    "renderer_version": "0.5.0",
+    "device": "cpu",
+    "font_family": "Arial",
+    "font_path": "C:\\Windows\\Fonts\\arial.ttf",
+    "font_sha256": "edfbd22a3d088fc2f5d7c79b8c9c732df6dc878a60f0a80be0f92a3c7a634404",
+    "optional_geometry_backend": "skia-pathops 0.9.2",
+    "doctor_status": "success",
+    "runtime_preflight_status": "ok"
+  },
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "numpy": "2.5.5",
+    "opencv-python-headless": "4.14.0.94",
+    "fonttools": "4.68.0",
+    "jsonschema": "4.26.0",
+    "resvg-py": "0.5.0"
+  },
+  "example": {
+    "project": "work/demo-citrus/project",
+    "figure_svg_sha256": "91efb13e36148d92993fd3e86030733feed99f1db6876a43c0330896b3fefd80",
+    "variant_final_svg_sha256": "91efb13e36148d92993fd3e86030733feed99f1db6876a43c0330896b3fefd80",
+    "variant_graphics_svg_present": true,
+    "note": "Local untracked demo project; the two digests are identical because export-variants writes figure.final.svg byte-identically to the project figure.svg."
+  },
+  "compatibility_gate": [
+    "pytest stays green with the same or a larger test count",
+    "existing figure.final.svg / figure.graphics.svg exports stay byte-identical",
+    "the new audit never runs inside write_project or the project qa.json"
+  ]
+}

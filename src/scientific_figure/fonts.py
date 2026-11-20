@@ -38,7 +38,8 @@ def check_text(text: str, family: str | None = None) -> None:
         raise ValueError(f"needs_input: selected font has no glyphs for {''.join(missing)!r}")
 
 
-def text_bounds(geometry: dict, style: dict) -> tuple[float, float, float, float]:
+def text_line_boxes(geometry: dict, style: dict) -> list[tuple[float, float, float, float]]:
+    """One local-space box per rendered line, matching the emitter's 1.2 line step."""
     size = style.get("font_size", 14)
     # Measure at 8x to reduce rounding of fractional font sizes.
     scale = 8
@@ -52,6 +53,11 @@ def text_bounds(geometry: dict, style: dict) -> tuple[float, float, float, float
         baseline = y + i * size * 1.2
         boxes.append((x + (left - shift) / scale, baseline + top / scale,
                       x + (right - shift) / scale, baseline + bottom / scale))
+    return boxes
+
+
+def text_bounds(geometry: dict, style: dict) -> tuple[float, float, float, float]:
+    boxes = text_line_boxes(geometry, style)
     return (min(b[0] for b in boxes), min(b[1] for b in boxes),
             max(b[2] for b in boxes), max(b[3] for b in boxes))
 
@@ -97,13 +103,21 @@ def font_candidates(directories=None, limit=FONT_PROBE_LIMITS["fonts"]):
     return found
 
 
+def _collection_count(path):
+    """Face count from the TTC header, without loading every face."""
+    try:
+        with open(path, "rb") as handle:
+            header = handle.read(12)
+    except OSError:
+        return 1
+    if len(header) == 12 and header[:4] == b"ttcf":
+        return max(1, int.from_bytes(header[8:12], "big"))
+    return 1
+
+
 def _font_faces(path, limit=FONT_PROBE_LIMITS["faces"]):
     """Read each face of a TTF/OTF/TTC without claiming fallback coverage."""
-    try:
-        with TTFont(path) as font:
-            count = getattr(getattr(font, "reader", None), "numFonts", 1) or 1
-    except Exception:
-        count = 1
+    count = _collection_count(path)
     faces = []
     for index in range(min(int(count), limit)):
         try:
@@ -114,6 +128,82 @@ def _font_faces(path, limit=FONT_PROBE_LIMITS["faces"]):
         except Exception as error:
             faces.append({"index": index, "error": f"{type(error).__name__}: {error}"[:200]})
     return faces
+
+
+PROFILE_SCAN_LIMIT = 400
+PROFILE_SAMPLE = "细胞膜线粒体αβγΔ∑∞→"
+
+
+def font_profile(name: str = "scientific-default") -> dict:
+    """Load a packaged font recommendation. Never installs or selects a font."""
+    from importlib.resources import files
+
+    resource = files("scientific_figure").joinpath("data", "font_profile.json")
+    document = json.loads(resource.read_text(encoding="utf-8"))
+    if document.get("name") != name:
+        raise ValueError(f"unknown font profile {name!r}; packaged profile is {document.get('name')!r}")
+    return document
+
+
+@lru_cache(maxsize=4)
+def _family_index(directories, limit):
+    """Map lower-cased family names to installed faces in a bounded scan."""
+    index = {}
+    for path in font_candidates(list(directories) if directories else None, limit=limit):
+        try:
+            resolved = str(path.resolve())
+        except OSError:
+            continue
+        for face in _font_faces(path, limit=8):
+            if "error" in face:
+                continue
+            index.setdefault(face["family"].lower(), []).append(
+                {"path": resolved, "family": face["family"], "face_index": face["index"],
+                 "glyphs": face["glyphs"]})
+    return index
+
+
+@lru_cache(maxsize=64)
+def _path_sha256(path):
+    return _font_sha256(path)
+
+
+def resolve_profile(profile: dict | None = None, *, name: str = "scientific-default",
+                    directories=None, limit: int = PROFILE_SCAN_LIMIT) -> dict:
+    """Resolve each profile family to real local faces, reporting what is missing.
+
+    Resolution is a probe: it does not change the active font, and a missing
+    family is reported as missing rather than substituted.
+    """
+    profile = font_profile(name) if profile is None else profile
+    scan = tuple(str(item) for item in directories) if directories else None
+    index = _family_index(scan, limit)
+    roles, missing = [], []
+    for role in sorted(profile.get("roles", {})):
+        for slot, family in sorted(profile["roles"][role].items()):
+            hits = index.get(family.lower(), [])
+            matches = []
+            for hit in hits[:4]:
+                public = {key: value for key, value in hit.items() if key != "glyphs"}
+                public["sha256"] = _path_sha256(hit["path"])
+                public["sample_missing"] = "".join(
+                    sorted({character for character in PROFILE_SAMPLE
+                            if ord(character) not in hit["glyphs"]}))
+                matches.append(public)
+            roles.append({"role": role, "slot": slot, "family": family,
+                          "available": bool(matches), "matches": matches})
+            if not matches:
+                missing.append(family)
+    return {"schema_version": "0.1", "kind": "font_profile_probe",
+            "name": profile.get("name"), "profile": profile,
+            "roles": roles, "missing": missing,
+            "fallback": profile.get("fallback", "single_font_only"),
+            "rendering": "single_font_only", "mixed_font_layout": "unsupported",
+            "sample_characters": PROFILE_SAMPLE,
+            "limitations": [
+                "A resolved family is installed, not necessarily the font the engine will render with.",
+                "Rendering stays single-font; the profile is a recommendation and pre-flight report.",
+                "No font is installed, downloaded or activated."]}
 
 
 def probe_fonts(texts, *, candidates=None, font_size=14,
