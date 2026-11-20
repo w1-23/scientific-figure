@@ -4,9 +4,21 @@
 
 A standalone skill for redrawing scientific figures from references and creating new figures from natural-language descriptions. It delivers editable SVGs and PNG previews. Use a screenshot to identify any region you want revised.
 
-绘图过程中可以用本地审阅页同步查看、缩放和按对象批注；交付时可以一次性检查整图字体覆盖，并从同一 Scene 生成无字矢量图与带字最终稿。
+绘图过程中可以用本地审阅页同步查看，按对象放置钉针批注；交付时可以一次性检查整图字体覆盖，并从同一 Scene 生成无字矢量图与带字最终稿。
 
-The figure can be watched in a local review page with zoom and object-level pins while it is being drawn. Delivery can check the whole task's font coverage first and derive a text-free vector version plus the annotated final SVG from one Scene.
+The figure can be watched in a local review page with object-level pins while it is being drawn. Delivery can check the whole task's font coverage first and derive a text-free vector version plus the annotated final SVG from one Scene.
+
+## 功能 / Features
+
+| 功能 / Feature | 说明 / What it does |
+|---|---|
+| 参考图重绘 / Reference redraw | 理解参考图的阅读顺序、对象与关系，按需测量局部轮廓、颜色和位置，重绘为可编辑 SVG。 |
+| 自然语言绘图 / Text-to-figure | 从一段描述设计版式与结构，用 FigurePlan 组织绘图决策，按对象选用模板、授权素材、基础几何或绘图程序。 |
+| 本地审阅页（预览窗口） / Local review page | 浏览器窗口里实时查看当前版本：画布自动适配窗口，用钉针按对象放置批注；每次提交绑定所看 SVG 的哈希与修订号，旧版本提交返回 409。只读预览，不缩放、不拖拽。 |
+| 双 SVG 交付 / Two SVG variants | 从同一 Scene 导出 `figure.final.svg` 与无字的 `figure.graphics.svg`，共有对象 ID、几何和样式完全一致。 |
+| 排版质检 / Layout audit | `layout-audit` 检查文字重叠、文字穿描边、容器内边距、画布越界、有效字号、面板对齐与间距、连接器净空、对比度、负空间和必需结构，输出 JSON 报告与诊断 SVG；状态只有 fail / warn / info / clear / exempted / not_auditable。 |
+| 受限自动修正 / Bounded fixes | `--fix` 只做换行、标签避让、面板间距和越界回移，每个候选重新审计后才接受，结果写入新目录，原工程不变。 |
+| 字体预检与预设 / Font pre-check | `font-probe` 检查字体覆盖与缺字；`--profile` 报告 Times New Roman / Microsoft YaHei / Cambria Math 在本机的解析结果，缺字体如实报告。 |
 
 ## 示例 / Examples
 
@@ -77,7 +89,7 @@ python examples/structural-regression/run.py work/regression --deliver examples/
 
 The citrus example writes `figure.svg`, `preview.png`, and `scene.json`.
 
-[宿主指南 / Skill guide](SKILL.md) · [参考图重建 / Reference reconstruction](references/reference-reconstruction.md) · [自然语言设计 / Text-to-figure design](references/text-design.md) · [交互审阅 / Interactive review](references/interactive-reconstruction.md) · [字体与双SVG / Fonts and variants](docs/fonts-and-variants.md)
+[宿主指南 / Skill guide](SKILL.md) · [参考图重建 / Reference reconstruction](references/reference-reconstruction.md) · [自然语言设计 / Text-to-figure design](references/text-design.md) · [交互审阅 / Interactive review](references/interactive-reconstruction.md) · [排版质检 / Layout QA](references/qa-contract.md) · [字体与双SVG / Fonts and variants](docs/fonts-and-variants.md)
 
 ## 目录 / Repository layout
 
