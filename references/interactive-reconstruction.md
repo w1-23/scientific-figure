@@ -79,8 +79,10 @@ SVG digest and `stale: true/false`. `--port 0` picks a free port.
 
 The page fetches `/svg`, `/state` and posts to `/feedback`. It presents one
 compact preview panel: a file/version bar, a canvas with the figure fitted and
-centred, numbered pins, and a list of comment cards. The fit follows window
-resizes until the user pans or zooms; the reset button restores it. It keeps
+centred, numbered pins, and a list of comment cards. The figure is fitted on first load,
+when a new version arrives, when the page is restored from the back/forward
+cache, and on window resizes until the user pans or zooms; the reset button
+restores the fit. A manual zoom survives a same-version reload. It keeps
 the current zoom, pan and unsent pins when the figure is reloaded, and shows a
 banner when a newer version is available instead of replacing the drawing under
 the user's cursor. Pins placed on an earlier version are marked; the submission

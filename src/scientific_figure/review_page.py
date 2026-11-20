@@ -129,7 +129,6 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
   let nextId = 1, selected = null;
   let dragging = null;
   let suppressClick = false;
-  let hasFit = false;
   let userAdjusted = false;
 
   function api(path) { return path + (path.includes("?") ? "&" : "?") + "t=" + encodeURIComponent(token); }
@@ -282,10 +281,13 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
     const size = svgSize();
     svg.style.width = size.w + "px"; svg.style.height = size.h + "px";
     stage.replaceChildren(svg);
+    // First load, a new version, and a restored page all start fitted;
+    // manual zoom/pan on the same version is left alone.
+    const changed = loadedSha !== state.svg_sha256;
     loadedSha = state.svg_sha256;
     document.getElementById("meta").textContent = "当前版本 · rev "
       + (state.revision === null ? "?" : state.revision) + " · " + state.svg_sha256.slice(0, 10);
-    if (!hasFit) { hasFit = true; fitView(); }
+    if (changed) { fitView(); }
     else { applyView(); renderPinMarks(); updateZoomLabel(); }
     renderPins();
   }
@@ -421,6 +423,9 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
   if (window.ResizeObserver) {
     new ResizeObserver(() => { if (!userAdjusted) fitView(); }).observe(wrap);
   }
+  window.addEventListener("pageshow", event => {
+    if (event.persisted && svg) fitView();
+  });
 
   refreshState(true);
   setInterval(() => refreshState(false), 2500);
