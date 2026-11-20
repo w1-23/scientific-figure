@@ -164,8 +164,12 @@ def test_overlay_is_valid_svg_and_never_touches_the_scene(tmp_path):
     root = ET.fromstring(xml)
     overlay = [node for node in root.iter() if node.get("id") == "qa-overlay"]
     assert len(overlay) == 1
-    assert overlay[0].get("data-status") == report["status"]
+    title = [child for child in overlay[0] if child.tag.endswith("title")][0]
+    assert report["status"] in title.text
     assert json.dumps(scene, sort_keys=True) == original
+
+    from scientific_figure.render import render_svg
+    assert render_svg(xml, 1).startswith(b"\x89PNG")
 
     path = write_overlay(scene, report, tmp_path / "qa.overlay.svg")
     assert path["bytes"] > 0 and len(path["sha256"]) == 64

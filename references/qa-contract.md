@@ -75,6 +75,15 @@ figure-cli layout-audit PROJECT_OR_SVG \
 - 只写 `--fix-output` 指定的新工程；不覆盖输入工程（测试校验字节不变）。
 - 修正后仍有 WARN 时状态是 `partially_fixed`，不是"已完美"。
 
+## 诊断 SVG
+
+`--overlay` 输出的是主体 SVG 加一个 `<g id="qa-overlay">`，可直接用 `figure-cli render qa.overlay.svg --output qa.overlay.png` 渲染，也可在浏览器打开：
+
+- 只使用引擎可渲染的 SVG 子集：没有 `<script>`、CSS、外部引用或 `data-*` 属性；每个发现带 `<title>`（kind、状态、对象、数值），浏览器悬停可见。
+- 颜色：FAIL 红、WARN 橙、NOT_AUDITABLE 灰、EXEMPTED 蓝；标签前缀 `F:`/`W:`/`N:`/`E:`。
+- 画布外的对象，其标签会被夹回画布可见范围，避免诊断信息跟着对象一起被裁掉。
+- overlay 是纯诊断产物：Scene 不变，也不会被再次审计。
+
 ## 测量口径
 
 - 文字框来自 `fonts.text_line_boxes`：与渲染同源（PIL 度量、1.2 行距、锚点 start/middle/end），按行成框，多行文字自身不算重叠。
