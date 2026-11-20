@@ -15,7 +15,7 @@
 | P6 版本与交付 | 0.9.0源码/wheel/公开示例/私有图分包，Windows/Linux独立应用文件一致性和新增入口验证，SHA清单 |
 | 本地 runtime preflight | prepare/consume在接触输入前探测renderer/fonts/schemas/OpenCV/pathops，回执与manifest记录`ok/degraded/failed`及逐项结果，`doctor`同样输出；模型adapter仍是`adapter_not_available`，`host_call_order_verified`为false |
 | 任务字体预检 | `font-probe`汇总整图文字，报告当前字体缺失字符、本地TTF/OTF/TTC逐face覆盖、SHA与样例图；只选一个真实字体，环境变量由用户设置；不声称混排回退 |
-| SVG审阅桥 | `review-serve`只读当前`figure.svg`，本机随机令牌、CSP与严格SVG清洗；单卡片预览页，图稿适应窗口并居中，编号Pin与批注卡，缩放/平移；反馈存`<preview>-review/feedback.json`，绑定SVG摘要与修订，旧版本提交返回409；`review-status`、`--wait` |
+| SVG审阅桥 | `review-serve`只读当前`figure.svg`，本机随机令牌、CSP与严格SVG清洗；单卡片预览页，图稿始终自动适配画布并居中（钉针光标，无缩放/平移，点击即标注），编号Pin与批注卡；反馈存`<preview>-review/feedback.json`，绑定SVG摘要与修订，旧版本提交返回409；`review-status`、`--wait` |
 | fidelity检查映射 | `shape/detail/topology`映射到已有boundary/region/negative_space绑定并给`plan validate`输出；`plan review`逐项报告checked/missing；repetition/layers/occlusion/connectivity保持needs_review |
 | 同源双SVG | `export-variants`从同一Scene输出`figure.final.svg`与无字`figure.graphics.svg`；共用ID几何/样式逐属性一致；文字装饰与指向文字的引线同步排除；工程不变 |
 

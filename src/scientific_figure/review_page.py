@@ -34,8 +34,7 @@ button.icon:hover { background:var(--accent-soft); }
 button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
 button.primary:hover { filter:brightness(1.06); color:#fff; }
 .icon { width:16px; height:16px; display:block; }
-#canvas-wrap { position:relative; height:clamp(320px, 56vh, 520px); margin:16px 18px 0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fbfcfe; cursor:grab; touch-action:none; }
-#canvas-wrap.dragging { cursor:grabbing; }
+#canvas-wrap { position:relative; height:clamp(320px, 56vh, 520px); margin:16px 18px 0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fbfcfe; cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMmE3IDcgMCAwIDAtNyA3YzAgNSA3IDEzIDcgMTNzNy04IDctMTNhNyA3IDAgMCAwLTctN1oiIGZpbGw9IiNkNjQ1NDUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjkiIHI9IjIuNCIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==") 13 24, crosshair; }
 #stage { position:absolute; top:0; left:0; transform-origin:0 0; background:transparent; }
 #stage svg { display:block; max-width:none; }
 #stage svg text { user-select:none; }
@@ -86,8 +85,6 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
   <div class="filebar">
     <div class="file"><span class="dot"></span><code>figure.svg</code><span id="meta">当前版本</span></div>
     <div class="tools">
-      <button class="icon" id="zoom-in" title="放大" aria-label="放大"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M20 20l-3.5-3.5"/></svg></button>
-      <button class="icon" id="reset" title="适应窗口" aria-label="适应窗口"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg></button>
       <button class="icon" id="refresh" title="重新加载" aria-label="重新加载"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
     </div>
   </div>
@@ -97,10 +94,9 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.6-6-10a6 6 0 0 1 12 0c0 4.4-6 10-6 10Z"/><circle cx="12" cy="11" r="2"/></svg>
       <span id="count">0 条批注</span>
       <span class="sep"></span>
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg>
-      <span>拖拽平移 · 滚轮缩放</span>
+      <span>点击图稿放置批注</span>
     </div>
-    <div class="right"><span id="zoom">100%</span><span>SVG 原生</span></div>
+    <div class="right"><span>自动适配 · SVG 原生</span></div>
   </div>
   <div id="pins"><p class="empty" id="no-pins">点击图稿上的对象或空白处添加批注。</p></div>
   <div class="actions">
@@ -127,9 +123,6 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
   let view = { scale: 1, x: 0, y: 0 };
   let pending = [];
   let nextId = 1, selected = null;
-  let dragging = null;
-  let suppressClick = false;
-  let userAdjusted = false;
 
   function api(path) { return path + (path.includes("?") ? "&" : "?") + "t=" + encodeURIComponent(token); }
   function setStatus(text, error) { statusBox.textContent = text; statusBox.className = error ? "error" : ""; }
@@ -145,10 +138,6 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
     stage.style.transform = "translate(" + view.x + "px," + view.y + "px) scale(" + view.scale + ")";
   }
 
-  function updateZoomLabel() {
-    document.getElementById("zoom").textContent = Math.round(view.scale * 100) + "%";
-  }
-
   function svgSize() {
     const box = svg && svg.viewBox && svg.viewBox.baseVal;
     return {w: Math.max(box && box.width ? box.width : 300, 1),
@@ -159,16 +148,15 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
     if (!svg) return;
     const box = wrap.getBoundingClientRect();
     const size = svgSize();
-    const pad = 26;
+    const pad = 18;
     if (!box.width || !box.height) return;
+    // Always fill the canvas: no zoom controls, so the fit is the only view.
     const scale = Math.min((box.width - pad * 2) / size.w,
-                           (box.height - pad * 2) / size.h, 1);
+                           (box.height - pad * 2) / size.h);
     view.scale = Math.max(scale, 0.05);
     view.x = (box.width - size.w * view.scale) / 2;
     view.y = (box.height - size.h * view.scale) / 2;
-    userAdjusted = false;
     applyView();
-    updateZoomLabel();
     renderPinMarks();
   }
 
@@ -281,21 +269,15 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
     const size = svgSize();
     svg.style.width = size.w + "px"; svg.style.height = size.h + "px";
     stage.replaceChildren(svg);
-    // First load, a new version, and a restored page all start fitted;
-    // manual zoom/pan on the same version is left alone.
-    const changed = loadedSha !== state.svg_sha256;
     loadedSha = state.svg_sha256;
     document.getElementById("meta").textContent = "当前版本 · rev "
       + (state.revision === null ? "?" : state.revision) + " · " + state.svg_sha256.slice(0, 10);
-    if (changed) { fitView(); }
-    else { applyView(); renderPinMarks(); updateZoomLabel(); }
+    fitView();
     renderPins();
   }
 
   function onCanvasClick(event) {
     if (!svg) return;
-    if (suppressClick) { suppressClick = false; return; }
-    // The click may be retargeted to the capture element, so hit-test by point.
     const hit = document.elementFromPoint(event.clientX, event.clientY);
     if (!hit || (hit !== svg && !svg.contains(hit))) return;
     const pinNode = hit.closest(".sf-pin");
@@ -334,58 +316,8 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
     }
   }
 
-  wrap.addEventListener("wheel", event => {
-    if (!svg) return;
-    event.preventDefault();
-    userAdjusted = true;
-    const box = wrap.getBoundingClientRect();
-    const px = event.clientX - box.left, py = event.clientY - box.top;
-    const factor = Math.exp(-event.deltaY * 0.0015);
-    const scale = Math.min(40, Math.max(0.05, view.scale * factor));
-    view.x = px - (px - view.x) * (scale / view.scale);
-    view.y = py - (py - view.y) * (scale / view.scale);
-    view.scale = scale;
-    applyView();
-    updateZoomLabel();
-    renderPinMarks();
-  }, { passive: false });
-
+  // Clicks only place pins; the figure itself is never panned or zoomed.
   wrap.addEventListener("click", onCanvasClick);
-  wrap.addEventListener("pointerdown", event => {
-    if (event.button !== 0) return;
-    suppressClick = false;
-    dragging = { x: event.clientX, y: event.clientY, vx: view.x, vy: view.y, captured: false };
-    wrap.classList.add("dragging");
-  });
-  wrap.addEventListener("pointermove", event => {
-    if (!dragging) return;
-    if (Math.abs(event.clientX - dragging.x) > 4 || Math.abs(event.clientY - dragging.y) > 4) {
-      suppressClick = true;
-      userAdjusted = true;
-      if (!dragging.captured) {
-        wrap.setPointerCapture(event.pointerId);
-        dragging.captured = true;
-      }
-    }
-    view.x = dragging.vx + event.clientX - dragging.x;
-    view.y = dragging.vy + event.clientY - dragging.y;
-    applyView();
-  });
-  wrap.addEventListener("pointerup", () => { dragging = null; wrap.classList.remove("dragging"); });
-
-  function zoom(factor) {
-    const box = wrap.getBoundingClientRect();
-    const px = box.width / 2, py = box.height / 2;
-    const scale = Math.min(40, Math.max(0.05, view.scale * factor));
-    view.x = px - (px - view.x) * (scale / view.scale);
-    view.y = py - (py - view.y) * (scale / view.scale);
-    view.scale = scale;
-    userAdjusted = true;
-    applyView(); updateZoomLabel(); renderPinMarks();
-  }
-
-  document.getElementById("zoom-in").addEventListener("click", () => zoom(1.25));
-  document.getElementById("reset").addEventListener("click", () => fitView());
   document.getElementById("refresh").addEventListener("click", () => {
     banner.classList.remove("show");
     refreshState(false).then(loadSvg);
@@ -421,7 +353,7 @@ footer span { display:inline-flex; align-items:center; gap:6px; }
   document.getElementById("request").addEventListener("click", () => submit("changes_requested"));
 
   if (window.ResizeObserver) {
-    new ResizeObserver(() => { if (!userAdjusted) fitView(); }).observe(wrap);
+    new ResizeObserver(() => fitView()).observe(wrap);
   }
   window.addEventListener("pageshow", event => {
     if (event.persisted && svg) fitView();

@@ -1,8 +1,8 @@
 # Interactive review of a reconstruction
 
-The review bridge lets a user watch the current SVG, zoom into it, and pin
-comments while the host keeps drawing. It is optional: every draw, check,
-export and project transaction still works without a browser or a server.
+The review bridge lets a user watch the current SVG and pin comments on it
+while the host keeps drawing. It is optional: every draw, check, export and
+project transaction still works without a browser or a server.
 
 ## Source and session
 
@@ -79,14 +79,15 @@ SVG digest and `stale: true/false`. `--port 0` picks a free port.
 
 The page fetches `/svg`, `/state` and posts to `/feedback`. It presents one
 compact preview panel: a file/version bar, a canvas with the figure fitted and
-centred, numbered pins, and a list of comment cards. The figure is fitted on first load,
-when a new version arrives, when the page is restored from the back/forward
-cache, and on window resizes until the user pans or zooms; the reset button
-restores the fit. A manual zoom survives a same-version reload. It keeps
-the current zoom, pan and unsent pins when the figure is reloaded, and shows a
-banner when a newer version is available instead of replacing the drawing under
-the user's cursor. Pins placed on an earlier version are marked; the submission
-still binds to the version currently displayed.
+centred, numbered pins, and a list of comment cards. The figure always fills
+the canvas: it is fitted on first load, when a new version arrives, when the
+page is restored from the back/forward cache, and on every window resize. The
+canvas is not pannable or zoomable — the pointer is a pin, so a click always
+means "mark this spot" — and there is no zoom control to reset. Unpinned
+comments stay in the cards across a same-version reload, and a banner announces
+a newer version instead of replacing the drawing under the user's cursor. Pins
+placed on an earlier version are marked; the submission still binds to the
+version currently displayed.
 
 The page is a local browser fallback. It does not install a VS Code webview or
 own any drawing state. An editor host that wants a side panel can consume the
