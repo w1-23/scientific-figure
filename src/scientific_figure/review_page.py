@@ -35,6 +35,7 @@ aside h2 { font-size:14px; margin:12px 14px 4px; }
 #pins { flex:1; overflow:auto; padding:0 14px 8px; }
 .pin { border:1px solid var(--line); border-radius:8px; padding:8px; margin-bottom:8px; background:#fbfcfd; }
 .pin.stale { border-color:#e6cf94; background:#fffaf0; }
+.pin.selected { border-color:var(--accent); box-shadow:inset 0 0 0 1px var(--accent); }
 .pin .where { display:flex; justify-content:space-between; gap:8px; color:var(--muted); font-size:12px; margin-bottom:5px; }
 .pin textarea { width:100%; min-height:52px; resize:vertical; font:inherit; border:1px solid var(--line); border-radius:5px; padding:5px; }
 .pin .remove { border:0; background:none; color:#a33; cursor:pointer; padding:0; font-size:12px; }
@@ -131,26 +132,30 @@ aside h2 { font-size:14px; margin:12px 14px 4px; }
     return layer;
   }
 
-  function renderPins() {
+  function renderPinMarks() {
     const layer = pinLayer();
     if (layer) layer.replaceChildren();
+    pending.forEach(pin => {
+      if (!layer) return;
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      const radius = 7 / Math.max(view.scale, 0.05);
+      circle.setAttribute("cx", pin.x); circle.setAttribute("cy", pin.y);
+      circle.setAttribute("r", radius);
+      circle.setAttribute("class", "sf-pin" + (pin.sha !== loadedSha ? " stale" : "")
+                          + (selected === pin.uid ? " selected" : ""));
+      circle.dataset.uid = pin.uid;
+      layer.appendChild(circle);
+    });
+  }
+
+  function renderPinCards() {
     pinsBox.querySelectorAll(".pin").forEach(node => node.remove());
     const empty = document.getElementById("no-pins");
     empty.style.display = pending.length ? "none" : "";
     pending.forEach(pin => {
-      if (layer) {
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        const radius = 7 / Math.max(view.scale, 0.05);
-        circle.setAttribute("cx", pin.x); circle.setAttribute("cy", pin.y);
-        circle.setAttribute("r", radius);
-        circle.setAttribute("class", "sf-pin" + (pin.sha !== loadedSha ? " stale" : "")
-                            + (selected === pin.uid ? " selected" : ""));
-        circle.dataset.uid = pin.uid;
-        circle.addEventListener("click", event => { event.stopPropagation(); select(pin.uid); });
-        layer.appendChild(circle);
-      }
       const card = document.createElement("div");
-      card.className = "pin" + (pin.sha !== loadedSha ? " stale" : "");
+      card.className = "pin" + (pin.sha !== loadedSha ? " stale" : "")
+                       + (selected === pin.uid ? " selected" : "");
       card.dataset.uid = pin.uid;
       const where = document.createElement("div");
       where.className = "where";
@@ -165,20 +170,43 @@ aside h2 { font-size:14px; margin:12px 14px 4px; }
       area.placeholder = "What should change here?";
       area.value = pin.text;
       area.addEventListener("input", () => { pin.text = area.value; });
-      area.addEventListener("focus", () => select(pin.uid));
+      // Selection only updates classes; rebuilding on focus would drop the
+      // textarea the user just clicked into.
+      area.addEventListener("focus", () => { selected = pin.uid; updateSelection(); });
       card.append(where, area);
       pinsBox.appendChild(card);
     });
   }
 
-  function select(uid) { selected = uid; renderPins(); const card = pinsBox.querySelector('.pin[data-uid="' + uid + '"] textarea'); if (card) card.focus(); }
+  function renderPins() { renderPinMarks(); renderPinCards(); }
+
+  function updateSelection() {
+    pinsBox.querySelectorAll(".pin").forEach(node => {
+      node.classList.toggle("selected", Number(node.dataset.uid) === selected);
+    });
+    const layer = svg && svg.querySelector("#sf-review-pins");
+    if (layer) layer.querySelectorAll(".sf-pin").forEach(node => {
+      node.classList.toggle("selected", Number(node.dataset.uid) === selected);
+    });
+  }
+
+  function select(uid) {
+    selected = uid;
+    updateSelection();
+    const card = pinsBox.querySelector('.pin[data-uid="' + uid + '"] textarea');
+    if (card) card.focus();
+  }
 
   function addPin(objectId, x, y) {
     pending.push({ uid: nextId++, objectId: objectId, x: x, y: y, text: "", sha: loadedSha });
     selected = pending[pending.length - 1].uid;
     renderPins();
-    const card = pinsBox.querySelector('.pin[data-uid="' + selected + '"] textarea');
-    if (card) card.focus();
+    const card = pinsBox.querySelector('.pin[data-uid="' + selected + '"]');
+    if (card) {
+      card.scrollIntoView({block: "nearest"});
+      const area = card.querySelector("textarea");
+      if (area) area.focus();
+    }
   }
 
   async function loadSvg() {
@@ -191,7 +219,6 @@ aside h2 { font-size:14px; margin:12px 14px 4px; }
     svg.removeAttribute("width"); svg.removeAttribute("height");
     const size = svgSize();
     svg.style.width = size.w + "px"; svg.style.height = size.h + "px";
-    svg.addEventListener("click", onCanvasClick);
     stage.replaceChildren(svg);
     loadedSha = state.svg_sha256;
     document.getElementById("meta").textContent = "rev " + (state.revision === null ? "?" : state.revision)
@@ -203,10 +230,20 @@ aside h2 { font-size:14px; margin:12px 14px 4px; }
   function onCanvasClick(event) {
     if (!svg) return;
     if (suppressClick) { suppressClick = false; return; }
-    if (event.target.closest("#sf-review-pins")) return;
-    const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(svg.getScreenCTM().inverse());
-    const owner = event.target.closest("[id]");
-    addPin(owner ? owner.id : null, Math.round(point.x * 100) / 100, Math.round(point.y * 100) / 100);
+    // The click may be retargeted to the capture element, so hit-test by point.
+    const hit = document.elementFromPoint(event.clientX, event.clientY);
+    if (!hit || (hit !== svg && !svg.contains(hit))) return;
+    const pinNode = hit.closest(".sf-pin");
+    if (pinNode) { select(Number(pinNode.dataset.uid)); return; }
+    if (hit.closest("#sf-review-pins")) return;
+    const rect = svg.getBoundingClientRect();
+    const box = svg.viewBox.baseVal;
+    if (!rect.width || !rect.height || !box.width || !box.height) return;
+    const x = box.x + (event.clientX - rect.left) * box.width / rect.width;
+    const y = box.y + (event.clientY - rect.top) * box.height / rect.height;
+    const owner = hit.closest("[id]");
+    addPin(owner && owner !== svg ? owner.id : null,
+           Math.round(x * 100) / 100, Math.round(y * 100) / 100);
   }
 
   async function refreshState(initial) {
@@ -242,20 +279,24 @@ aside h2 { font-size:14px; margin:12px 14px 4px; }
     view.y = py - (py - view.y) * (scale / view.scale);
     view.scale = scale;
     applyView();
-    renderPins();
+    renderPinMarks();
   }, { passive: false });
 
+  wrap.addEventListener("click", onCanvasClick);
   wrap.addEventListener("pointerdown", event => {
     if (event.button !== 0) return;
     suppressClick = false;
-    dragging = { x: event.clientX, y: event.clientY, vx: view.x, vy: view.y };
+    dragging = { x: event.clientX, y: event.clientY, vx: view.x, vy: view.y, captured: false };
     wrap.classList.add("dragging");
-    wrap.setPointerCapture(event.pointerId);
   });
   wrap.addEventListener("pointermove", event => {
     if (!dragging) return;
     if (Math.abs(event.clientX - dragging.x) > 4 || Math.abs(event.clientY - dragging.y) > 4) {
       suppressClick = true;
+      if (!dragging.captured) {
+        wrap.setPointerCapture(event.pointerId);
+        dragging.captured = true;
+      }
     }
     view.x = dragging.vx + event.clientX - dragging.x;
     view.y = dragging.vy + event.clientY - dragging.y;
