@@ -5,6 +5,7 @@ import json
 import os
 import shutil
 import tempfile
+import time
 from contextlib import contextmanager
 from pathlib import Path
 
@@ -83,19 +84,94 @@ def project_state_sha256(scene, extras):
     return content_digest({"scene": scene, "extras": extras})
 
 
+def _lap(timings, name, since):
+    """Record one stage in seconds without changing the value it returns."""
+    now = time.perf_counter()
+    timings[name] = round(now - since, 3)
+    return now
+
+
+def _swap(stage, output):
+    """Publish a finished stage directory over an existing one, atomically."""
+    backup = None
+    if output.exists():
+        backup = Path(tempfile.mkdtemp(prefix="." + output.name + ".backup-", dir=output.parent))
+        backup.rmdir()
+        output.rename(backup)
+    try:
+        stage.rename(output)
+    except BaseException:
+        if backup is not None:
+            backup.rename(output)
+            backup = None
+        raise
+    if backup is not None:
+        shutil.rmtree(backup)
+
+
+def _check_preview_target(output):
+    """A preview may replace only a previous preview, never a real project."""
+    if not output.exists():
+        return
+    marker = output / "preview.json"
+    if not output.is_dir() or not marker.is_file():
+        raise ValueError("preview output already exists and is not a draft preview")
+    try:
+        kind = load_json(marker).get("kind")
+    except (ValueError, OSError):
+        kind = None
+    if kind != "draft_preview":
+        raise ValueError("preview output already exists and is not a draft preview")
+
+
+def _write_preview(scene, output, stage, svg, scale, timings, started, since):
+    """Write only figure.svg, preview.png and the draft marker."""
+    (stage / "figure.svg").write_text(svg, encoding="utf-8")
+    (stage / "preview.png").write_bytes(render_svg(svg, scale))
+    since = _lap(timings, "render", since)
+    timings["total"] = round(time.perf_counter() - started, 3)
+    marker = {"schema_version": "0.1", "kind": "draft_preview",
+              "revision": scene["revision"], "render_scale": scale,
+              "timings": dict(timings),
+              "artifacts": {p.name: {"sha256": digest(p), "bytes": p.stat().st_size}
+                            for p in sorted(stage.iterdir())}}
+    (stage / "preview.json").write_text(json_text(marker), encoding="utf-8")
+    _swap(stage, output)
+    timings["publish"] = round(time.perf_counter() - since, 3)
+    timings["total"] = round(time.perf_counter() - started, 3)
+    return {"status": "success", "kind": "draft_preview", "project": str(output),
+            "revision": scene["revision"], "object_count": len(scene["objects"]),
+            "render_scale": scale, "timings": timings,
+            "limitations": ["Draft preview only: no receipt, object manifest, QA record or review binding.",
+                            "Not an editable or deliverable project; rerun without preview."]}
+
+
 def write_project(scene, output, *, scale=3, reference=None, extras=None, expected_revision=None,
-                  expected_state_sha256=None, expected_receipt_sha256=None):
+                  expected_state_sha256=None, expected_receipt_sha256=None, preview=False):
+    """Write a complete project, or with ``preview`` a draft SVG/PNG that is not one.
+
+    A preview skips the semantic audit, receipts, manifests, QA records, visual
+    review bindings and reference comparison; it validates the Scene, renders at
+    ``scale`` and records stage timings in ``preview.json``. It may replace a
+    previous preview but never an existing project or arbitrary directory.
+    """
+    timings = {}
+    started = time.perf_counter()
+    mark = started
     validate(scene)
     audit = None
-    if scene.get("provenance", {}).get("mode") == "semantic":
+    if not preview and scene.get("provenance", {}).get("mode") == "semantic":
         from .reconstruct import semantic_audit
         audit = semantic_audit(scene)
         if audit["status"] not in {"passed", "needs_review"}:
             raise ValueError("semantic mechanical audit rejected: " + ", ".join(audit["reasons"]))
+    mark = _lap(timings, "validate", mark)
     output=Path(output).resolve()
     output.parent.mkdir(parents=True,exist_ok=True)
     with project_lock(output):
-        if output.exists():
+        if preview:
+            _check_preview_target(output)
+        elif output.exists():
             if expected_revision is None:raise ValueError("output already exists; use edit for revision-checked updates")
             current=load_project(output)
             if current["revision"]!=expected_revision:raise ValueError("revision_conflict")
@@ -107,14 +183,19 @@ def write_project(scene, output, *, scale=3, reference=None, extras=None, expect
         elif expected_revision is not None or expected_state_sha256 is not None or expected_receipt_sha256 is not None:
             raise ValueError("project disappeared before edit commit")
         stage=Path(tempfile.mkdtemp(prefix="."+output.name+".stage-",dir=output.parent))
-        backup=None
         try:
             svg=to_svg(scene)
+            mark = _lap(timings, "to_svg", mark)
+            if preview:
+                return _write_preview(scene, output, stage, svg, scale, timings, started, mark)
             (stage/"scene.json").write_text(json_text(scene),encoding="utf-8")
             (stage/"figure.svg").write_text(svg,encoding="utf-8")
             (stage/"preview.png").write_bytes(render_svg(svg,scale))
+            mark = _lap(timings, "render", mark)
             inventory=manifest(scene)
             (stage/"objects.json").write_text(json_text(inventory),encoding="utf-8")
+            mark = _lap(timings, "inventory", mark)
+            qa_started = mark
             qa={"execution":"completed","geometry_validation":"passed","vector_only":True,
                 "object_count":len(scene["objects"]),
                 "path_count":sum(o["kind"]=="path" for o in scene["objects"]),
@@ -182,27 +263,28 @@ def write_project(scene, output, *, scale=3, reference=None, extras=None, expect
                 from .evaluation import current_audit
                 qa["adaptive_review"]=current_audit(scene)
             (stage/"qa.json").write_text(json_text(qa),encoding="utf-8")
+            mark = _lap(timings, "qa", qa_started)
+            timings["total"] = round(time.perf_counter() - started, 3)
             receipt={"schema_version":"0.1","status":"success","quality_status":"needs_review",
                      "revision":scene["revision"],"runtime":render_runtime,"render_scale":scale,
+                     "timings":dict(timings),
                      "artifacts":{p.name:{"sha256":digest(p),"bytes":p.stat().st_size} for p in sorted(stage.iterdir())}}
             (stage/"receipt.json").write_text(json_text(receipt),encoding="utf-8")
-            if output.exists():
-                backup=Path(tempfile.mkdtemp(prefix="."+output.name+".backup-",dir=output.parent))
-                backup.rmdir();output.rename(backup)
-            try:
-                stage.rename(output)
-            except BaseException:
-                if backup is not None:backup.rename(output);backup=None
-                raise
-            if backup is not None:shutil.rmtree(backup)
+            publish_started = time.perf_counter()
+            _swap(stage, output)
+            timings["publish"] = round(time.perf_counter() - publish_started, 3)
+            timings["total"] = round(time.perf_counter() - started, 3)
             return {"status":"success","quality_status":"needs_review","project":str(output),
-                    "revision":scene["revision"],"object_count":len(scene["objects"])}
+                    "revision":scene["revision"],"object_count":len(scene["objects"]),
+                    "timings":timings}
         finally:
             if stage.exists():shutil.rmtree(stage)
 
 
 def load_project(path):
     path=Path(path)
+    if (path/"preview.json").is_file() and not (path/"receipt.json").is_file():
+        raise ValueError("draft preview is not an editable project; write a full project first")
     receipt=load_json(path/"receipt.json")
     for name,info in receipt["artifacts"].items():
         if Path(name).name!=name or digest(path/name)!=info["sha256"]:

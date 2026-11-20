@@ -44,6 +44,16 @@ Use `inspect reference.png` for source size/hash. Source-bound plans declare SHA
 conda run -n ScientificFigure_skill figure-cli reconstruct reference.png --plan plan.json --output work/figure
 ```
 
+### Draft preview loop and stage timings
+
+`draw` and `reconstruct` accept `--preview`: it writes only `figure.svg`, `preview.png` and `preview.json`, renders at scale 1 unless `--scale` says otherwise, and may replace its own previous preview. It is not a project or a deliverable — no receipt, object manifest, QA record, review binding or reference comparison — so use it for the first look and for each correction round, then run the same command without `--preview` once the structure is right.
+
+```bash
+conda run -n ScientificFigure_skill figure-cli draw plan.json --output work/quick --preview
+```
+
+Both paths return `timings` in seconds: `validate`, `to_svg`, `render`, `inventory`, `qa`, `publish`, `total`; a preview omits the delivery stages and the receipt records the same pre-publish stages. On this host a 501-object Scene takes about 0.33 s as a preview and 1.16 s as a full project, most of the difference being PNG rendering at scale 1 versus 3. The engine cannot see model-side time: when measuring a reconstruction, record the host's first inference, output tokens and correction rounds beside these numbers, and never attribute engine seconds to model latency or the reverse.
+
 ### Evidence constraints for reference reconstruction
 
 Reference work runs one evidence loop; the figure is its output, not a substitute for it.

@@ -33,7 +33,8 @@
 
 ## 验证事实
 
-- 完整回归：994 passed、5 skipped、10 subtests passed，65.61秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 完整回归：1006 passed、5 skipped、10 subtests passed，82.52秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 快速预览与分段计时：501对象的柑橘Scene用`--preview`（scale 1）0.33秒，完整交付（scale 3）1.16秒，差主要来自PNG渲染；两条路径都返回`validate/to_svg/render/.../total`秒数，回执记录发布前各段。为本机单次测量，只说明同一台机器上的路径差异，不含模型推理时间。
 - 公开文件链：草稿→缺构造返回needs_input→真实检索→四种测量→内联上下文→编译→用户改色/移动/改字→候选合并保留编辑→局部SVG/PNG→Bundle/两个实例组合→源目录移走后重开。自动脚本的视觉字段明确not_executed。
 - 边界：复杂细胞Recipe报告缺少mitochondrion；不存在mouse/未知品牌返回空；模糊交叉的阈值变化为ambiguous，宿主保留上下层unknown；简单扁平流程节点不强加渐变或强制检索。
 - 实际参考测量：view/profile为ok；选定阈值孔洞和同源模板重复为ambiguous。没有据此宣称透明孔洞、隐藏ER连接或分子数量。

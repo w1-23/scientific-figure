@@ -83,8 +83,12 @@ def parser():
             cmd.add_argument("--scale",type=float,default=3)
         else:
             cmd.add_argument("--output",type=Path,required=True)
-            cmd.add_argument("--scale",type=float,default=3)
-        if name in {"draw","reconstruct"}:cmd.add_argument("--context",type=Path)
+            # draw/reconstruct resolve the default after parsing: a preview renders at 1.
+            cmd.add_argument("--scale",type=float,default=None if name in {"draw","reconstruct"} else 3)
+        if name in {"draw","reconstruct"}:
+            cmd.add_argument("--context",type=Path)
+            cmd.add_argument("--preview",action="store_true",
+                             help="Write only figure.svg, preview.png and preview.json; not a project")
         if name=="review":cmd.add_argument("--record",type=Path,help="Record a host assessment bound to the current project preview")
         if name=="reconstruct":cmd.add_argument("--plan",type=Path,required=True)
         if name=="export":
@@ -316,7 +320,8 @@ def execute(args):
         if args.context:
             from .context import apply_context
             scene,extras=apply_context(scene,args.context,resolve_tokens=True)
-        return write_project(scene,args.output,scale=args.scale,extras=extras)
+        scale=args.scale if args.scale is not None else (1 if args.preview else 3)
+        return write_project(scene,args.output,scale=scale,extras=extras,preview=args.preview)
     if command=="reconstruct":
         plan=load_json(args.plan);scene=reconstruct(args.input,plan)
         extras={"reconstruction-plan.json":plan}
@@ -325,7 +330,8 @@ def execute(args):
             scene,context_extras=apply_context(scene,args.context,resolve_tokens=True);extras.update(context_extras)
         x,y,w,h=plan["source"]["region"]
         with Image.open(args.input) as image:reference=image.convert("RGBA").crop((x,y,x+w,y+h))
-        return write_project(scene,args.output,scale=args.scale,reference=reference,extras=extras)
+        scale=args.scale if args.scale is not None else (1 if args.preview else 3)
+        return write_project(scene,args.output,scale=scale,reference=reference,extras=extras,preview=args.preview)
     if command=="render":
         svg=args.input.read_text(encoding="utf-8")
         write_new(args.output,render_svg(svg,args.scale))
