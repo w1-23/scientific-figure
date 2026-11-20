@@ -20,6 +20,12 @@ The figure can be watched in a local review page with object-level pins while it
 | 受限自动修正 / Bounded fixes | `--fix` 只做换行、标签避让、面板间距和越界回移，每个候选重新审计后才接受，结果写入新目录，原工程不变。 |
 | 字体预检与预设 / Font pre-check | `font-probe` 检查字体覆盖与缺字；`--profile` 报告 Times New Roman / Microsoft YaHei / Cambria Math 在本机的解析结果，缺字体如实报告。 |
 
+### 本地审阅页（预览窗口） / Local review page
+
+[![本地审阅页预览窗口 / Local review page](docs/images/review-page.png)](references/interactive-reconstruction.md)
+
+`review-serve` 起一个本地页面，实时显示当前版本：画布自动适配窗口，用钉针点选对象或空白处添加批注，底部显示上次提交的结论与修订号。每次提交绑定所看 SVG 的哈希，旧版本提交返回 409。页面只读，不缩放、不拖拽；关掉服务不影响任何绘图、检查或导出命令。用法见 [交互审阅 / Interactive review](references/interactive-reconstruction.md)。
+
 ## 示例 / Examples
 
 ### 柑橘无损品质评价

@@ -1,5 +1,7 @@
 # Interactive review of a reconstruction
 
+![Local review page](../docs/images/review-page.png)
+
 The review bridge lets a user watch the current SVG and pin comments on it
 while the host keeps drawing. It is optional: every draw, check, export and
 project transaction still works without a browser or a server.
