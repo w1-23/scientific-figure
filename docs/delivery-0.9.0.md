@@ -14,8 +14,12 @@
 | P5 实际绘图 | 参考图与自然语言图均真实渲染、看图和一轮定向修正；均有改色/移动/改字、两项局部导出和重开；实际Bundle与组合保留输入快照 |
 | P6 版本与交付 | 0.9.0源码/wheel/公开示例/私有图分包，Windows/Linux独立应用文件一致性和新增入口验证，SHA清单 |
 | 本地 runtime preflight | prepare/consume在接触输入前探测renderer/fonts/schemas/OpenCV/pathops，回执与manifest记录`ok/degraded/failed`及逐项结果，`doctor`同样输出；模型adapter仍是`adapter_not_available`，`host_call_order_verified`为false |
+| 任务字体预检 | `font-probe`汇总整图文字，报告当前字体缺失字符、本地TTF/OTF/TTC逐face覆盖、SHA与样例图；只选一个真实字体，环境变量由用户设置；不声称混排回退 |
+| SVG审阅桥 | `review-serve`只读当前`figure.svg`，本机随机令牌、CSP与严格SVG清洗；页面缩放/平移/对象Pin；反馈存`<preview>-review/feedback.json`，绑定SVG摘要与修订，旧版本提交返回409；`review-status`、`--wait` |
+| fidelity检查映射 | `shape/detail/topology`映射到已有boundary/region/negative_space绑定并给`plan validate`输出；`plan review`逐项报告checked/missing；repetition/layers/occlusion/connectivity保持needs_review |
+| 同源双SVG | `export-variants`从同一Scene输出`figure.final.svg`与无字`figure.graphics.svg`；共用ID几何/样式逐属性一致；文字装饰与指向文字的引线同步排除；工程不变 |
 
-入口及请求示例见[语义规划流程](semantic-planning-workflow.md)、[局部测量契约](local-measurements.md)。协议保持独立：Engine0.9.0，FigurePlan0.1、Scene0.1/0.2/0.3、generation0.1和旧CLI继续支持。
+入口及请求示例见[语义规划流程](semantic-planning-workflow.md)、[局部测量契约](local-measurements.md)、[字体预检与双SVG](fonts-and-variants.md)、[交互审阅](../references/interactive-reconstruction.md)。协议保持独立：Engine0.9.0，FigurePlan0.1、Scene0.1/0.2/0.3、generation0.1和旧CLI继续支持。
 
 ## 两类实际任务
 
@@ -33,7 +37,10 @@
 
 ## 验证事实
 
-- 完整回归：1014 passed、5 skipped、10 subtests passed，79.28秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 完整回归：1056 passed、5 skipped、10 subtests passed，72.61秒。5项skip是Windows符号链接权限限制。测试证明工程行为，不是视觉质量分数。
+- 审阅与双SVG：本地服务实测`/svg`、`/state`、`/feedback`三路由，无令牌403、旧摘要409、未知对象400；反馈按轮次追加且不被预览替换删除。双SVG测试逐属性比较共用对象的id/transform/style，并验证文字、文字装饰、指向文字的引线和空组被排除，祖先/occlusion冲突明确失败而不是猜。
+- 字体预检：在本机Windows字体目录枚举64个候选；Arial缺一个私用区字符时返回needs_input并列出来源，指定真实候选可报告覆盖与需要用户设置的环境变量。样例图用被选字体实际绘制。
+- fidelity映射：hard/soft/shape/detail/holes各自产生独立阈值；有约束包时只移除已覆盖项，未覆盖与无机械检查的拓扑项保持needs_review；失败约束使总状态为failed。
 - 显式测量缓存：`--cache-dir`关闭时不读不写；命中前重验源字节SHA、完整规范化请求、实现标记和numpy/opencv/pillow版本，并重算`result_sha256`。测试以禁止`_load_source`证明命中不重新解码或计算，并覆盖ROI/问题/源/版本变化与损坏条目按未命中重算。
 - 快速预览与分段计时：501对象的柑橘Scene用`--preview`（scale 1）0.33秒，完整交付（scale 3）1.16秒，差主要来自PNG渲染；两条路径都返回`validate/to_svg/render/.../total`秒数，回执记录发布前各段。为本机单次测量，只说明同一台机器上的路径差异，不含模型推理时间。
 - 公开文件链：草稿→缺构造返回needs_input→真实检索→四种测量→内联上下文→编译→用户改色/移动/改字→候选合并保留编辑→局部SVG/PNG→Bundle/两个实例组合→源目录移走后重开。自动脚本的视觉字段明确not_executed。
@@ -65,3 +72,5 @@ python -m pip install --no-deps scientific_figure_skill-0.9.0-py3-none-any.whl
 程序始终由宿主显式执行；加载、render、diff/accept和Bundle不执行保存源码。python -I不是安全沙箱。规划确认只表示当次输入，不是当前工程审批；当前审核依赖Scene/preview绑定。无隐式持久缓存；测量缓存只在显式`--cache-dir`时读写，命中前重验源字节、完整请求、实现与库版本。无OCR，无自动科学理解。原始外部源未打包时明确external_not_packaged，内联测量仍可读。
 
 未重新引入用户排除的正式大评测、独立宿主消融、盲评、科学认证、Runtime首轮接线、跨版本部件迁移或实验轮廓扩展。系统字体、环境、模型权重和私图没有混入公共包。未初始化Git、未提交/推送QAagent、未启动或部署服务、未修改网络/安全设置。
+
+本轮审阅页是仓库内独立实现，未复制Draw Better SVG或其他第三方UI代码，因此未新增第三方声明；也未提供VS Code Webview侧栏适配器，本地浏览器页是通用回退。Draw Better SVG的MIT审阅流程只作为设计参考，若以后移植其代码，必须在合并前记录固定上游版本、文件、MIT声明和修改。

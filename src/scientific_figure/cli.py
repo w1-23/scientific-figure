@@ -24,6 +24,14 @@ def parser():
     p.add_argument("--version",action="version",version=__version__)
     sub=p.add_subparsers(dest="command",required=True)
     doctor=sub.add_parser("doctor");doctor.add_argument("--json",action="store_true")
+    probe=sub.add_parser("font-probe");probe.add_argument("input",type=Path)
+    probe.add_argument("--output",type=Path);probe.add_argument("--font",type=Path,action="append")
+    probe.add_argument("--font-size",type=float)
+    review_serve=sub.add_parser("review-serve");review_serve.add_argument("input",type=Path)
+    review_serve.add_argument("--session",type=Path);review_serve.add_argument("--host",default="127.0.0.1")
+    review_serve.add_argument("--port",type=int,default=0);review_serve.add_argument("--open",action="store_true")
+    review_serve.add_argument("--wait",action="store_true");review_serve.add_argument("--timeout",type=float,default=600)
+    review_status=sub.add_parser("review-status");review_status.add_argument("input",type=Path)
     evidence=sub.add_parser("evidence");evidence.add_argument("input",type=Path);evidence.add_argument("request",type=Path,nargs="?")
     evidence.add_argument("--output",type=Path)
     evidence.add_argument("--channels",default="contrast");evidence.add_argument("--roi");evidence.add_argument("--cache-dir",type=Path)
@@ -36,6 +44,8 @@ def parser():
     plan.add_argument("--context",type=Path);plan.add_argument("--phase",choices=["semantic","construction"],default="semantic");plan.add_argument("--reference",type=Path)
     plan.add_argument("--constraints",type=Path,help="Merge a constraint_check report into review")
     plan.add_argument("--evidence-pack",type=Path,help="Resolve declared evidence_ids against this constraint pack")
+    variants=sub.add_parser("export-variants");variants.add_argument("input",type=Path)
+    variants.add_argument("--output",type=Path,required=True);variants.add_argument("--exclude",default="")
     constraints=sub.add_parser("constraints");constraint_sub=constraints.add_subparsers(dest="action",required=True)
     cbuild=constraint_sub.add_parser("build");cbuild.add_argument("source",type=Path);cbuild.add_argument("--request",type=Path,required=True);cbuild.add_argument("--output",type=Path,required=True)
     ccheck=constraint_sub.add_parser("check");ccheck.add_argument("project",type=Path);ccheck.add_argument("--pack",type=Path,required=True);ccheck.add_argument("--bindings",type=Path);ccheck.add_argument("--output",type=Path)
@@ -213,6 +223,50 @@ def execute(args):
             data=load_json(args.bindings)
             bindings=data.get('bindings',data) if isinstance(data,dict) else data
         return check_constraints(args.project,args.pack,bindings=bindings,output=args.output)
+    if command=="font-probe":
+        from .fonts import probe_fonts, write_font_sample
+        document=load_json(args.input)
+        if (not isinstance(document,dict)
+                or set(document)-{"schema_version","texts","candidates","font_size"}):
+            raise ValueError("font-probe request takes schema_version, texts, candidates and font_size")
+        if document.get("schema_version","0.1")!="0.1":raise ValueError("unsupported font-probe schema_version")
+        if not isinstance(document.get("candidates",[]),list):raise ValueError("candidate fonts must be a list")
+        candidates=list(document.get("candidates",[]))+[str(path) for path in (args.font or [])]
+        if any(not isinstance(item,str) for item in candidates):raise ValueError("candidate fonts must be paths")
+        size=args.font_size if args.font_size is not None else document.get("font_size",14)
+        report=probe_fonts(document.get("texts"),candidates=candidates or None,font_size=size)
+        if args.output:
+            if args.output.exists() and not args.output.is_dir():raise ValueError("font-probe output must be a directory")
+            args.output.mkdir(parents=True,exist_ok=True)
+            if report["selected"]:
+                report["sample"]=write_font_sample(document["texts"],args.output/"font-probe-sample.png",
+                                                   font_path=report["selected"]["path"],font_size=size)
+            write_new(args.output/"font-probe.json",json_text(report).encode("utf-8"))
+        return report
+    if command=="review-status":
+        from .review_bridge import feedback_status
+        return feedback_status(args.input)
+    if command=="review-serve":
+        from .review_bridge import ReviewServer, create_session, wait_for_feedback
+        session=create_session(args.input,args.session)
+        server=ReviewServer(args.input,session,host=args.host,port=args.port)
+        info=server.start()
+        # The URL must be visible before a blocking serve/wait.
+        print(json.dumps(info,ensure_ascii=False),flush=True)
+        if args.open:
+            import webbrowser
+            webbrowser.open(info["url"])
+        try:
+            if args.wait:
+                return {"status":"feedback","url":info["url"],"session":session["session"],
+                        "feedback":wait_for_feedback(session["session"],timeout=args.timeout)}
+            try:
+                server.thread.join()
+            except KeyboardInterrupt:
+                pass
+            return {"status":"stopped","url":info["url"],"session":session["session"]}
+        finally:
+            server.stop()
     if command=="evidence":
         if args.input == Path('measure'):
             from .measurements import measure
@@ -378,6 +432,9 @@ def execute(args):
                              expected_revision=scene["revision"] if in_place else None)
         if repair_report is not None:result["repair_status"]=repair_report["status"]
         return result
+    if command=="export-variants":
+        from .export_variants import export_variants
+        return export_variants(args.input,args.output,exclude=[item for item in args.exclude.split(",") if item])
     if command=="export":
         selected=export_scene(scene,args.objects.split(","),args.padding)
         svg=to_svg(selected)

@@ -80,7 +80,70 @@ def validate_plan(plan):
         from .style_profile import validate_profile
         validate_profile(plan['style_profile'])
     return {'status': 'valid', 'objects': len(specs), 'modules': len(plan['modules']),
+            'fidelity_bindings': fidelity_bindings(plan),
             'semantic_understanding': 'host_supplied', 'scientific_review': 'not_executed'}
+
+
+FIDELITY_DEFAULTS = {"hard": (0.85, 2.0), "soft": (0.60, 6.0)}
+FIDELITY_DETAIL = (0.70, 4.0)
+FIDELITY_HOLES = (0.75, 4.0)
+FIDELITY_UNCHECKED = ('repetition', 'layers', 'occlusion', 'connectivity')
+
+
+def fidelity_policy(fidelity):
+    """Map declared fidelity to existing check kinds; never invent a score.
+
+    Each check carries its own threshold: a hard shape does not silently make a
+    soft detail strict, and an explicit ``allowed_deviation`` overrides the
+    default tolerance for every check on that object.
+    """
+    if not isinstance(fidelity, dict):
+        raise ValueError('fidelity must be an object')
+    shape, detail = fidelity.get('shape'), fidelity.get('detail')
+    explicit = fidelity.get('allowed_deviation')
+    checks = []
+    if shape in FIDELITY_DEFAULTS:
+        recall, deviation = FIDELITY_DEFAULTS[shape]
+        checks.append({'kind': 'boundary', 'recall_min': recall,
+                       'allowed_deviation': float(explicit if explicit is not None else deviation)})
+    if detail == 'hard':
+        recall, deviation = FIDELITY_DETAIL
+        checks.append({'kind': 'region', 'recall_min': recall,
+                       'allowed_deviation': float(explicit if explicit is not None else deviation)})
+    topology = list(fidelity.get('topology') or [])
+    if 'holes' in topology:
+        recall, deviation = FIDELITY_HOLES
+        checks.append({'kind': 'negative_space', 'recall_min': recall,
+                       'allowed_deviation': float(explicit if explicit is not None else deviation)})
+    unchecked = [item for item in FIDELITY_UNCHECKED if item in topology]
+    grade = 'hard' if 'hard' in {shape, detail} else 'soft'
+    return {'grade': grade, 'checks': checks,
+            'required_checks': [check['kind'] for check in checks],
+            'unchecked_topology': unchecked}
+
+
+def fidelity_bindings(plan, mappings=None):
+    """Produce constraint bindings for the checks the declared fidelity implies."""
+    bindings = []
+    specs = [spec for module in plan.get('modules', []) for spec in module.get('objects', [])]
+    for spec in specs:
+        fidelity = spec.get('fidelity')
+        if not fidelity:
+            continue
+        region = spec.get('source_region')
+        if region is None:
+            continue
+        policy = fidelity_policy(fidelity)
+        oid = spec['id']
+        if mappings and oid in mappings:
+            oid = mappings[oid]['root_id']
+        for check in policy['checks']:
+            bindings.append({'object_id': oid, 'kind': check['kind'],
+                             'source_region': list(region),
+                             'allowed_deviation': check['allowed_deviation'],
+                             'recall_min': check['recall_min'], 'group': None,
+                             'min_count': 1, 'notes': 'Derived from declared fidelity.'})
+    return bindings
 
 
 def _region_in_source(source_id, region, plan):
@@ -577,19 +640,33 @@ def plan_review(scene, plan, mappings, *, planning_context=None, baseline=None,
         from .constraints import review_checks
         extra = review_checks(constraints_report)
         checks.extend(extra)
-        covered = {check['object_id'] for check in extra}
+        covered = {(check['object_id'], check['constraint']) for check in extra}
+    policies = []
     for oid, spec in specs.items():
         fidelity = spec.get('fidelity')
         if not fidelity:
             continue
         root = mappings[oid]['root_id']
-        if root in covered:
-            continue
-        checks.append({'kind': 'fidelity', 'object_id': root, 'constraint': 'boundary',
-                       'status': 'needs_review',
-                       'notes': ['No constraint check covers this object.']})
+        policy = fidelity_policy(fidelity)
+        missing = [check['kind'] for check in policy['checks']
+                   if (root, check['kind']) not in covered]
+        for kind in missing:
+            checks.append({'kind': 'fidelity', 'object_id': root, 'constraint': kind,
+                           'status': 'needs_review',
+                           'notes': ['No ' + kind + ' constraint check covers this object.']})
+        for item in policy['unchecked_topology']:
+            checks.append({'kind': 'fidelity', 'object_id': root, 'constraint': item,
+                           'status': 'needs_review',
+                           'notes': ['No mechanical check exists for this topology aspect; host review required.']})
+        policies.append({'plan_object_id': oid, 'object_id': root, 'grade': policy['grade'],
+                         'checks': copy.deepcopy(policy['checks']),
+                         'checked': [check['kind'] for check in policy['checks']
+                                     if (root, check['kind']) in covered],
+                         'missing': missing,
+                         'unchecked_topology': list(policy['unchecked_topology'])})
     return {'status': 'failed' if any(c['status'] == 'failed' for c in checks) else 'needs_review',
-            'checks': checks, 'trace': trace, 'unresolved': plan['review_spec'].get('unknown', []),
+            'checks': checks, 'trace': trace, 'fidelity_policy': policies,
+            'unresolved': plan['review_spec'].get('unknown', []),
             'planning_context': copy.deepcopy(planning_context),
             'confirmation_scope': 'construction_input_snapshot_only',
             'visual_review': 'host_required', 'scientific_review': 'not_executed',

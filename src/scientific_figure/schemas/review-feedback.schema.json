@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-figure.local/schemas/review-feedback.schema.json",
+  "title": "Review feedback submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "figure_id", "svg_sha256", "scene_revision", "status", "comments"],
+  "properties": {
+    "schema_version": {"const": "0.1"},
+    "figure_id": {"type": "string", "minLength": 1, "maxLength": 100},
+    "svg_sha256": {"$ref": "#/$defs/hash"},
+    "scene_revision": {"oneOf": [{"type": "integer", "minimum": 0}, {"type": "null"}]},
+    "status": {"enum": ["approved", "changes_requested"]},
+    "comments": {
+      "type": "array", "maxItems": 100,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["object_id", "position", "comment"],
+        "properties": {
+          "object_id": {"oneOf": [{"type": "string", "minLength": 1, "maxLength": 100}, {"type": "null"}]},
+          "position": {"oneOf": [{"type": "null"},
+                                  {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}]},
+          "comment": {"type": "string", "minLength": 1, "maxLength": 2000},
+          "svg_sha256": {"$ref": "#/$defs/hash"}
+        }
+      }
+    }
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}
+}

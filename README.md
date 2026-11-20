@@ -4,6 +4,10 @@
 
 A standalone skill for redrawing scientific figures from references and creating new figures from natural-language descriptions. It delivers editable SVGs and PNG previews. Use a screenshot to identify any region you want revised.
 
+绘图过程中可以用本地审阅页同步查看、缩放和按对象批注；交付时可以一次性检查整图字体覆盖，并从同一 Scene 生成无字矢量图与带字最终稿。
+
+The figure can be watched in a local review page with zoom and object-level pins while it is being drawn. Delivery can check the whole task's font coverage first and derive a text-free vector version plus the annotated final SVG from one Scene.
+
 ## 示例 / Examples
 
 ### 柑橘无损品质评价
@@ -73,7 +77,7 @@ python examples/structural-regression/run.py work/regression --deliver examples/
 
 The citrus example writes `figure.svg`, `preview.png`, and `scene.json`.
 
-[宿主指南 / Skill guide](SKILL.md) · [参考图重建 / Reference reconstruction](references/reference-reconstruction.md) · [自然语言设计 / Text-to-figure design](references/text-design.md)
+[宿主指南 / Skill guide](SKILL.md) · [参考图重建 / Reference reconstruction](references/reference-reconstruction.md) · [自然语言设计 / Text-to-figure design](references/text-design.md) · [交互审阅 / Interactive review](references/interactive-reconstruction.md) · [字体与双SVG / Fonts and variants](docs/fonts-and-variants.md)
 
 ## 目录 / Repository layout
 

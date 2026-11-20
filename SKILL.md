@@ -17,6 +17,18 @@ Choose the task guide before constructing a complex figure:
 - **Natural-language design:** read [text-design](references/text-design.md). Separate user-explicit content, design choices and scientific assumptions. Design the hierarchy around the requested mechanism; do not invent preparation, administration or experimental conditions.
 - **Both tasks:** use [construction-selection](references/construction-selection.md) when the method is uncertain. Choose by required shape, parts, repetition, holes, occlusion and style, then compare actual available resources. A simple flat object can go straight from a short intent/unknown note to geometry and preview; no mandatory search or multiple planning files.
 
+## Work autonomously by default; pause only when asked
+
+| Mode | Start when | Host behaviour |
+|---|---|---|
+| `autonomous` (default) | the user asks for the figure or says to finish it | draw, inspect, correct and deliver; do not pause for approval at each step |
+| `interactive` | the user asks to see a sample, confirm each page or take part | publish the agreed checkpoint and wait for feedback or approval |
+
+- Opening a review page does not force a pause. In autonomous mode, read new feedback at the next safe checkpoint; if the user asks to stop, stop publishing candidates and handle their edits first.
+- In interactive mode, finish and publish the first agreed page, wait, then continue. For multi-page work, the first approved page fixes shared typography, spacing, card style and palette rules; later pages share those rules, not a forced identical layout.
+- A host that cannot read images may use geometry and structural checks but must leave visual review `not_executed`.
+- Approving one SVG version is not scientific review and does not approve a later version.
+
 ## Default: understand, select, construct, inspect, correct
 
 1. State purpose, intended display size, modules and reading order. List objects, indispensable internal parts, editable units, labels, color meanings and relations. Keep unresolved content explicit. For a complex figure, make this draft inspectable before writing extensive geometry. Use existing FigurePlan modules/objects/relations where useful; unselected constructions can remain `unresolved`. These are stages of one planning input, not another Scene tree.
@@ -53,6 +65,40 @@ conda run -n ScientificFigure_skill figure-cli draw plan.json --output work/quic
 ```
 
 Both paths return `timings` in seconds: `validate`, `to_svg`, `render`, `inventory`, `qa`, `publish`, `total`; a preview omits the delivery stages and the receipt records the same pre-publish stages. On this host a 501-object Scene takes about 0.33 s as a preview and 1.16 s as a full project, most of the difference being PNG rendering at scale 1 versus 3. The engine cannot see model-side time: when measuring a reconstruction, record the host's first inference, output tokens and correction rounds beside these numbers, and never attribute engine seconds to model latency or the reverse.
+
+### Check text and fonts before complex construction
+
+Collect every string the figure will draw — labels, formulas, units, axis text, legends — into one request and run this before geometry:
+
+```json
+{"schema_version": "0.1", "texts": ["Cell membrane", "H₂O → O₂", "细胞膜"]}
+```
+
+```bash
+conda run -n ScientificFigure_skill figure-cli font-probe texts.json --output work/fonts
+```
+
+`status: ok` selects one real local font and writes `font-probe.json` plus `font-probe-sample.png`; `needs_input` lists missing characters and per-face coverage. `--font PATH` adds a specific file. The engine renders one family, so do not claim mixed-font fallback: set `SCIENTIFIC_FIGURE_FONT` to the selected path yourself, or simplify the text. For several pages, probe the union of all pages once, before page 1. A missing glyph is a construction decision, not a last-minute export error.
+
+### Show the figure while you draw
+
+```bash
+conda run -n ScientificFigure_skill figure-cli draw plan.json --output work/quick --preview
+conda run -n ScientificFigure_skill figure-cli review-serve work/quick --open
+conda run -n ScientificFigure_skill figure-cli review-status work/quick-review
+```
+
+`review-serve` serves the newest successfully published `figure.svg` on `127.0.0.1` with a random token and prints the URL before blocking. The page keeps zoom, pan and unsent pins across reloads, and lets the user pin a comment to an object ID or empty space. `review-status` reads the feedback log. Add `--wait --timeout N` to block until a new round arrives; without it, stop with Ctrl-C. The server only reads the figure and writes feedback; it never edits the project.
+
+Feedback is stored in `<preview>-review/feedback.json`, outside the replaceable preview directory, and every submission is bound to the SVG SHA256 and revision that were shown. A submission from an older version is rejected with HTTP 409, never applied silently. Apply accepted comments through a normal patch or generation merge, then publish a new preview. The local page is a browser fallback; it does not create a VS Code sidebar, and an embedded host must still treat feedback as this versioned file.
+
+### Deliver graphics-only and final SVGs
+
+```bash
+conda run -n ScientificFigure_skill figure-cli export-variants work/figure --output deliverables/figure
+```
+
+This reads one validated project and writes `figure.final.svg` plus `figure.graphics.svg` (no text) and `variants.json`. Both come from the same Scene, so shared IDs keep identical geometry and style; nothing is redrawn. Text is removed by `kind=text` and by `semantic.layer="text"`, `semantic.text_decoration` or `semantic.label_for`; mark path-drawn glyphs with `semantic.layer="text"` or pass `--exclude id1,id2`. Leaders pointing at removed text are removed with it; an occlusion that references removed text refuses rather than guessing. The project and receipt are unchanged. PNG remains an optional format, not a required deliverable.
 
 ### Build repeated structure from tables
 
@@ -98,6 +144,10 @@ Bind the objects you chose to that evidence in the FigurePlan:
 - `plan compile --evidence-pack work/constraints` and `plan check --evidence-pack work/constraints` reject unknown evidence IDs and IDs that miss the declared `source_region`. A stale citation is an error, not a silent no-op.
 - Plan `source_region` is in oriented-source pixels; pack and binding boxes are ROI-local. The pack ROI origin is subtracted when these are compared.
 - `must_preserve` lines are checked when they name an object (`sample`), a part (`cristae`) or `object/part` (`mitochondrion/cristae`). Free text stays `needs_review`; it is never counted as satisfied.
+
+`fidelity` is not decoration. `shape: hard|soft` requires a boundary check, `detail: hard` a region check, and `topology: ["holes"]` a negative-space check. `plan validate` returns the derived `fidelity_bindings`; use them as the constraint request's bindings (or merge them into it), then `plan review --constraints` reports each one as checked, missing or failed. `repetition`, `layers`, `occlusion` and `connectivity` have no mechanical check: they stay `needs_review`, never a pass. `allowed_deviation` is a source-pixel tolerance, not a quality score.
+
+User-facing grades map to object-level fields, not to one global number: quick = `shape: soft` (or `ignore` for background texture), standard = hard on scientifically important objects and soft elsewhere, strict = `shape: hard`, `detail: hard` and the topology the reference actually shows. A strict grade on one mitochondrion does not silently make every background speck strict.
 
 Check the rendered result object by object, then merge the report into the plan review:
 
