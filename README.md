@@ -86,6 +86,6 @@ The citrus example writes `figure.svg`, `preview.png`, and `scene.json`.
 
 ## 许可 / License
 
-仓库代码采用 **PolyForm Noncommercial License 1.0.0**，详见 [LICENSE](LICENSE)。第三方依赖和素材遵守各自条款，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。参考图仅作对照展示，版权归各原权利人，不适用仓库的代码许可。本仓库独立于 QAagent。
+仓库代码采用 **PolyForm Noncommercial License 1.0.0**，详见 [LICENSE](LICENSE)。第三方依赖和素材遵守各自条款，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。参考图仅作对照展示，版权归各原权利人，不适用仓库的代码许可。
 
 Code is available under the **PolyForm Noncommercial License 1.0.0**; see [LICENSE](LICENSE). Third-party dependencies and assets retain their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Reference images are shown for comparison, remain the property of their respective rights holders, and are not covered by the code license. This repository is independent of QAagent.
